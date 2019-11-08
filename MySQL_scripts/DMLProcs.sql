@@ -259,6 +259,21 @@ BEGIN
     COMMIT;
 END;$$
 
+-- DELETE
+CREATE PROCEDURE deleteCountry(IN p_country_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting country';
+    END;
+    
+    DELETE FROM country
+    WHERE country_id = p_country_id;
+	COMMIT;
+    
+END;$$
+
 /* Province */
 -- INSERT
 CREATE PROCEDURE createProvince(IN p_province_name VARCHAR(35), IN p_country_id int)
@@ -274,6 +289,21 @@ BEGIN
     INSERT INTO province(province_id,country_id,province_name)
     VALUES (v_province_id,p_country_id,p_province_name);
     COMMIT;
+END;$$
+
+-- DELETE
+CREATE PROCEDURE deleteProvince(IN p_province_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting province';
+    END;
+    
+    DELETE FROM province
+    WHERE province_id = p_province_id;
+	COMMIT;
+    
 END;$$
 
 /* Canton */
@@ -293,6 +323,21 @@ BEGIN
     COMMIT;
 END;$$
 
+-- DELETE
+CREATE PROCEDURE deleteCanton(IN p_canton_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting canton';
+    END;
+    
+    DELETE FROM canton
+    WHERE canton_id = p_canton_id;
+	COMMIT;
+    
+END;$$
+
 /* District */
 -- INSERT
 CREATE PROCEDURE createDistrict(IN p_district_name VARCHAR(35), IN p_canton_id int)
@@ -308,6 +353,21 @@ BEGIN
     INSERT INTO district(district_id,canton_id,district_name)
     VALUES (v_district_id,p_canton_id,p_district_name);
     COMMIT;
+END;$$
+
+-- DELETE
+CREATE PROCEDURE deleteDistrict(IN p_district_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting district';
+    END;
+    
+    DELETE FROM district
+    WHERE district_id = p_district_id;
+	COMMIT;
+    
 END;$$
 
 /* Adress */
@@ -327,6 +387,21 @@ BEGIN
     COMMIT;
 END;$$
 
+-- DELETE
+CREATE PROCEDURE deleteAddress(IN p_address_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting address';
+    END;
+    
+    DELETE FROM address
+    WHERE address_id = p_address_id;
+	COMMIT;
+    
+END;$$
+
 /* User Type */
 -- INSERT
 CREATE PROCEDURE createUserType(IN p_user_type_name VARCHAR(35))
@@ -342,4 +417,19 @@ BEGIN
     INSERT INTO user_type(user_type_id,user_type_name)
     VALUES (v_user_type_id,p_user_type_name);
     COMMIT;
+END;$$
+
+-- DELETE
+CREATE PROCEDURE deleteUserType(IN p_user_type_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting user type';
+    END;
+    
+    DELETE FROM user_type
+    WHERE user_type_id = p_user_type_id;
+	COMMIT;
+    
 END;$$
