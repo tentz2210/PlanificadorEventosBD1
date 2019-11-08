@@ -1,3 +1,4 @@
+USE eventsProject;
 /* DML Procedures */
 -- On user root
 DELIMITER $$
@@ -239,4 +240,106 @@ BEGIN
     WHERE (email_address, person_id) = (p_email_address, p_person_id);
 	COMMIT;
     
+END;$$
+
+/* Country */
+-- INSERT
+CREATE PROCEDURE createCountry(IN p_country_name VARCHAR(35))
+BEGIN
+	DECLARE v_country_id int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting country';
+    END;
+    
+    SET v_country_id = LAST_INSERT_ID();
+    INSERT INTO country(country_id,country_name)
+    VALUES (v_country_id,p_country_name);
+    COMMIT;
+END;$$
+
+/* Province */
+-- INSERT
+CREATE PROCEDURE createProvince(IN p_province_name VARCHAR(35), IN p_country_id int)
+BEGIN
+	DECLARE v_province_id int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting province';
+    END;
+    
+    SET v_province_id = LAST_INSERT_ID();
+    INSERT INTO province(province_id,country_id,province_name)
+    VALUES (v_province_id,p_country_id,p_province_name);
+    COMMIT;
+END;$$
+
+/* Canton */
+-- INSERT
+CREATE PROCEDURE createCanton(IN p_canton_name VARCHAR(35), IN p_province_id int)
+BEGIN
+	DECLARE v_canton_id int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting canton';
+    END;
+    
+    SET v_canton_id = LAST_INSERT_ID();
+    INSERT INTO canton(canton_id,province_id,canton_name)
+    VALUES (v_canton_id,p_province_id,p_canton_name);
+    COMMIT;
+END;$$
+
+/* District */
+-- INSERT
+CREATE PROCEDURE createDistrict(IN p_district_name VARCHAR(35), IN p_canton_id int)
+BEGIN
+	DECLARE v_district_id int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting district';
+    END;
+    
+    SET v_district_id = LAST_INSERT_ID();
+    INSERT INTO district(district_id,canton_id,district_name)
+    VALUES (v_district_id,p_canton_id,p_district_name);
+    COMMIT;
+END;$$
+
+/* Adress */
+-- INSERT
+CREATE PROCEDURE createAdress(IN p_address_desc VARCHAR(200), IN p_district_id int)
+BEGIN
+	DECLARE v_address_id int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting adress';
+    END;
+    
+    SET v_address_id = LAST_INSERT_ID();
+    INSERT INTO address(address_id,district_id,address_description)
+    VALUES (v_address_id,p_district_id,p_address_desc);
+    COMMIT;
+END;$$
+
+/* User Type */
+-- INSERT
+CREATE PROCEDURE createUserType(IN p_user_type_name VARCHAR(35))
+BEGIN
+	DECLARE v_user_type_id int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting user type';
+    END;
+    
+    SET v_user_type_id = LAST_INSERT_ID();
+    INSERT INTO user_type(user_type_id,user_type_name)
+    VALUES (v_user_type_id,p_user_type_name);
+    COMMIT;
 END;$$
