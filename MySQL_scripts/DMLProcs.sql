@@ -492,6 +492,21 @@ BEGIN
     COMMIT;
 END;$$
 
+-- DELETE
+CREATE PROCEDURE deletePerson(IN p_person_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting person';
+    END;
+    
+    DELETE FROM person
+    WHERE person_id = p_person_id;
+	COMMIT;
+    
+END;$$
+
 /* Parameter */
 -- INSERT
 CREATE PROCEDURE createParameter(IN p_parameter_name VARCHAR(20), IN p_parameter_value int)
@@ -505,6 +520,21 @@ BEGIN
     INSERT INTO parameter(parameter_name,parameter_value)
     VALUES (p_parameter_name,p_parameter_value);
     COMMIT;
+END;$$
+
+-- DELETE
+CREATE PROCEDURE deleteParameter(IN p_parameter_name VARCHAR(20))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting parameter';
+    END;
+    
+    DELETE FROM parameter
+    WHERE parameter_name = p_parameter_name;
+	COMMIT;
+    
 END;$$
 
 /* Person Event Status */
@@ -522,6 +552,21 @@ BEGIN
     COMMIT;
 END;$$
 
+-- DELETE
+CREATE PROCEDURE deletePersonEventStatus(IN p_person_id int, IN p_event_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting person\'s event status';
+    END;
+    
+    DELETE FROM person_event_status
+    WHERE (person_id,event_id) = (p_person_id,p_event_id);
+	COMMIT;
+    
+END;$$
+
 /* Person Event Invitation */
 -- INSERT
 CREATE PROCEDURE createPersonEventInvitation(IN p_person_id int, IN p_event_id int)
@@ -535,6 +580,21 @@ BEGIN
     INSERT INTO person_event_invitation(person_id,event_id)
     VALUES (p_person_id,p_event_id);
     COMMIT;
+END;$$
+
+-- DELETE
+CREATE PROCEDURE deletePersonEventInvitation(IN p_person_id int, IN p_event_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting person\'s event invitation';
+    END;
+    
+    DELETE FROM person_event_invitation
+    WHERE (person_id,event_id) = (p_person_id,p_event_id);
+	COMMIT;
+    
 END;$$
 
 /* Category */
@@ -554,6 +614,21 @@ BEGIN
     COMMIT;
 END;$$
 
+-- DELETE
+CREATE PROCEDURE deleteCategory(IN p_category_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting category';
+    END;
+    
+    DELETE FROM category
+    WHERE category_id = p_category_id;
+	COMMIT;
+    
+END;$$
+
 /* Status Type */
 -- INSERT
 CREATE PROCEDURE createStatusType(IN p_status_name VARCHAR(20))
@@ -571,6 +646,21 @@ BEGIN
     COMMIT;
 END;$$
 
+-- DELETE
+CREATE PROCEDURE deleteStatusType(IN p_status_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting status type';
+    END;
+    
+    DELETE FROM status_type
+    WHERE status_type_id = p_status_id;
+	COMMIT;
+    
+END;$$
+
 /* Person Comment */
 -- INSERT
 CREATE PROCEDURE createPersonComment(IN p_person_id int, IN p_event_id int, IN p_comment VARCHAR(400), IN p_photo VARCHAR(30))
@@ -586,4 +676,19 @@ BEGIN
     INSERT INTO person_comment(comment_id,person_id,event_id,comment_body,photo)
     VALUES (v_comment_id,p_person_id,p_event_id,p_comment,p_photo);
     COMMIT;
+END;$$
+
+-- DELETE
+CREATE PROCEDURE deletePersonComment(IN p_comment_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error deleting comment';
+    END;
+    
+    DELETE FROM person_comment
+    WHERE comment_id = p_comment_id;
+	COMMIT;
+    
 END;$$
