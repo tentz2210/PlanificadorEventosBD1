@@ -274,6 +274,21 @@ BEGIN
     
 END;$$
 
+-- UPDATE
+CREATE PROCEDURE updateCountry(IN p_country_id int, IN p_country_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating country';
+    END;
+	
+	UPDATE country
+    SET country_name = p_country_name
+    WHERE country_id = p_country_id;
+    COMMIT;
+END;$$
+
 /* Province */
 -- INSERT
 CREATE PROCEDURE createProvince(IN p_province_name VARCHAR(30), IN p_country_id int)
@@ -304,6 +319,21 @@ BEGIN
     WHERE province_id = p_province_id;
 	COMMIT;
     
+END;$$
+
+-- UPDATE
+CREATE PROCEDURE updateProvince(IN p_province_id int, IN p_province_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating province';
+    END;
+	
+	UPDATE province
+    SET province_name = p_province_name
+    WHERE province_id = p_province_id;
+    COMMIT;
 END;$$
 
 /* Canton */
@@ -338,6 +368,21 @@ BEGIN
     
 END;$$
 
+-- UPDATE
+CREATE PROCEDURE updateCanton(IN p_canton_id int, IN p_canton_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating canton';
+    END;
+	
+	UPDATE canton
+    SET canton_name = p_canton_name
+    WHERE canton_id = p_canton_id;
+    COMMIT;
+END;$$
+
 /* District */
 -- INSERT
 CREATE PROCEDURE createDistrict(IN p_district_name VARCHAR(30), IN p_canton_id int)
@@ -368,6 +413,21 @@ BEGIN
     WHERE district_id = p_district_id;
 	COMMIT;
     
+END;$$
+
+-- UPDATE
+CREATE PROCEDURE updateDistrict(IN p_district_id int, IN p_district_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating district';
+    END;
+	
+	UPDATE district
+    SET district_name = p_district_name
+    WHERE district_id = p_district_id;
+    COMMIT;
 END;$$
 
 /* Adress */
@@ -402,6 +462,21 @@ BEGIN
     
 END;$$
 
+-- UPDATE
+CREATE PROCEDURE updateAddress(IN p_address_id int, IN p_address_desc VARCHAR(100))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating address';
+    END;
+	
+	UPDATE address
+    SET address_description = p_address_desc
+    WHERE address_id = p_address_id;
+    COMMIT;
+END;$$
+
 /* User Type */
 -- INSERT
 CREATE PROCEDURE createUserType(IN p_user_type_name VARCHAR(30))
@@ -432,6 +507,21 @@ BEGIN
     WHERE user_type_id = p_user_type_id;
 	COMMIT;
     
+END;$$
+
+-- UPDATE
+CREATE PROCEDURE updateUserType(IN p_user_type_id int, IN p_user_type_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating user type';
+    END;
+	
+	UPDATE user_type
+    SET user_type_name = p_user_type_name
+    WHERE user_type_id = p_user_type_id;
+    COMMIT;
 END;$$
 
 /* Social Event */
@@ -470,6 +560,30 @@ BEGIN
     WHERE event_id = p_social_event_id;
 	COMMIT;
     
+END;$$
+
+-- UPDATE
+CREATE PROCEDURE updateSocialEvent(IN p_event_id int, IN p_address_id int, IN p_category_id int, IN p_title VARCHAR(50),
+								   IN p_description VARCHAR(400), IN p_start_date VARCHAR(20), IN p_end_date VARCHAR(20),
+                                   IN p_is_private tinyint, IN p_photo VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating social event';
+    END;
+	
+	UPDATE social_event
+    SET address_id = IFNULL(p_address_id,address_id),
+		category_id = IFNULL(p_category_id,category_id),
+        event_title = IFNULL(p_title,event_title),
+        event_description = IFNULL(p_description,event_description),
+        start_date = IFNULL(STR_TO_DATE(p_start_date, '%d/%m/%Y %H:%i'),start_date),
+        end_date = IFNULL(STR_TO_DATE(p_end_date, '%d/%m/%Y %H:%i'),end_date),
+        isPrivate = IFNULL(p_is_private,isPrivate),
+        photo = IFNULL(p_photo,photo)
+    WHERE event_id = p_event_id;
+    COMMIT;
 END;$$
 
 /* Person */
