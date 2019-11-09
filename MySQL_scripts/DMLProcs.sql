@@ -471,3 +471,119 @@ BEGIN
 	COMMIT;
     
 END;$$
+
+/* Person */
+-- INSERT
+CREATE PROCEDURE createPerson(IN p_first_name VARCHAR(30), IN p_middle_name VARCHAR(30), IN p_last_name VARCHAR(30), IN p_id int,
+							  IN p_date_of_birth VARCHAR(10), IN p_photo VARCHAR(30))
+BEGIN
+	DECLARE v_person_id int;
+    DECLARE v_birth_date DATE;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting person';
+    END;
+    
+    SET v_person_id = LAST_INSERT_ID();
+    SET v_birth_date := STR_TO_DATE(p_date_of_birth, '%d/%m/%Y');
+    INSERT INTO person(person_id,first_name,middle_name,last_name,id,date_of_birth,photo)
+    VALUES (v_person_id,p_first_name,p_middle_name,p_last_name,p_id,v_birth_date,p_photo);
+    COMMIT;
+END;$$
+
+/* Parameter */
+-- INSERT
+CREATE PROCEDURE createParameter(IN p_parameter_name VARCHAR(20), IN p_parameter_value int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting parameter';
+    END;
+    
+    INSERT INTO parameter(parameter_name,parameter_value)
+    VALUES (p_parameter_name,p_parameter_value);
+    COMMIT;
+END;$$
+
+/* Person Event Status */
+-- INSERT
+CREATE PROCEDURE createPersonEventStatus(IN p_person_id int, IN p_event_id int, IN p_status_type_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting person\'s status for selected event';
+    END;
+    
+    INSERT INTO person_event_status(person_id,event_id,status_type_id)
+    VALUES (p_person_id,p_event_id,p_status_type_id);
+    COMMIT;
+END;$$
+
+/* Person Event Invitation */
+-- INSERT
+CREATE PROCEDURE createPersonEventInvitation(IN p_person_id int, IN p_event_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting person\'s invitation for selected event';
+    END;
+    
+    INSERT INTO person_event_invitation(person_id,event_id)
+    VALUES (p_person_id,p_event_id);
+    COMMIT;
+END;$$
+
+/* Category */
+-- INSERT
+CREATE PROCEDURE createCategory(IN p_category_name VARCHAR(30))
+BEGIN
+	DECLARE v_category_id int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting category';
+    END;
+    
+    SET v_category_id = LAST_INSERT_ID();
+    INSERT INTO category(category_id,category_name)
+    VALUES (v_category_id,p_category_name);
+    COMMIT;
+END;$$
+
+/* Status Type */
+-- INSERT
+CREATE PROCEDURE createStatusType(IN p_status_name VARCHAR(20))
+BEGIN
+	DECLARE v_status_id int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting status type';
+    END;
+    
+    SET v_status_id = LAST_INSERT_ID();
+    INSERT INTO status_type(status_type_id,status_name)
+    VALUES (v_status_id,p_status_name);
+    COMMIT;
+END;$$
+
+/* Person Comment */
+-- INSERT
+CREATE PROCEDURE createPersonComment(IN p_person_id int, IN p_event_id int, IN p_comment VARCHAR(400), IN p_photo VARCHAR(30))
+BEGIN
+	DECLARE v_comment_id int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error inserting comment';
+    END;
+    
+    SET v_comment_id = LAST_INSERT_ID();
+    INSERT INTO person_comment(comment_id,person_id,event_id,comment_body,photo)
+    VALUES (v_comment_id,p_person_id,p_event_id,p_comment,p_photo);
+    COMMIT;
+END;$$
