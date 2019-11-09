@@ -507,6 +507,27 @@ BEGIN
     
 END;$$
 
+-- UPDATE
+CREATE PROCEDURE updatePerson(IN p_person_id int, IN p_first_name VARCHAR(30), IN p_middle_name VARCHAR(30), IN p_last_name VARCHAR(30), 
+							  IN p_id int, IN p_date_of_birth VARCHAR(10), IN p_photo VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating person';
+    END;
+	
+	UPDATE person
+    SET first_name = IFNULL(p_first_name, first_name),
+		middle_name = IFNULL(p_middle_name, middle_name),
+        last_name = IFNULL(p_last_name, last_name),
+        id = IFNULL(p_id, id),
+        date_of_birth = IFNULL(STR_TO_DATE(p_date_of_birth, '%d/%m/%Y'),date_of_birth),
+        photo = IFNULL(p_photo,photo)
+    WHERE person_id = p_person_id;
+    COMMIT;
+END;$$
+
 /* Parameter */
 -- INSERT
 CREATE PROCEDURE createParameter(IN p_parameter_name VARCHAR(20), IN p_parameter_value int)
@@ -537,6 +558,22 @@ BEGIN
     
 END;$$
 
+-- UPDATE
+CREATE PROCEDURE updateParameter(IN p_old_name VARCHAR(20), IN p_new_name VARCHAR(20), IN p_new_value int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating parameter';
+    END;
+	
+	UPDATE parameter
+    SET parameter_name = IFNULL(p_new_name, parameter_name),
+		parameter_value = IFNULL(p_new_value, parameter_value)
+    WHERE parameter_name = p_old_name;
+    COMMIT;
+END;$$
+
 /* Person Event Status */
 -- INSERT
 CREATE PROCEDURE createPersonEventStatus(IN p_person_id int, IN p_event_id int, IN p_status_type_id int)
@@ -565,6 +602,21 @@ BEGIN
     WHERE (person_id,event_id) = (p_person_id,p_event_id);
 	COMMIT;
     
+END;$$
+
+-- UPDATE
+CREATE PROCEDURE updatePersonEventStatus(IN p_person_id int, IN p_event_id int, IN p_new_status_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating person\'s status for selected event';
+    END;
+	
+	UPDATE person_event_status
+    SET status_type_id = p_new_status_id
+    WHERE (person_id,event_id) = (p_person_id,p_event_id);
+    COMMIT;
 END;$$
 
 /* Person Event Invitation */
@@ -629,6 +681,21 @@ BEGIN
     
 END;$$
 
+-- UPDATE
+CREATE PROCEDURE updateCategory(IN p_category_id int, IN p_new_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating category';
+    END;
+	
+	UPDATE category
+    SET category_name = p_new_name
+    WHERE category_id = p_category_id;
+    COMMIT;
+END;$$
+
 /* Status Type */
 -- INSERT
 CREATE PROCEDURE createStatusType(IN p_status_name VARCHAR(20))
@@ -661,6 +728,21 @@ BEGIN
     
 END;$$
 
+-- UPDATE
+CREATE PROCEDURE updateStatusType(IN p_status_id int, IN p_new_name VARCHAR(20))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating status type';
+    END;
+	
+	UPDATE status_type
+    SET status_name = p_new_name
+    WHERE status_type_id = p_status_id;
+    COMMIT;
+END;$$
+
 /* Person Comment */
 -- INSERT
 CREATE PROCEDURE createPersonComment(IN p_person_id int, IN p_event_id int, IN p_comment VARCHAR(400), IN p_photo VARCHAR(30))
@@ -691,4 +773,20 @@ BEGIN
     WHERE comment_id = p_comment_id;
 	COMMIT;
     
+END;$$
+
+-- UPDATE
+CREATE PROCEDURE updatePersonComment(IN p_comment_id int, IN p_comment VARCHAR(400), IN p_photo VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error updating comment';
+    END;
+	
+	UPDATE person_comment
+    SET comment_body = IFNULL(p_comment, comment_body),
+		photo = IFNULL(p_photo,photo)
+    WHERE comment_id = p_comment_id;
+    COMMIT;
 END;$$
