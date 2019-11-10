@@ -13,23 +13,39 @@ import AppPackage.AnimationClass;
  */
 public class animationLoginWindow extends javax.swing.JFrame {
 
+    animationLoginWindow a = this;
+
     /**
      * Creates new form animationLoginWindow
      */
     public animationLoginWindow() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        
-        AnimationClass anim = new AnimationClass();
-        
-        anim.jLabelXLeft(mainFigure1.getX(), -1000, 3, 1, mainFigure1);
-        anim.jLabelXRight(mainFigure2.getX(), 1000, 3, 1, mainFigure2);
-        anim.jLabelYDown(mainFigure3.getY(), 1000, 3, 1, mainFigure3);
-        anim.jLabelYDown(mainFigure4.getY(), 1000, 3, 1, mainFigure4);
-        
-        
-    }
+        new Thread()
+        {
+            int count;
 
+            @Override
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(5700);
+                    a.setVisible(false);
+                    new loginWindow().setVisible(true);
+                }
+                catch(InterruptedException e)
+                {
+
+                }
+            }
+        }.start();
+        initComponents();     
+        AnimationClass anim = new AnimationClass();
+        anim.jLabelXLeft(mainFigure1.getX(), -1000, 5, 1, mainFigure1);
+        anim.jLabelXRight(mainFigure2.getX(), 1000, 5, 1, mainFigure2);
+        anim.jLabelYDown(mainFigure3.getY(), 1000, 5, 1, mainFigure3);
+        anim.jLabelYDown(mainFigure4.getY(), 1000, 5, 1, mainFigure4);  
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,6 +60,7 @@ public class animationLoginWindow extends javax.swing.JFrame {
         mainFigure2 = new javax.swing.JLabel();
         mainFigure3 = new javax.swing.JLabel();
         mainFigure4 = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 600));
@@ -74,49 +91,20 @@ public class animationLoginWindow extends javax.swing.JFrame {
         mainFigure4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/MainFigure4.png"))); // NOI18N
         jPanel1.add(mainFigure4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 343, 580, 260));
 
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logoFade.gif"))); // NOI18N
+        logo.setText("jLabel1");
+        jPanel1.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 600));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 630));
         jPanel1.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(animationLoginWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(animationLoginWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(animationLoginWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(animationLoginWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new animationLoginWindow().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel logo;
     private javax.swing.JLabel mainFigure1;
     private javax.swing.JLabel mainFigure2;
     private javax.swing.JLabel mainFigure3;
