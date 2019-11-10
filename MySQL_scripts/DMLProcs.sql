@@ -246,16 +246,14 @@ END;$$
 -- INSERT
 CREATE PROCEDURE createCountry(IN p_country_name VARCHAR(30))
 BEGIN
-	DECLARE v_country_id int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting country';
     END;
     
-    SET v_country_id = LAST_INSERT_ID();
-    INSERT INTO country(country_id,country_name)
-    VALUES (v_country_id,p_country_name);
+    INSERT INTO country(country_name)
+    VALUES (p_country_name);
     COMMIT;
 END;$$
 
@@ -293,16 +291,14 @@ END;$$
 -- INSERT
 CREATE PROCEDURE createProvince(IN p_province_name VARCHAR(30), IN p_country_id int)
 BEGIN
-	DECLARE v_province_id int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting province';
     END;
     
-    SET v_province_id = LAST_INSERT_ID();
-    INSERT INTO province(province_id,country_id,province_name)
-    VALUES (v_province_id,p_country_id,p_province_name);
+    INSERT INTO province(country_id,province_name)
+    VALUES (p_country_id,p_province_name);
     COMMIT;
 END;$$
 
@@ -340,16 +336,14 @@ END;$$
 -- INSERT
 CREATE PROCEDURE createCanton(IN p_canton_name VARCHAR(30), IN p_province_id int)
 BEGIN
-	DECLARE v_canton_id int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting canton';
     END;
     
-    SET v_canton_id = LAST_INSERT_ID();
-    INSERT INTO canton(canton_id,province_id,canton_name)
-    VALUES (v_canton_id,p_province_id,p_canton_name);
+    INSERT INTO canton(province_id,canton_name)
+    VALUES (p_province_id,p_canton_name);
     COMMIT;
 END;$$
 
@@ -387,16 +381,14 @@ END;$$
 -- INSERT
 CREATE PROCEDURE createDistrict(IN p_district_name VARCHAR(30), IN p_canton_id int)
 BEGIN
-	DECLARE v_district_id int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting district';
     END;
     
-    SET v_district_id = LAST_INSERT_ID();
-    INSERT INTO district(district_id,canton_id,district_name)
-    VALUES (v_district_id,p_canton_id,p_district_name);
+    INSERT INTO district(canton_id,district_name)
+    VALUES (p_canton_id,p_district_name);
     COMMIT;
 END;$$
 
@@ -434,16 +426,14 @@ END;$$
 -- INSERT
 CREATE PROCEDURE createAdress(IN p_address_desc VARCHAR(100), IN p_district_id int)
 BEGIN
-	DECLARE v_address_id int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting adress';
     END;
     
-    SET v_address_id = LAST_INSERT_ID();
-    INSERT INTO address(address_id,district_id,address_description)
-    VALUES (v_address_id,p_district_id,p_address_desc);
+    INSERT INTO address(district_id,address_description)
+    VALUES (p_district_id,p_address_desc);
     COMMIT;
 END;$$
 
@@ -481,16 +471,14 @@ END;$$
 -- INSERT
 CREATE PROCEDURE createUserType(IN p_user_type_name VARCHAR(30))
 BEGIN
-	DECLARE v_user_type_id int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting user type';
     END;
     
-    SET v_user_type_id = LAST_INSERT_ID();
-    INSERT INTO user_type(user_type_id,user_type_name)
-    VALUES (v_user_type_id,p_user_type_name);
+    INSERT INTO user_type(user_type_name)
+    VALUES (p_user_type_name);
     COMMIT;
 END;$$
 
@@ -530,20 +518,18 @@ CREATE PROCEDURE createSocialEvent(IN p_person_id int, IN p_address_id int, IN p
 								   IN p_event_description VARCHAR(400), IN p_start_date VARCHAR(20), IN p_end_date VARCHAR(20),
                                    IN p_is_private tinyint, IN p_photo VARCHAR(30))
 BEGIN
-	DECLARE v_event_id int;
-    DECLARE v_start_date DATE;
-    DECLARE v_end_date DATE;
+   	 DECLARE v_start_date DATE;
+    	DECLARE v_end_date DATE;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting event';
     END;
     
-    SET v_event_id = LAST_INSERT_ID();
     SET v_start_date := STR_TO_DATE(p_start_date, '%d/%m/%Y %H:%i');
     SET v_end_date := STR_TO_DATE(p_end_date, '%d/%m/%Y %H:%i');
-    INSERT INTO social_event(event_id,person_id,address_id,category_id,event_title,event_description,start_date,end_date,isPrivate,photo)
-    VALUES (v_event_id,p_person_id,p_address_id,p_category_id,p_event_title,p_event_description,v_start_date,v_end_date,p_is_private,p_photo);
+    INSERT INTO social_event(person_id,address_id,category_id,event_title,event_description,start_date,end_date,isPrivate,photo)
+    VALUES (p_person_id,p_address_id,p_category_id,p_event_title,p_event_description,v_start_date,v_end_date,p_is_private,p_photo);
     COMMIT;
 END;$$
 
@@ -591,18 +577,16 @@ END;$$
 CREATE PROCEDURE createPerson(IN p_first_name VARCHAR(30), IN p_middle_name VARCHAR(30), IN p_last_name VARCHAR(30), IN p_id int,
 							  IN p_date_of_birth VARCHAR(10), IN p_photo VARCHAR(30))
 BEGIN
-	DECLARE v_person_id int;
-    DECLARE v_birth_date DATE;
+    	DECLARE v_birth_date DATE;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting person';
     END;
     
-    SET v_person_id = LAST_INSERT_ID();
     SET v_birth_date := STR_TO_DATE(p_date_of_birth, '%d/%m/%Y');
-    INSERT INTO person(person_id,first_name,middle_name,last_name,id,date_of_birth,photo)
-    VALUES (v_person_id,p_first_name,p_middle_name,p_last_name,p_id,v_birth_date,p_photo);
+    INSERT INTO person(first_name,middle_name,last_name,id,date_of_birth,photo)
+    VALUES (p_first_name,p_middle_name,p_last_name,p_id,v_birth_date,p_photo);
     COMMIT;
 END;$$
 
@@ -767,16 +751,14 @@ END;$$
 -- INSERT
 CREATE PROCEDURE createCategory(IN p_category_name VARCHAR(30))
 BEGIN
-	DECLARE v_category_id int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting category';
     END;
     
-    SET v_category_id = LAST_INSERT_ID();
-    INSERT INTO category(category_id,category_name)
-    VALUES (v_category_id,p_category_name);
+    INSERT INTO category(category_name)
+    VALUES (p_category_name);
     COMMIT;
 END;$$
 
@@ -814,16 +796,14 @@ END;$$
 -- INSERT
 CREATE PROCEDURE createStatusType(IN p_status_name VARCHAR(20))
 BEGIN
-	DECLARE v_status_id int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting status type';
     END;
     
-    SET v_status_id = LAST_INSERT_ID();
-    INSERT INTO status_type(status_type_id,status_name)
-    VALUES (v_status_id,p_status_name);
+    INSERT INTO status_type(status_name)
+    VALUES (p_status_name);
     COMMIT;
 END;$$
 
@@ -861,16 +841,14 @@ END;$$
 -- INSERT
 CREATE PROCEDURE createPersonComment(IN p_person_id int, IN p_event_id int, IN p_comment VARCHAR(400), IN p_photo VARCHAR(30))
 BEGIN
-	DECLARE v_comment_id int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting comment';
     END;
     
-    SET v_comment_id = LAST_INSERT_ID();
-    INSERT INTO person_comment(comment_id,person_id,event_id,comment_body,photo)
-    VALUES (v_comment_id,p_person_id,p_event_id,p_comment,p_photo);
+    INSERT INTO person_comment(person_id,event_id,comment_body,photo)
+    VALUES (p_person_id,p_event_id,p_comment,p_photo);
     COMMIT;
 END;$$
 
