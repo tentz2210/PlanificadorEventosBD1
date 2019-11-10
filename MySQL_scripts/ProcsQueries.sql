@@ -148,3 +148,22 @@ BEGIN
     WHERE pes.status_type_id = 2 -- AQUI VA EL PARAMETRO
       AND pes.person_id = p_current_person_id;
 END;$$
+
+/* User Login */
+
+CREATE PROCEDURE userLogin(IN p_username VARCHAR(30), IN p_userpassword VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+        SELECT 'Error logging in';
+    END;
+    DECLARE EXIT HANDLER FOR NOT FOUND
+    BEGIN
+		SELECT 'Username or password incorrect';
+    END;
+    
+    SELECT user_id, person_id
+    FROM person_user
+    WHERE username = p_username
+      AND user_password = p_userpassword;
+END;$$
