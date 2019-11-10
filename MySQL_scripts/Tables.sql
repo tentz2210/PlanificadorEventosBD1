@@ -305,3 +305,31 @@ CREATE TABLE event_log(
 -- Foreign keys
 ALTER TABLE event_log
 	ADD CONSTRAINT log_event_fk FOREIGN KEY (event_id) REFERENCES social_event(event_id);
+
+################################################################################################################
+-- User Event Report
+CREATE TABLE user_event_report(
+	report_id int NOT NULL COMMENT 'Reference to the linked report',
+    person_id int NOT NULL COMMENT 'Reference to the person liked to the report',
+    event_id int NOT NULL COMMENT 'Reference to the event to be reminded',
+    creation_date DATE NOT NULL COMMENT 'Row date of creation',
+	created_by VARCHAR(30) NOT NULL COMMENT 'User which created the row',
+	last_modification_date DATE DEFAULT NULL COMMENT 'Last date of row modification',
+	last_modified_by VARCHAR(30) DEFAULT NULL COMMENT 'Last user which modified the row',
+    PRIMARY KEY(report_id, person_id, event_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table containing generated reports for daily user reminders';
+
+ALTER TABLE user_event_report
+	ADD CONSTRAINT user_event_report_report_fk FOREIGN KEY (report_id) REFERENCES report(report_id),
+    ADD CONSTRAINT user_event_report_person_fk FOREIGN KEY (person_id) REFERENCES person(person_id),
+    ADD CONSTRAINT user_event_report_event_fk FOREIGN KEY (event_id) REFERENCES social_event(event_id);
+################################################################################################################
+-- Report
+CREATE TABLE report(
+	report_id int AUTO_INCREMENT PRIMARY KEY COMMENT 'Report numeric id',
+    report_date DATE NOT NULL COMMENT 'Date when report was generated',
+    creation_date DATE NOT NULL COMMENT 'Row date of creation',
+	created_by VARCHAR(30) NOT NULL COMMENT 'User which created the row',
+	last_modification_date DATE DEFAULT NULL COMMENT 'Last date of row modification',
+	last_modified_by VARCHAR(30) DEFAULT NULL COMMENT 'Last user which modified the row'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table containing reports and the date of generation';
