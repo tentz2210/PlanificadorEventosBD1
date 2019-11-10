@@ -25,7 +25,7 @@ public class loginWindow extends javax.swing.JFrame {
     public void holders(){
         PlaceHolder holder;
         holder = new PlaceHolder(usernameField,"Usuario");
-        holder = new PlaceHolder(passwordField,"Contraseña");
+        holder = new PlaceHolder(passwordField,"Contraseña"); 
     }
 
     /**
@@ -39,13 +39,20 @@ public class loginWindow extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        welcomeLabel = new javax.swing.JLabel();
+        d1 = new javax.swing.JLabel();
+        d2 = new javax.swing.JLabel();
+        registerButton = new javax.swing.JButton();
+        logo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         loginLabel = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
         loginButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        photoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1000, 600));
         setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(1000, 600));
         setResizable(false);
@@ -57,6 +64,43 @@ public class loginWindow extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(8, 151, 157));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        welcomeLabel.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        welcomeLabel.setForeground(new java.awt.Color(255, 255, 255));
+        welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        welcomeLabel.setText("Bienvenido");
+        jPanel2.add(welcomeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 130, 30));
+
+        d1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        d1.setForeground(new java.awt.Color(255, 255, 255));
+        d1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        d1.setText("Ingresa tus datos personales y empieza a  ");
+        jPanel2.add(d1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 90, 310, 30));
+
+        d2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        d2.setForeground(new java.awt.Color(255, 255, 255));
+        d2.setText("planear eventos con nosotros");
+        jPanel2.add(d2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 190, 20));
+
+        registerButton.setBackground(new java.awt.Color(5, 91, 92));
+        registerButton.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        registerButton.setForeground(new java.awt.Color(255, 255, 255));
+        registerButton.setText("Registrarse");
+        registerButton.setMaximumSize(new java.awt.Dimension(121, 37));
+        registerButton.setMinimumSize(new java.awt.Dimension(121, 37));
+        registerButton.setPreferredSize(new java.awt.Dimension(130, 47));
+        jPanel2.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, 40));
+
+        logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo_pequeño.png"))); // NOI18N
+        jPanel2.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 150, 370, 290));
+
+        jLabel1.setFont(new java.awt.Font("Edwardian Script ITC", 0, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Plevent");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 200, 50));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, 350, 600));
 
         loginLabel.setBackground(new java.awt.Color(0, 0, 0));
@@ -75,11 +119,11 @@ public class loginWindow extends javax.swing.JFrame {
         loginButton.setText("Ingresar");
         jPanel1.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 130, 40));
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user01.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 100, 100));
+        photoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        photoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user01.png"))); // NOI18N
+        jPanel1.add(photoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 100, 100));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -120,12 +164,18 @@ public class loginWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel d1;
+    private javax.swing.JLabel d2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel loginLabel;
+    private javax.swing.JLabel logo;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JLabel photoLabel;
+    private javax.swing.JButton registerButton;
     private javax.swing.JTextField usernameField;
+    private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
