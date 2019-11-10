@@ -28,13 +28,13 @@ END;$$
 -- Point b
 CREATE PROCEDURE getFinishedEvents(IN filter_start_date VARCHAR(11), IN filter_end_date VARCHAR(11))
 BEGIN
+	DECLARE vStartDate DATE DEFAULT NULL;
+    DECLARE vEndDate DATE DEFAULT NULL;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error executing query';
     END;
-	DECLARE vStartDate DATE DEFAULT NULL;
-    DECLARE vEndDate DATE DEFAULT NULL;
     SET vStartDate := STR_TO_DATE(filter_start_date, '%d/%m/%Y');
     SET vEndDate := STR_TO_DATE(filter_end_date, '%d/%m/%Y');
     
@@ -46,13 +46,13 @@ END;$$
 
 CREATE PROCEDURE getPendingEvents(IN filter_start_date VARCHAR(11), IN filter_end_date VARCHAR(11))
 BEGIN
+	DECLARE vStartDate DATE DEFAULT NULL;
+    DECLARE vEndDate DATE DEFAULT NULL;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error executing query';
     END;
-	DECLARE vStartDate DATE DEFAULT NULL;
-    DECLARE vEndDate DATE DEFAULT NULL;
     SET vStartDate := STR_TO_DATE(filter_start_date, '%d/%m/%Y');
     SET vEndDate := STR_TO_DATE(filter_end_date, '%d/%m/%Y');
     
@@ -161,9 +161,39 @@ BEGIN
     BEGIN
 		SELECT 'Username or password incorrect';
     END;
-    
+
     SELECT user_id, person_id
     FROM person_user
     WHERE username = p_username
       AND user_password = p_userpassword;
 END;$$
+
+-- STATISTICS MODULE --
+
+-- Point a: getEventStatisticsPerCategory
+CREATE PROCEDURE getEventStatisticsPerCategory() 
+BEGIN
+	DECLARE vnTotalEvents int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+    END;
+    
+    SELECT count (1)
+    INTO vnTotalEvents
+    FROM social_event;
+        
+	SELECT c.category_name AS "Category", count(1) AS "Number of events", count(1)/vnTotalEvents *100 AS "Percentage"
+	FROM social_event s INNER JOIN category c
+	ON s.category_id = c.category_id
+	GROUP BY category_name;
+END;$$
+
+-- Point b
+-- Point c
+-- Point d
+-- Point e
+-- Point f
+-- Point g
+-- Point h
