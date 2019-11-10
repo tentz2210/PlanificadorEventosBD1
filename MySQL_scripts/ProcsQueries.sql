@@ -190,10 +190,65 @@ BEGIN
 	GROUP BY category_name;
 END;$$
 
--- Point b
--- Point c
--- Point d
--- Point e
--- Point f
--- Point g
--- Point h
+-- Point b: getPeopleStatiticsPerCategory
+-- Point c: getEventStatiticsPerDate
+-- Point d getTopEventsWithMostAssistance
+-- Point e: getTopEventsWithBestCalif
+-- Point f getTopEventsWithWorstCalif
+
+-- Point g: getAgeStatistics
+-- FUNCTION getAgeRankId --
+CREATE FUNCTION getAgeRank(p_date_of_birth DATE) RETURNS VARCHAR(21) NO SQL
+BEGIN
+	DECLARE vnAge INT;
+    DECLARE vcRank VARCHAR(21);
+	SET vnAge:= FLOOR((DATEDIFF(CURDATE(),p_date_of_birth))/365.25);
+	IF (vnAge BETWEEN 0 AND 18) THEN
+		SET vcRank = '0 a 18';
+	ELSEIF (vnAge BETWEEN 19 AND 30) THEN
+		SET vcRank = '19 a 30';
+	ELSEIF (vnAge BETWEEN 30 AND 45) THEN
+		SET vcRank = '30 a 45';
+	ELSEIF (vnAge BETWEEN 46 AND 55) THEN
+		SET vcRank = '46 a 55';
+	ELSEIF (vnAge BETWEEN 55 AND 65) THEN
+		SET vcRank = '55 a 65';
+	ELSEIF (vnAge BETWEEN 66 AND 75) THEN
+		SET vcRank = '66 a 75';
+	ELSEIF (vnAge BETWEEN 76 AND 85) THEN
+		SET vcRank = '76 a 85';
+	ELSE -- vnAge > 85
+		SET vcRank = 'mayor a 85';
+	END IF;
+	RETURN vcRank;
+END;$$
+
+-- PROCEDURE getStatisticsUsersAge --
+CREATE PROCEDURE getStatisticsUsersAge()
+BEGIN
+	DECLARE vnTotalUsers INT;
+	SELECT count (1)
+	INTO vnTotalUsers
+	FROM person;
+            
+	SELECT a.age_rank, count(1) total, count(1)/vnTotalUsers * 100 percentage
+	FROM (SELECT getAgeRank(p.date_of_birth) age_rank FROM person p) a
+	GROUP BY age_rank;
+END;$$
+
+-- Point h: getReviewsStatisticsPerCategory
+CREATE PROCEDURE getReviewsStatisticsPerCategory()
+BEGIN
+	DECLARE vnTotalReviews INT;
+    SELECT count(1)
+    INTO vnTotalReviews
+    FROM person_review;
+    
+    SELECT c.category_name, count(1) total, count(1)/vnTotalReviews * 100 percentage
+    FROM category c
+    INNER JOIN (SELECT se.category_id cat_id
+				FROM social_event se INNER JOIN person_review r
+				ON r.event_id = se.event_id) t
+	ON t.cat_id = c.category_id
+    GROUP BY c.category_name;
+END;$$
