@@ -72,6 +72,11 @@ public class editProfile extends javax.swing.JFrame {
         nameButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/userName.png"))); // NOI18N
         nameButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         nameButton.setPreferredSize(new java.awt.Dimension(100, 100));
+        nameButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nameButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(nameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 100, 100));
 
         passwordButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -113,6 +118,11 @@ public class editProfile extends javax.swing.JFrame {
         idNumberButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/idNumber.png"))); // NOI18N
         idNumberButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         idNumberButton.setPreferredSize(new java.awt.Dimension(100, 100));
+        idNumberButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                idNumberButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(idNumberButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 100, 100));
 
         usersButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -178,6 +188,17 @@ public class editProfile extends javax.swing.JFrame {
     private void minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeMouseClicked
         this.setState(editProfile.ICONIFIED);
     }//GEN-LAST:event_minimizeMouseClicked
+
+    private void nameButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nameButtonMouseClicked
+        this.setVisible(false);
+        nameWindow name = new nameWindow(this);
+        
+    }//GEN-LAST:event_nameButtonMouseClicked
+
+    private void idNumberButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_idNumberButtonMouseClicked
+        this.setVisible(false);
+        idNumberWindow idN = new idNumberWindow(this);
+    }//GEN-LAST:event_idNumberButtonMouseClicked
 
     /**
      * @param args the command line arguments

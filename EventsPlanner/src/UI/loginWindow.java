@@ -97,6 +97,11 @@ public class loginWindow extends javax.swing.JFrame {
                 registerButtonMouseClicked(evt);
             }
         });
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
         jPanel2.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, 40));
 
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -167,6 +172,10 @@ public class loginWindow extends javax.swing.JFrame {
     private void minimizeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeLabelMouseClicked
         this.setState(loginWindow.ICONIFIED);
     }//GEN-LAST:event_minimizeLabelMouseClicked
+
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registerButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
