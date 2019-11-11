@@ -514,7 +514,7 @@ END;$$
 
 /* Social Event */
 -- INSERT
-CREATE PROCEDURE createSocialEvent(IN p_person_id int, IN p_address_id int, IN p_category_id int, IN p_event_tile VARCHAR(50),
+CREATE PROCEDURE createSocialEvent(IN p_person_id int, IN p_address_id int, IN p_category_id int, IN p_event_title VARCHAR(50),
 								   IN p_event_description VARCHAR(400), IN p_start_date VARCHAR(20), IN p_end_date VARCHAR(20),
                                    IN p_is_private tinyint, IN p_photo VARCHAR(30))
 BEGIN
