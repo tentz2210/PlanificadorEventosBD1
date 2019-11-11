@@ -340,3 +340,37 @@ BEGIN
     SET NEW.last_modification_date := SYSDATE();
 END;
 $$
+
+-- Report
+CREATE DEFINER= root@localhost TRIGGER Report_BEFORE_INSERT 
+BEFORE INSERT ON report FOR EACH ROW 
+BEGIN
+	SET NEW.created_by := USER();
+    SET NEW.creation_date := SYSDATE();
+END;
+$$
+
+CREATE DEFINER= root@localhost TRIGGER Report_BEFORE_UPDATE
+BEFORE UPDATE ON report FOR EACH ROW
+BEGIN
+	SET NEW.last_modified_by := USER();
+    SET NEW.last_modification_date := SYSDATE();
+END;
+$$
+
+-- user_event_report
+CREATE DEFINER= root@localhost TRIGGER user_event_report_BEFORE_INSERT 
+BEFORE INSERT ON user_event_report FOR EACH ROW 
+BEGIN
+	SET NEW.created_by := USER();
+    SET NEW.creation_date := SYSDATE();
+END;
+$$
+
+CREATE DEFINER= root@localhost TRIGGER user_event_report_BEFORE_UPDATE
+BEFORE UPDATE ON user_event_report FOR EACH ROW
+BEGIN
+	SET NEW.last_modified_by := USER();
+    SET NEW.last_modification_date := SYSDATE();
+END;
+$$
