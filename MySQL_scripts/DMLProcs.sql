@@ -113,9 +113,14 @@ BEGIN
 		ROLLBACK;
         SELECT 'Error creating user review';
     END;
+    IF(SELECT EXISTS(SELECT event_id, person_id 
+					 FROM person_event_invitation 
+					 WHERE event_id = p_event_id
+                       AND person_id = p_person_id)) THEN
+		INSERT INTO person_review(person_id, event_id, rating, review_comment)
+		VALUES(p_person_id, p_event_id, p_rating, p_comment);
+    END IF;
     
-    INSERT INTO person_review(person_id, event_id, rating, review_comment)
-    VALUES(p_person_id, p_event_id, p_rating, p_comment);
     COMMIT;
 END;$$
 
