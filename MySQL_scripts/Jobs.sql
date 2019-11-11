@@ -13,7 +13,7 @@ BEGIN
 	DECLARE cursor_new_finished_events CURSOR FOR
 	SELECT event_id
     FROM social_event
-    WHERE end_date < SYSDATE()
+    WHERE end_date < NOW()
       AND event_id NOT IN (SELECT event_id
 						   FROM event_log);
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
