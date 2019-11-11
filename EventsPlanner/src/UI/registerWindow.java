@@ -77,7 +77,6 @@ public class registerWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1000, 600));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -107,6 +106,7 @@ public class registerWindow extends javax.swing.JFrame {
         loginButton.setBackground(new java.awt.Color(5, 91, 92));
         loginButton.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
+        loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         loginButton.setLabel("Iniciar sesión");
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -177,12 +177,14 @@ public class registerWindow extends javax.swing.JFrame {
         photoButton.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         photoButton.setForeground(new java.awt.Color(255, 255, 255));
         photoButton.setText("Foto");
+        photoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(photoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 470, 130, 30));
 
         registerButton.setBackground(new java.awt.Color(8, 151, 157));
         registerButton.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         registerButton.setForeground(new java.awt.Color(255, 255, 255));
         registerButton.setText("Registrarse");
+        registerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 530, 130, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 600));

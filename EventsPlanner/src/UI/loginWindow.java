@@ -86,6 +86,7 @@ public class loginWindow extends javax.swing.JFrame {
         registerButton.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         registerButton.setForeground(new java.awt.Color(255, 255, 255));
         registerButton.setText("Registrarse");
+        registerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         registerButton.setMaximumSize(new java.awt.Dimension(121, 37));
         registerButton.setMinimumSize(new java.awt.Dimension(121, 37));
         registerButton.setPreferredSize(new java.awt.Dimension(130, 47));
@@ -122,6 +123,7 @@ public class loginWindow extends javax.swing.JFrame {
         loginButton.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
         loginButton.setText("Ingresar");
+        loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 130, 40));
 
         photoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
