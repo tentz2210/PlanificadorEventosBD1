@@ -688,15 +688,35 @@ END;$$
 -- INSERT
 CREATE PROCEDURE createPersonEventStatus(IN p_person_id int, IN p_event_id int, IN p_status_type_id int)
 BEGIN
+	DECLARE v_isPrivate TINYINT DEFAULT FALSE;
+    DECLARE v_isInvited TINYINT DEFAULT FALSE;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting person\'s status for selected event';
     END;
     
-    INSERT INTO person_event_status(person_id,event_id,status_type_id)
-    VALUES (p_person_id,p_event_id,p_status_type_id);
-    COMMIT;
+    SELECT isPrivate INTO v_isPrivate
+    FROM social_event
+    WHERE event_id = p_event_id;
+    
+    SELECT(EXISTS(SELECT event_id, person_id
+				  FROM person_event_invitation
+                  WHERE event_id = p_event_id
+                    AND person_id = p_person_id)) INTO v_isInvited;
+    IF v_isPrivate THEN
+		IF v_isInvited THEN
+			INSERT INTO person_event_status(person_id,event_id,status_type_id)
+			VALUES (p_person_id,p_event_id,p_status_type_id);
+            COMMIT;
+		ELSE
+			SELECT 'User is not invited to private event.';
+        END IF;
+    ELSE 
+		INSERT INTO person_event_status(person_id,event_id,status_type_id)
+		VALUES (p_person_id,p_event_id,p_status_type_id);
+		COMMIT;
+    END IF;
 END;$$
 
 -- DELETE
