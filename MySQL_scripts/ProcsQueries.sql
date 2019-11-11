@@ -40,6 +40,7 @@ BEGIN
     
 	SELECT se.event_title, se.start_date, se.end_date
     FROM social_event se INNER JOIN event_log el
+    ON se.event_id = el.event_id
     WHERE se.start_date <= IFNULL(vStartDate, se.start_date)
     AND se.end_date >= IFNULL(vEndDate, se.end_date);
 END;$$ 
