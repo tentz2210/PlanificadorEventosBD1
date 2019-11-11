@@ -514,22 +514,26 @@ END;$$
 
 /* Social Event */
 -- INSERT
-CREATE PROCEDURE createSocialEvent(IN p_person_id int, IN p_address_id int, IN p_category_id int, IN p_event_title VARCHAR(50),
-								   IN p_event_description VARCHAR(400), IN p_start_date VARCHAR(20), IN p_end_date VARCHAR(20),
-                                   IN p_is_private tinyint, IN p_photo VARCHAR(30))
+CREATE PROCEDURE createSocialEvent(IN p_person_id int, IN p_category_id int, IN p_event_title VARCHAR(50),
+				   IN p_event_description VARCHAR(400), IN p_start_date VARCHAR(20), IN p_end_date VARCHAR(20),
+                                   IN p_is_private tinyint, IN p_photo VARCHAR(30), IN p_address_descrip VARCHAR(100), IN p_district_id int)
 BEGIN
-   	 DECLARE v_start_date DATE;
-    	DECLARE v_end_date DATE;
+   	DECLARE v_start_date DATE;
+    DECLARE v_end_date DATE;
+	DECLARE v_address_id int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error inserting event';
     END;
     
+    INSERT INTO address(address_description, district_id)
+    VALUES(p_address_descrip, p_district_id);
+    SET v_address_id := LAST_INSERT_ID();
     SET v_start_date := STR_TO_DATE(p_start_date, '%d/%m/%Y %H:%i');
     SET v_end_date := STR_TO_DATE(p_end_date, '%d/%m/%Y %H:%i');
     INSERT INTO social_event(person_id,address_id,category_id,event_title,event_description,start_date,end_date,isPrivate,photo)
-    VALUES (p_person_id,p_address_id,p_category_id,p_event_title,p_event_description,v_start_date,v_end_date,p_is_private,p_photo);
+    VALUES (p_person_id,v_address_id,p_category_id,p_event_title,p_event_description,v_start_date,v_end_date,p_is_private,p_photo);
     COMMIT;
 END;$$
 
