@@ -98,6 +98,11 @@ public class AdminWindow extends javax.swing.JFrame {
         accountSettingsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/userSettings.png"))); // NOI18N
         accountSettingsIcon.setText("Configuración");
         accountSettingsIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        accountSettingsIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                accountSettingsIconMouseClicked(evt);
+            }
+        });
         jPanel1.add(accountSettingsIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-185, 186, -1, -1));
 
         logoutIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -149,6 +154,11 @@ public class AdminWindow extends javax.swing.JFrame {
         AnimationClass logoutL = new AnimationClass();
         logoutL.jLabelXLeft(10,-185,10,5,logoutIcon);
     }//GEN-LAST:event_menuIconMouseClicked
+
+    private void accountSettingsIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountSettingsIconMouseClicked
+        this.setVisible(false);
+        editProfile edit = new editProfile();
+    }//GEN-LAST:event_accountSettingsIconMouseClicked
 
     /**
      * @param args the command line arguments
