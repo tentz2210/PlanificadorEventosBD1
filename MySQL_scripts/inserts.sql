@@ -204,6 +204,7 @@ call createCategory('Naturaleza');
 call createCategory('Familiar');
 call createCategory('Negocios');
 call createCategory('Tour');
+call createCategory('Académico');
 
 /* INSERT STATUS TYPE */
 call createStatusType('No asistiré');
