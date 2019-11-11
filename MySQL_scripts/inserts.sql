@@ -189,7 +189,10 @@ call createDistrict('San Rafael', 20);
 
 /* INSERTS USER TYPE */
 call createusertype('Administrador');
-call createusertype('Usuario');
+call createusertype('Estudiante');
+call createusertype('Funcionario');
+call createusertype('Profesor');
+call createusertype('Civil');
 
 /* INSERT USER */
 call registerUser('Hans', 'Fernandez', 'Murillo', 123456, '22/10/1998', 'ejemplo1.png', 'tentz2210', 'abc123', 2, 88060199, 'tentz2210@hotmail.com');
