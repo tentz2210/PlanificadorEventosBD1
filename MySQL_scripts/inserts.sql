@@ -191,3 +191,22 @@ call createDistrict('San Rafael', 20);
 call createusertype('Administrador');
 call createusertype('Usuario');
 
+/* INSERT USER */
+call registerUser('Hans', 'Fernandez', 'Murillo', 123456, '22/10/1998', 'ejemplo1.png', 'tentz2210', 'abc123', 2, 88060199, 'tentz2210@hotmail.com');
+
+/* INSERT CATEGORY */
+call createCategory('Nocturno');
+call createCategory('Exteriores');
+call createCategory('Naturaleza');
+call createCategory('Familiar');
+call createCategory('Negocios');
+call createCategory('Tour');
+
+/* INSERT STATUS TYPE */
+call createStatusType('No asistiré');
+call createStatusType('Tal vez asistiré');
+call createStatusType('Sí asistiré');
+select * from status_type;
+
+/* INSERT PARAMETER */
+call createParameter('user_assist_id', 3);
