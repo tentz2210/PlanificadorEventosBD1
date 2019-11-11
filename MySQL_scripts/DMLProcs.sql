@@ -113,15 +113,18 @@ BEGIN
 		ROLLBACK;
         SELECT 'Error creating user review';
     END;
-    IF(SELECT EXISTS(SELECT event_id, person_id 
-					 FROM person_event_invitation 
-					 WHERE event_id = p_event_id
-                       AND person_id = p_person_id)) THEN
+    IF(SELECT EXISTS(SELECT pes.event_id, pes.person_id 
+					 FROM person_event_status pes INNER JOIN social_event se
+                     ON pes.event_id = se.event_id
+					 WHERE pes.event_id = p_event_id
+                       AND pes.person_id = p_person_id
+                       AND pes.status_type_id = 3
+                       AND se.end_date < NOW())) THEN -- aqui va parametro
 		INSERT INTO person_review(person_id, event_id, rating, review_comment)
 		VALUES(p_person_id, p_event_id, p_rating, p_comment);
+        COMMIT;
+	ELSE SELECT 'User hasn''t assisted event';
     END IF;
-    
-    COMMIT;
 END;$$
 
 -- UPDATE
