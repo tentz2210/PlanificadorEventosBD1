@@ -190,7 +190,34 @@ BEGIN
 	GROUP BY category_name;
 END;$$
 
--- Point b: getPeopleStatiticsPerCategory
+-- Point b: getPeopleStatisticsPerCategory
+CREATE PROCEDURE getPeopleStatisticsPerCategory()
+BEGIN
+	DECLARE vnTotalPersons int;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+    END;
+    
+    SELECT count (1)
+    INTO vnTotalPersons
+    FROM person_event_status
+    WHERE status_type_id = 1; -- 1 se refiere al id de asistiré
+    
+	SELECT c.category_name AS "Category", count(1) AS "Total Persons", count(1)/vnTotalPersons*100 AS "Percentage"
+    FROM category c
+	INNER JOIN(SELECT se.category_id cat_id
+			   FROM (SELECT event_id id
+					 FROM person_event_status
+					 WHERE status_type_id = 1 -- 1 se refiere al id de asistiré
+					) t_events
+			   INNER JOIN social_event se
+			   ON t_events.id = se.event_id) t_cats
+	ON c.category_id = t_cats.cat_id
+    GROUP BY category_name;
+END;$$
+
 -- Point c: getEventStatiticsPerDate
 -- Point d getTopEventsWithMostAssistance
 -- Point e: getTopEventsWithBestCalif
