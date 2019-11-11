@@ -214,3 +214,11 @@ select * from status_type;
 
 /* INSERT PARAMETER */
 call createParameter('user_assist_id', 3);
+
+/* INSERT SOCIAL EVENT */
+call createSocialEvent(1, 3, 'Paseo al Chirripó', 'Tour de ida y vuelta en buseta al cerro Chirripó.',
+					   '12/11/2019 10:40', '12/11/2019 22:00', FALSE, 'photo1', 'Contiguo al walmart San Sebastian', 10);
+call createSocialEvent(1, 7, 'Exposición', 'Actividad donde asistirán diferentes expositores en el área de computación.',
+					   '02/11/2019 10:00', '02/11/2019 20:00', TRUE, 'photo2', 'En hatillo 8', 3);
+call createSocialEvent(1, 1, 'Fiesta en el bar', 'Fiesta en el bar de siempre',
+					   '10/11/2019 22:00', '11/11/2019 6:00', FALSE, 'photo3', 'En el bar de siempre', 5);
