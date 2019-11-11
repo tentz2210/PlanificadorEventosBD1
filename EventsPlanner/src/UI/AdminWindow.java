@@ -122,7 +122,7 @@ public class AdminWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_closeWindIconMouseClicked
 
     private void minimizeWindIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeWindIconMouseClicked
-        this.setState(loginWindow.ICONIFIED);
+        this.setState(AdminWindow.ICONIFIED);
     }//GEN-LAST:event_minimizeWindIconMouseClicked
 
     private void menuIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuIconMouseClicked

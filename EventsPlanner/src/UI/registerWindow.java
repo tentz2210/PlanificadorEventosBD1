@@ -74,6 +74,8 @@ public class registerWindow extends javax.swing.JFrame {
         photoLabel = new javax.swing.JLabel();
         photoButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
+        closeWindow = new javax.swing.JLabel();
+        minimize = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -187,6 +189,24 @@ public class registerWindow extends javax.swing.JFrame {
         registerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 530, 130, 30));
 
+        closeWindow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/closeWindow.png"))); // NOI18N
+        closeWindow.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        closeWindow.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeWindowMouseClicked(evt);
+            }
+        });
+        jPanel1.add(closeWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 10, -1, -1));
+
+        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/minimize.png"))); // NOI18N
+        minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeMouseClicked(evt);
+            }
+        });
+        jPanel1.add(minimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 10, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 600));
 
         pack();
@@ -196,6 +216,15 @@ public class registerWindow extends javax.swing.JFrame {
         this.setVisible(false);
         loginWindow login = new loginWindow();
     }//GEN-LAST:event_loginButtonMouseClicked
+
+    private void closeWindowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowMouseClicked
+        this.setVisible(false);
+        loginWindow window = new loginWindow();
+    }//GEN-LAST:event_closeWindowMouseClicked
+
+    private void minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeMouseClicked
+        this.setState(registerWindow.ICONIFIED);
+    }//GEN-LAST:event_minimizeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -237,6 +266,7 @@ public class registerWindow extends javax.swing.JFrame {
     private javax.swing.JLabel Month;
     private javax.swing.JLabel Year;
     private javax.swing.JPasswordField cPasswordField;
+    private javax.swing.JLabel closeWindow;
     private javax.swing.JLabel createAccount;
     private javax.swing.JLabel d1;
     private javax.swing.JLabel d2;
@@ -249,6 +279,7 @@ public class registerWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel minimize;
     private javax.swing.JComboBox<String> monthComboBox;
     private javax.swing.JTextField nameField;
     private javax.swing.JPasswordField passwordField;

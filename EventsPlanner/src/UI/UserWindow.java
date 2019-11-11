@@ -125,7 +125,7 @@ public class UserWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_closeWindIconMouseClicked
 
     private void minimizeWindIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeWindIconMouseClicked
-         this.setState(loginWindow.ICONIFIED);
+         this.setState(UserWindow.ICONIFIED);
     }//GEN-LAST:event_minimizeWindIconMouseClicked
 
     private void menuIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuIconMouseClicked

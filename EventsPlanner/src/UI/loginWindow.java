@@ -46,6 +46,8 @@ public class loginWindow extends javax.swing.JFrame {
         registerButton = new javax.swing.JButton();
         logo = new javax.swing.JLabel();
         pleventTitle = new javax.swing.JLabel();
+        closeWindow = new javax.swing.JLabel();
+        minimizeLabel = new javax.swing.JLabel();
         loginLabel = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
@@ -107,6 +109,24 @@ public class loginWindow extends javax.swing.JFrame {
         pleventTitle.setText("Plevent");
         jPanel2.add(pleventTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 200, 50));
 
+        closeWindow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/closeWindow2.png"))); // NOI18N
+        closeWindow.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        closeWindow.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeWindowMouseClicked(evt);
+            }
+        });
+        jPanel2.add(closeWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, -1, -1));
+
+        minimizeLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/minimize2.png"))); // NOI18N
+        minimizeLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        minimizeLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeLabelMouseClicked(evt);
+            }
+        });
+        jPanel2.add(minimizeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, 350, 600));
 
         loginLabel.setBackground(new java.awt.Color(0, 0, 0));
@@ -140,8 +160,17 @@ public class loginWindow extends javax.swing.JFrame {
         registerWindow register = new registerWindow();
     }//GEN-LAST:event_registerButtonMouseClicked
 
+    private void closeWindowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_closeWindowMouseClicked
+
+    private void minimizeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeLabelMouseClicked
+        this.setState(loginWindow.ICONIFIED);
+    }//GEN-LAST:event_minimizeLabelMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel closeWindow;
     private javax.swing.JLabel d1;
     private javax.swing.JLabel d2;
     private javax.swing.JPanel jPanel1;
@@ -149,6 +178,7 @@ public class loginWindow extends javax.swing.JFrame {
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel loginLabel;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel minimizeLabel;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel photoLabel;
     private javax.swing.JLabel pleventTitle;
