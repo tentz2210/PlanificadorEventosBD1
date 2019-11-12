@@ -205,6 +205,50 @@ BEGIN
     WHERE user_id = p_user_id;
     COMMIT;
 END;$$
+DELIMITER $$
+-- UPDATE
+CREATE PROCEDURE updateUserType(IN p_user_id int, IN p_new_user_type int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error updating user type';
+	END;
+    
+    UPDATE person_user
+    SET user_type_id = p_new_user_type
+    WHERE user_id = p_user_id;
+    COMMIT;
+END;$$
+
+CREATE PROCEDURE updatePassword(IN p_user_id int, IN p_old_password VARCHAR(30) ,IN p_new_password VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error updating password';
+	END;
+    
+    UPDATE person_user
+    SET user_password = p_new_password
+    WHERE user_id = p_user_id
+    AND user_password = p_old_password;
+    COMMIT;
+END;$$
+
+CREATE PROCEDURE updateUsername(IN p_user_id int, IN p_new_username VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error updating username';
+	END;
+    
+    UPDATE person_user
+    SET username = p_new_username
+    WHERE user_id = p_user_id;
+    COMMIT;
+END;$$
 
 /* Email */
 -- INSERT
