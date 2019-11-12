@@ -247,17 +247,13 @@ END;$$
 -- PROCEDURE getStatisticsUsersAge --
 CREATE PROCEDURE getStatisticsUsersAge()
 BEGIN
-	DECLARE vnTotalUsers INT;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error executing query';
     END;
-	SELECT count (1)
-	INTO vnTotalUsers
-	FROM person;
             
-	SELECT a.age_rank, count(1) total, count(1)/vnTotalUsers * 100 percentage
+	SELECT a.age_rank, count(1) AS "total", count(1)/(SELECT COUNT(1) FROM person) *100 AS "Percentage"
 	FROM (SELECT getAgeRank(p.date_of_birth) age_rank FROM person p) a
 	GROUP BY age_rank;
 END;$$
@@ -265,17 +261,13 @@ END;$$
 -- Point h: getReviewsStatisticsPerCategory
 CREATE PROCEDURE getReviewsStatisticsPerCategory()
 BEGIN
-	DECLARE vnTotalReviews INT;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error executing query';
     END;
-    SELECT count(1)
-    INTO vnTotalReviews
-    FROM person_review;
     
-    SELECT c.category_name, count(1) total, count(1)/vnTotalReviews * 100 percentage
+    SELECT c.category_name, count(1) total, count(1)/(SELECT COUNT(1) FROM person_review) *100 AS "Percentage" 
     FROM category c
     INNER JOIN (SELECT se.category_id cat_id
 				FROM social_event se INNER JOIN person_review r
