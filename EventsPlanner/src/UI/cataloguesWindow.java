@@ -85,11 +85,21 @@ public class cataloguesWindow extends javax.swing.JFrame {
         cantonButton.setBackground(new java.awt.Color(255, 255, 255));
         cantonButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/canton.png"))); // NOI18N
         cantonButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cantonButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cantonButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(cantonButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 100, 100));
 
         districtButton.setBackground(new java.awt.Color(255, 255, 255));
         districtButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/district.png"))); // NOI18N
         districtButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        districtButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                districtButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(districtButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 300, 100, 100));
 
         categoriesButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -168,6 +178,16 @@ public class cataloguesWindow extends javax.swing.JFrame {
         this.setVisible(false);
         categoriesWindow category = new categoriesWindow(this);
     }//GEN-LAST:event_categoriesButtonMouseClicked
+
+    private void cantonButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cantonButtonMouseClicked
+        this.setVisible(false);
+        cantonWindow canton = new cantonWindow(this);
+    }//GEN-LAST:event_cantonButtonMouseClicked
+
+    private void districtButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_districtButtonMouseClicked
+        this.setVisible(false);
+        districtWindow canton = new districtWindow(this);
+    }//GEN-LAST:event_districtButtonMouseClicked
 
     /**
      * @param args the command line arguments

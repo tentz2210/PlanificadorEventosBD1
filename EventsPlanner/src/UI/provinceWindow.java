@@ -158,9 +158,8 @@ public class provinceWindow extends javax.swing.JFrame {
         jPanel1.add(newProvinceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 130, -1));
 
         chooseCComboBox1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        chooseCComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estados Unidos", "Estados Unidos", "Estados Unidos", "Estados Unidos", "Estados Unidos", "Estados Unidos", "Estados Unidos", "Estados Unidos", "Estados Unidos", " " }));
         chooseCComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(chooseCComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 130, -1));
+        jPanel1.add(chooseCComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 130, 21));
 
         chooseCComboBox2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         chooseCComboBox2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

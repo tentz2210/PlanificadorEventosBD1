@@ -19,6 +19,7 @@ public class categoriesWindow extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        cataW = cW;
     }
 
     /**
