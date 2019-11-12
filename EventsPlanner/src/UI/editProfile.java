@@ -66,6 +66,11 @@ public class editProfile extends javax.swing.JFrame {
         dateOfBithButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/dateOfBirth.png"))); // NOI18N
         dateOfBithButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         dateOfBithButton.setPreferredSize(new java.awt.Dimension(100, 100));
+        dateOfBithButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dateOfBithButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(dateOfBithButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 100, 100));
 
         nameButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -89,6 +94,11 @@ public class editProfile extends javax.swing.JFrame {
         phoneButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/phone.png"))); // NOI18N
         phoneButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         phoneButton.setPreferredSize(new java.awt.Dimension(100, 100));
+        phoneButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                phoneButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(phoneButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 100, 100));
 
         nameLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -112,6 +122,11 @@ public class editProfile extends javax.swing.JFrame {
         emailButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/email.png"))); // NOI18N
         emailButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         emailButton.setPreferredSize(new java.awt.Dimension(100, 100));
+        emailButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                emailButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(emailButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 130, 100, 100));
 
         idNumberButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -147,7 +162,7 @@ public class editProfile extends javax.swing.JFrame {
 
         photoLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         photoLabel.setText("Foto");
-        jPanel1.add(photoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 410, -1, -1));
+        jPanel1.add(photoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 410, -1, -1));
 
         passwordLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         passwordLabel.setText("Usuario y contraseña");
@@ -199,6 +214,21 @@ public class editProfile extends javax.swing.JFrame {
         this.setVisible(false);
         idNumberWindow idN = new idNumberWindow(this);
     }//GEN-LAST:event_idNumberButtonMouseClicked
+
+    private void phoneButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_phoneButtonMouseClicked
+        this.setVisible(false);
+        telephoneWindow tW = new telephoneWindow(this);
+    }//GEN-LAST:event_phoneButtonMouseClicked
+
+    private void emailButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_emailButtonMouseClicked
+        this.setVisible(false);
+        emailWindow eW = new emailWindow(this);
+    }//GEN-LAST:event_emailButtonMouseClicked
+
+    private void dateOfBithButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dateOfBithButtonMouseClicked
+        this.setVisible(false);
+        dateOfBirthWindow eW = new dateOfBirthWindow(this);
+    }//GEN-LAST:event_dateOfBithButtonMouseClicked
 
     /**
      * @param args the command line arguments
