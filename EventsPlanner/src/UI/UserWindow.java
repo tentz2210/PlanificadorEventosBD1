@@ -37,6 +37,7 @@ public class UserWindow extends javax.swing.JFrame {
         minimizeWindIcon = new javax.swing.JLabel();
         closeWindIcon = new javax.swing.JLabel();
         myEventsIcon = new javax.swing.JLabel();
+        createIcon = new javax.swing.JLabel();
         favoritesIcon = new javax.swing.JLabel();
         queriesIcon = new javax.swing.JLabel();
         accountSettingsIcon = new javax.swing.JLabel();
@@ -83,19 +84,30 @@ public class UserWindow extends javax.swing.JFrame {
         myEventsIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(myEventsIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 60, -1, -1));
 
+        createIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        createIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/create.png"))); // NOI18N
+        createIcon.setText("Crear evento");
+        createIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        createIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                createIconMouseClicked(evt);
+            }
+        });
+        jPanel1.add(createIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 102, -1, -1));
+
         favoritesIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         favoritesIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/star.png"))); // NOI18N
         favoritesIcon.setText("Favoritos");
         favoritesIcon.setToolTipText("");
         favoritesIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(favoritesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 102, -1, -1));
+        jPanel1.add(favoritesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 144, -1, -1));
 
-        queriesIcon.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        queriesIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         queriesIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/query.png"))); // NOI18N
         queriesIcon.setText("Consultas");
         queriesIcon.setToolTipText("");
         queriesIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(queriesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 144, -1, -1));
+        jPanel1.add(queriesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 186, -1, -1));
 
         accountSettingsIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         accountSettingsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/userSettings.png"))); // NOI18N
@@ -106,13 +118,13 @@ public class UserWindow extends javax.swing.JFrame {
                 accountSettingsIconMouseClicked(evt);
             }
         });
-        jPanel1.add(accountSettingsIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 186, -1, -1));
+        jPanel1.add(accountSettingsIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 228, -1, -1));
 
         logoutIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         logoutIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logout.png"))); // NOI18N
         logoutIcon.setText("Cerrar sesión");
         logoutIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(logoutIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 228, -1, -1));
+        jPanel1.add(logoutIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 270, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -136,6 +148,8 @@ public class UserWindow extends javax.swing.JFrame {
     private void menuIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuIconMouseClicked
         AnimationClass myEventsR = new AnimationClass();
         myEventsR.jLabelXRight(-125, 10, 10, 5, myEventsIcon);
+        AnimationClass createR = new AnimationClass();
+        createR.jLabelXRight(-125, 10, 10, 5, createIcon);
         AnimationClass favoritesR = new AnimationClass();
         favoritesR.jLabelXRight(-125, 10, 10, 5, favoritesIcon);
         AnimationClass queriesR = new AnimationClass();
@@ -147,6 +161,8 @@ public class UserWindow extends javax.swing.JFrame {
         //<--
         AnimationClass myEventsL = new AnimationClass();
         myEventsL.jLabelXLeft(10, -125, 10, 5, myEventsIcon);
+        AnimationClass createL = new AnimationClass();
+        createL.jLabelXLeft(10, -125, 10, 5, createIcon);
         AnimationClass favoritesL = new AnimationClass();
         favoritesL.jLabelXLeft(10, -125, 10, 5, favoritesIcon);
         AnimationClass queriesL = new AnimationClass();
@@ -161,6 +177,11 @@ public class UserWindow extends javax.swing.JFrame {
         this.setVisible(false);
         editProfile edit = new editProfile();
     }//GEN-LAST:event_accountSettingsIconMouseClicked
+
+    private void createIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createIconMouseClicked
+        this.setVisible(false);
+        registerEvent event = new registerEvent(this);  
+    }//GEN-LAST:event_createIconMouseClicked
 
     /**
      * @param args the command line arguments
@@ -200,6 +221,7 @@ public class UserWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountSettingsIcon;
     private javax.swing.JLabel closeWindIcon;
+    private javax.swing.JLabel createIcon;
     private javax.swing.JLabel favoritesIcon;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel logoutIcon;

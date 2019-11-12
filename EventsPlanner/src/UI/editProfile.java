@@ -221,8 +221,7 @@ public class editProfile extends javax.swing.JFrame {
 
     private void nameButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nameButtonMouseClicked
         this.setVisible(false);
-        nameWindow name = new nameWindow(this);
-        
+        nameWindow name = new nameWindow(this);  
     }//GEN-LAST:event_nameButtonMouseClicked
 
     private void idNumberButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_idNumberButtonMouseClicked
