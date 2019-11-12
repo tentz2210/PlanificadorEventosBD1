@@ -75,6 +75,11 @@ public class cataloguesWindow extends javax.swing.JFrame {
         provinceButton.setBackground(new java.awt.Color(255, 255, 255));
         provinceButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/province.png"))); // NOI18N
         provinceButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        provinceButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                provinceButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(provinceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 100, 100));
 
         cantonButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -90,6 +95,11 @@ public class cataloguesWindow extends javax.swing.JFrame {
         categoriesButton.setBackground(new java.awt.Color(255, 255, 255));
         categoriesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/categories.png"))); // NOI18N
         categoriesButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        categoriesButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                categoriesButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(categoriesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 300, 100, 100));
 
         countryLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -148,6 +158,16 @@ public class cataloguesWindow extends javax.swing.JFrame {
         this.setVisible(false);
         countryWindow country = new countryWindow(this); 
     }//GEN-LAST:event_countryButtonMouseClicked
+
+    private void provinceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_provinceButtonMouseClicked
+        this.setVisible(false);
+        provinceWindow country = new provinceWindow(this); 
+    }//GEN-LAST:event_provinceButtonMouseClicked
+
+    private void categoriesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoriesButtonMouseClicked
+        this.setVisible(false);
+        categoriesWindow category = new categoriesWindow(this);
+    }//GEN-LAST:event_categoriesButtonMouseClicked
 
     /**
      * @param args the command line arguments

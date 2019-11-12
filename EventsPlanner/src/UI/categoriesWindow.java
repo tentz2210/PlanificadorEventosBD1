@@ -9,15 +9,14 @@ package UI;
  *
  * @author mapac
  */
-public class countryWindow extends javax.swing.JFrame {
+public class categoriesWindow extends javax.swing.JFrame {
 
     /**
-     * Creates new form countryWindow
+     * Creates new form categoriesWindow
      */
     cataloguesWindow cataW;
-    public countryWindow(cataloguesWindow cW) {
+    public categoriesWindow(cataloguesWindow cW) {
         initComponents();
-        cataW = cW;
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -33,25 +32,24 @@ public class countryWindow extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         addTitle = new javax.swing.JLabel();
-        addCountryLabel = new javax.swing.JLabel();
+        addCategoryLabel = new javax.swing.JLabel();
         eliminateTitle = new javax.swing.JLabel();
         eliminateLabel = new javax.swing.JLabel();
         modifyTitle = new javax.swing.JLabel();
-        modifyCountryLabel = new javax.swing.JLabel();
+        modifyCategoryLabel = new javax.swing.JLabel();
         newNameLabel = new javax.swing.JLabel();
-        addCountryField = new javax.swing.JTextField();
-        eliminateComboBox = new javax.swing.JComboBox<>();
-        oldNameComboBox = new javax.swing.JComboBox<>();
+        categoriesIcon = new javax.swing.JLabel();
         newNameField = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
+        eliminateCategory = new javax.swing.JComboBox<>();
+        addCategoryField1 = new javax.swing.JTextField();
+        modifyCategory = new javax.swing.JComboBox<>();
         eliminateButton = new javax.swing.JButton();
         modifyButton = new javax.swing.JButton();
-        countryIcon = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(431, 426));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -61,42 +59,36 @@ public class countryWindow extends javax.swing.JFrame {
         addTitle.setText("Agregar");
         jPanel1.add(addTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, 20));
 
-        addCountryLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        addCountryLabel.setText("Agregar país");
-        jPanel1.add(addCountryLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 90, 20));
+        addCategoryLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        addCategoryLabel.setText("Agregar categoría");
+        jPanel1.add(addCategoryLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 120, 20));
 
         eliminateTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         eliminateTitle.setText("Eliminar");
         jPanel1.add(eliminateTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 90, -1));
 
         eliminateLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        eliminateLabel.setText("Eliminar país");
-        jPanel1.add(eliminateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 100, -1));
+        eliminateLabel.setText("Eliminar categoría");
+        jPanel1.add(eliminateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 120, -1));
 
         modifyTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         modifyTitle.setText("Modificar");
         jPanel1.add(modifyTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
 
-        modifyCountryLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        modifyCountryLabel.setText("País a modificar");
-        jPanel1.add(modifyCountryLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 110, -1));
+        modifyCategoryLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        modifyCategoryLabel.setText("Categoría a modificar");
+        jPanel1.add(modifyCategoryLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 140, -1));
 
         newNameLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         newNameLabel.setText("Nuevo nombre");
         jPanel1.add(newNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 100, -1));
 
-        addCountryField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jPanel1.add(addCountryField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 130, 21));
-
-        eliminateComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        eliminateComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(eliminateComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 147, 130, 21));
-
-        oldNameComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jPanel1.add(oldNameComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 257, 130, -1));
+        categoriesIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        categoriesIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/categories.png"))); // NOI18N
+        jPanel1.add(categoriesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 110, 90));
 
         newNameField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jPanel1.add(newNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 130, -1));
+        jPanel1.add(newNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 298, 130, 21));
 
         addButton.setBackground(new java.awt.Color(8, 151, 157));
         addButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -109,50 +101,71 @@ public class countryWindow extends javax.swing.JFrame {
                 addButtonMouseClicked(evt);
             }
         });
-        jPanel1.add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, -1, -1));
+        jPanel1.add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 80, -1, -1));
+
+        eliminateCategory.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        eliminateCategory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(eliminateCategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 148, 130, -1));
+
+        addCategoryField1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jPanel1.add(addCategoryField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 130, 21));
+
+        modifyCategory.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        modifyCategory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(modifyCategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 130, -1));
 
         eliminateButton.setBackground(new java.awt.Color(8, 151, 157));
         eliminateButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         eliminateButton.setForeground(new java.awt.Color(255, 255, 255));
         eliminateButton.setText("Eliminar");
+        eliminateButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        eliminateButton.setMaximumSize(new java.awt.Dimension(89, 25));
+        eliminateButton.setMinimumSize(new java.awt.Dimension(89, 25));
         eliminateButton.setPreferredSize(new java.awt.Dimension(89, 25));
         eliminateButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 eliminateButtonMouseClicked(evt);
             }
         });
-        jPanel1.add(eliminateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, -1, -1));
+        jPanel1.add(eliminateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 190, -1, -1));
 
         modifyButton.setBackground(new java.awt.Color(8, 151, 157));
         modifyButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         modifyButton.setForeground(new java.awt.Color(255, 255, 255));
         modifyButton.setText("Modificar");
+        modifyButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         modifyButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 modifyButtonMouseClicked(evt);
             }
         });
-        jPanel1.add(modifyButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 350, -1, -1));
-
-        countryIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        countryIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/country.png"))); // NOI18N
-        jPanel1.add(countryIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 110, 90));
+        modifyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(modifyButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 340, -1, -1));
 
         cancelButton.setBackground(new java.awt.Color(132, 116, 161));
         cancelButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cancelButton.setForeground(new java.awt.Color(255, 255, 255));
         cancelButton.setText("Cancelar");
+        cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cancelButtonMouseClicked(evt);
             }
         });
-        jPanel1.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 390, -1, -1));
+        jPanel1.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 400, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 430));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 440));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modifyButtonActionPerformed
 
     private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
         cataW.setVisible(true);
@@ -191,36 +204,36 @@ public class countryWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(countryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(categoriesWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(countryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(categoriesWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(countryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(categoriesWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(countryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(categoriesWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-       
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JTextField addCountryField;
-    private javax.swing.JLabel addCountryLabel;
+    private javax.swing.JTextField addCategoryField1;
+    private javax.swing.JLabel addCategoryLabel;
     private javax.swing.JLabel addTitle;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JLabel countryIcon;
+    private javax.swing.JLabel categoriesIcon;
     private javax.swing.JButton eliminateButton;
-    private javax.swing.JComboBox<String> eliminateComboBox;
+    private javax.swing.JComboBox<String> eliminateCategory;
     private javax.swing.JLabel eliminateLabel;
     private javax.swing.JLabel eliminateTitle;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton modifyButton;
-    private javax.swing.JLabel modifyCountryLabel;
+    private javax.swing.JComboBox<String> modifyCategory;
+    private javax.swing.JLabel modifyCategoryLabel;
     private javax.swing.JLabel modifyTitle;
     private javax.swing.JTextField newNameField;
     private javax.swing.JLabel newNameLabel;
-    private javax.swing.JComboBox<String> oldNameComboBox;
     // End of variables declaration//GEN-END:variables
 }
