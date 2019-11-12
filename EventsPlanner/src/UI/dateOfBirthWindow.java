@@ -5,6 +5,10 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.updateBirthDate;
+import Utils.Global;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mapac
@@ -126,6 +130,17 @@ public class dateOfBirthWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_yearComboBoxActionPerformed
 
     private void acceptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptButtonMouseClicked
+        int monthNumber = monthComboBox.getSelectedIndex()+1;
+        String month = String.valueOf(monthNumber);
+        String day = dayComboBox.getSelectedItem().toString();
+        String year = yearComboBox.getSelectedItem().toString();
+        if(day.length() < 2) day = "0"+day;
+        if (month.length() < 2) month = "0"+month;
+        String format_date = year+"-"+month+"-"+day;
+        String birth_date = dayComboBox.getSelectedItem().toString() +"/" +monthNumber+"/" + yearComboBox.getSelectedItem().toString();
+        updateBirthDate(Global.person_id,birth_date,format_date);
+        if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"Fecha de nacimiento ha sido cambiada","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+        else JOptionPane.showMessageDialog(this,"La fecha de nacimiento no ha sido modificada","Error de modificación",JOptionPane.ERROR_MESSAGE);
         editP.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_acceptButtonMouseClicked

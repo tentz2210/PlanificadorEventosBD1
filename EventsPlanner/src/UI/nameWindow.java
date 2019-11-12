@@ -9,9 +9,6 @@ import static DBConnection.MySQLConnection.updatePersonLastName;
 import static DBConnection.MySQLConnection.updatePersonMiddleName;
 import static DBConnection.MySQLConnection.updatePersonName;
 import Utils.Global;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**

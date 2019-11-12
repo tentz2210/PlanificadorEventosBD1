@@ -510,4 +510,129 @@ public class MySQLConnection {
             return id;
         }
     }
+    
+    public static void updatePersonPhoto(int p_person_id,String p_photo)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updatePersonPhoto(?,?)}");
+            statement.setInt(1,p_person_id);
+            statement.setString(2,p_photo);
+            
+            statement.execute();
+            statement.close();
+            
+            String photo = getPhoto(p_person_id);
+            if (photo.equals(p_photo)) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String getPhoto(int p_person_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String photo = "";
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT photo FROM person WHERE person_id = "+Global.person_id);
+            
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getString("photo"));
+                photo = resultSet.getString("photo");
+            }
+            return photo;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return photo;
+        }
+    }
+    
+    public static void updateBirthDate(int p_person_id, String p_new_date, String p_format_date)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updatePersonBirthDate(?,?)}");
+            statement.setInt(1,p_person_id);
+            statement.setString(2,p_new_date);
+            
+            statement.execute();
+            statement.close();
+            
+            String date = getBirthDate(p_person_id);
+            System.out.println(p_format_date);
+            if (date.equals(p_format_date)) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String getBirthDate(int p_person_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String date = "";
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT date_of_birth FROM person WHERE person_id = "+Global.person_id);
+            
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getString("date_of_birth"));
+                date = resultSet.getString("date_of_birth");
+            }
+            return date;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return date;
+        }
+    }
 }
