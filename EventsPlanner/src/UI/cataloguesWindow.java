@@ -65,6 +65,11 @@ public class cataloguesWindow extends javax.swing.JFrame {
         countryButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/country.png"))); // NOI18N
         countryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         countryButton.setPreferredSize(new java.awt.Dimension(100, 100));
+        countryButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                countryButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(countryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
         provinceButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -138,6 +143,11 @@ public class cataloguesWindow extends javax.swing.JFrame {
     private void minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeMouseClicked
         this.setState(cataloguesWindow.ICONIFIED);
     }//GEN-LAST:event_minimizeMouseClicked
+
+    private void countryButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_countryButtonMouseClicked
+        this.setVisible(false);
+        countryWindow country = new countryWindow(this); 
+    }//GEN-LAST:event_countryButtonMouseClicked
 
     /**
      * @param args the command line arguments
