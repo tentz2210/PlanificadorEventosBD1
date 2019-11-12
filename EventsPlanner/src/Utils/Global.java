@@ -22,8 +22,8 @@ public class Global {
     public static int delete_result = -1;
     public static int person_id = -1;
     public static int getInfo_result = -1;
-    /*public static List<CatalogueContainer> countriesInfo = new ArrayList<>();
-    public static List<CatalogueContainer> nationalitiesInfo = new ArrayList<>();
+    public static List<CatalogueContainer> countriesInfo = new ArrayList<>();
+    /*public static List<CatalogueContainer> nationalitiesInfo = new ArrayList<>();
     public static List<CatalogueContainer> provincesInfo = new ArrayList<>();
     public static List<CatalogueContainer> cantonsInfo = new ArrayList<>();
     public static List<CatalogueContainer> districtsInfo = new ArrayList<>();

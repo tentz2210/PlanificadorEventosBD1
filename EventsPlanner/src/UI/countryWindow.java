@@ -5,6 +5,15 @@
  */
 package UI;
 
+import DBConnection.MySQLConnection;
+import static DBConnection.MySQLConnection.deleteCountry;
+import static DBConnection.MySQLConnection.insertNewCountry;
+import static DBConnection.MySQLConnection.loadCountries;
+import static DBConnection.MySQLConnection.updateCountry;
+import Utils.Global;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mapac
@@ -15,13 +24,29 @@ public class countryWindow extends javax.swing.JFrame {
      * Creates new form countryWindow
      */
     cataloguesWindow cataW;
-    public countryWindow(cataloguesWindow cW) {
+    public countryWindow(cataloguesWindow cW) throws SQLException {
+        Global.countriesInfo.clear();
         initComponents();
+        fillCountriesComboBox();
         cataW = cW;
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-
+    
+    private void fillCountriesComboBox() throws SQLException
+    {
+        loadCountries();
+        if (Global.getInfo_result == 1)
+        {
+            eliminateComboBox.removeAllItems();
+            oldNameComboBox.removeAllItems();
+            for (int countryNumber = 0; countryNumber < Global.countriesInfo.size(); countryNumber++)
+            {
+                eliminateComboBox.addItem(Global.countriesInfo.get(countryNumber).getName());
+                oldNameComboBox.addItem(Global.countriesInfo.get(countryNumber).getName());
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -155,16 +180,39 @@ public class countryWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        String newCountryName = addCountryField.getText();
+        if (!"".equals(newCountryName) && !Global.isNumeric(newCountryName) && !Global.hasNumbers(newCountryName))
+        {
+            insertNewCountry(newCountryName);
+            if (Global.insert_result == 1) JOptionPane.showMessageDialog(this,"Nuevo país ha sido agregado al catálogo","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al insertar el país","Error de inserción",JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this,"Error al insertar el país","Error de inserción",JOptionPane.ERROR_MESSAGE);
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_addButtonMouseClicked
 
     private void eliminateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminateButtonMouseClicked
+        int id_country = Global.countriesInfo.get(eliminateComboBox.getSelectedIndex()).getId();
+        String name_country = Global.countriesInfo.get(eliminateComboBox.getSelectedIndex()).getName();
+        deleteCountry(id_country,name_country);
+        if (Global.delete_result == 1) JOptionPane.showMessageDialog(this,"El país ha sido eliminado","Borrado exitoso",JOptionPane.INFORMATION_MESSAGE);
+        else JOptionPane.showMessageDialog(this,"Error al eliminar el país","Error de borrado",JOptionPane.ERROR_MESSAGE);
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_eliminateButtonMouseClicked
 
     private void modifyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyButtonMouseClicked
+        int id_country = Global.countriesInfo.get(oldNameComboBox.getSelectedIndex()).getId();
+        String old_name_country = Global.countriesInfo.get(oldNameComboBox.getSelectedIndex()).getName();
+        String newCountryName = newNameField.getText();
+        if (!"".equals(newCountryName) && !Global.isNumeric(newCountryName) && !Global.hasNumbers(newCountryName))
+        {
+            updateCountry(id_country,old_name_country,newCountryName);
+            if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"El nombre del país ha sido modificado","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al modificar el país","Error de modificación",JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this,"Error al modificar el país","Error de modificación",JOptionPane.ERROR_MESSAGE);
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_modifyButtonMouseClicked
@@ -173,36 +221,6 @@ public class countryWindow extends javax.swing.JFrame {
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_cancelButtonMouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(countryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(countryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(countryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(countryWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-       
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
