@@ -33,6 +33,9 @@ CREATE TABLE person (
 	last_modified_by varchar(30) DEFAULT NULL COMMENT 'Last user which modified the row'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Repository of users with their information';
 
+-- UNIQUE CONSTRAINTS
+ALTER TABLE person 
+	ADD CONSTRAINT person_id_uk UNIQUE (id);
 ####################################################################################################
 -- Email
 CREATE TABLE email (
@@ -67,6 +70,9 @@ CREATE TABLE person_user(
 ALTER TABLE person_user
 	ADD CONSTRAINT user_person_fk FOREIGN KEY (person_id) REFERENCES person(person_id),
     ADD CONSTRAINT user_usertype_fk FOREIGN KEY (user_type_id) REFERENCES user_type(user_type_id);
+-- UNIQUE CONSTRAINTS
+ALTER TABLE person_user
+	ADD CONSTRAINT user_name_uk UNIQUE (username);
 ##############################################################################################################
 -- User_Type
 CREATE TABLE user_type(
