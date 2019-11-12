@@ -5,7 +5,14 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.checkUserLogin;
+import Security.AES;
+import Utils.Global;
 import com.placeholder.PlaceHolder;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -149,6 +156,11 @@ public class loginWindow extends javax.swing.JFrame {
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
         loginButton.setText("Ingresar");
         loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 130, 40));
 
         photoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -176,6 +188,31 @@ public class loginWindow extends javax.swing.JFrame {
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_registerButtonActionPerformed
+
+    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
+        String encryptedPassword = AES.encrypt(String.valueOf(passwordField.getPassword()));
+        checkUserLogin(usernameField.getText(),encryptedPassword);
+        if (Global.login_result == 1)
+        {
+            this.setVisible(false);
+            if (Global.user_type_id == 1) //isAdmin
+            {
+                AdminWindow adminW = new AdminWindow();
+            }
+            
+            else
+            {
+                UserWindow userW = new UserWindow();
+            }
+        }
+        else
+        {
+            usernameField.setText("");
+            passwordField.setText("");
+            JOptionPane.showMessageDialog(this,"Usuario y/o contraseña incorrectos. Favor intentar nuevamente.",
+                    "Inicio de sesión fallido",JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_loginButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
