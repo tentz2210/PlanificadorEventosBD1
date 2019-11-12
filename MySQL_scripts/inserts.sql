@@ -195,7 +195,7 @@ call createusertype('Profesor');
 call createusertype('Civil');
 
 /* INSERT USER */
-call registerUser('Hans', 'Fernandez', 'Murillo', 123456, '22/10/1998', 'ejemplo1.png', 'tentz2210', 'abc123', 2, 88060199, 'tentz2210@hotmail.com');
+call registerUser('Hans', 'Fernandez', 'Murillo', 123456, '22/10/1998', 'ejemplo1.png', 'tentz2210', 'wmRf2xTUeiiYVYEKPZZF6A==', 2, 88060199, 'tentz2210@hotmail.com');
 
 /* INSERT CATEGORY */
 call createCategory('Nocturno');
