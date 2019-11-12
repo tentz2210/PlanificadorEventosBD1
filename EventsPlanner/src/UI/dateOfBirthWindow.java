@@ -44,6 +44,8 @@ public class dateOfBirthWindow extends javax.swing.JFrame {
         acceptButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(450, 162));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -72,19 +74,16 @@ public class dateOfBirthWindow extends javax.swing.JFrame {
         dayComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         dayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
         dayComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        dayComboBox.setPreferredSize(new java.awt.Dimension(40, 21));
         jPanel1.add(dayComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 46, -1, -1));
 
         monthComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         monthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo ", "Abril ", "Mayo", "Junio", "Juilio", "Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre" }));
         monthComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        monthComboBox.setPreferredSize(new java.awt.Dimension(86, 21));
         jPanel1.add(monthComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 46, -1, -1));
 
         yearComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         yearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1910", "1911", "1912", "1913", "1914", "1915", "1916", "1917", "1918", "1919", "1920", "1921", "1922", "1923", "1924", "1925", "1926", "1927", "1928", "1929", "1930", "1931", "1932", "1933", "1934", "1935", "1936", "1937", "1938", "1939", "1940", "1941", "1942", "1993", "1944", "1945", "1946", "1947", "1948", "1949", "1950", "1951", "1952", "1953", "1954", "1955", "1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004" }));
         yearComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        yearComboBox.setPreferredSize(new java.awt.Dimension(54, 21));
         yearComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yearComboBoxActionPerformed(evt);
@@ -97,7 +96,6 @@ public class dateOfBirthWindow extends javax.swing.JFrame {
         cancelButton.setForeground(new java.awt.Color(255, 255, 255));
         cancelButton.setText("Cancelar");
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cancelButton.setPreferredSize(new java.awt.Dimension(89, 25));
         cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cancelButtonMouseClicked(evt);

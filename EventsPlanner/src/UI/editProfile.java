@@ -88,6 +88,11 @@ public class editProfile extends javax.swing.JFrame {
         passwordButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/password.png"))); // NOI18N
         passwordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         passwordButton.setPreferredSize(new java.awt.Dimension(100, 100));
+        passwordButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                passwordButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(passwordButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 300, 100, 100));
 
         phoneButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -144,12 +149,22 @@ public class editProfile extends javax.swing.JFrame {
         usersButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/userType.png"))); // NOI18N
         usersButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         usersButton.setPreferredSize(new java.awt.Dimension(100, 100));
+        usersButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                usersButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(usersButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 100, 100));
 
         photoButton.setBackground(new java.awt.Color(255, 255, 255));
         photoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/camera2.png"))); // NOI18N
         photoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         photoButton.setPreferredSize(new java.awt.Dimension(100, 100));
+        photoButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                photoButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(photoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, 100, 100));
 
         dateOfBirth.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -229,6 +244,21 @@ public class editProfile extends javax.swing.JFrame {
         this.setVisible(false);
         dateOfBirthWindow eW = new dateOfBirthWindow(this);
     }//GEN-LAST:event_dateOfBithButtonMouseClicked
+
+    private void usersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersButtonMouseClicked
+        this.setVisible(false);
+        userTypeWindow uW = new userTypeWindow(this);
+    }//GEN-LAST:event_usersButtonMouseClicked
+
+    private void photoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_photoButtonMouseClicked
+        this.setVisible(false);
+        photoWindow pW = new photoWindow(this);
+    }//GEN-LAST:event_photoButtonMouseClicked
+
+    private void passwordButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passwordButtonMouseClicked
+        this.setVisible(false);
+        passwordUserWindow puW = new passwordUserWindow(this);
+    }//GEN-LAST:event_passwordButtonMouseClicked
 
     /**
      * @param args the command line arguments
