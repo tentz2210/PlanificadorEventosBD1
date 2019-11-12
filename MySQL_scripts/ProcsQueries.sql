@@ -260,6 +260,11 @@ END;$$
 CREATE PROCEDURE getStatisticsUsersAge()
 BEGIN
 	DECLARE vnTotalUsers INT;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+    END;
 	SELECT count (1)
 	INTO vnTotalUsers
 	FROM person;
@@ -273,6 +278,11 @@ END;$$
 CREATE PROCEDURE getReviewsStatisticsPerCategory()
 BEGIN
 	DECLARE vnTotalReviews INT;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+    END;
     SELECT count(1)
     INTO vnTotalReviews
     FROM person_review;
@@ -285,3 +295,19 @@ BEGIN
 	ON t.cat_id = c.category_id
     GROUP BY c.category_name;
 END;$$
+
+-- OTHERS
+
+-- call getUserTypes();$$
+CREATE PROCEDURE getUserTypes()
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+    END;
+	SELECT user_type_id, user_type_name
+	FROM user_type
+	ORDER BY user_type_name asc;
+END;$$
+    
