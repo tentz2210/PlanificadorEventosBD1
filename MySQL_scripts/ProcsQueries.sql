@@ -4,6 +4,7 @@
 DELIMITER $$
 /* ADMINS */
 -- Point a
+call getInvitedUsers(2, 1);$$
 CREATE PROCEDURE getInvitedUsers(IN filter_status_id int, IN filter_owner_id int)
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -26,6 +27,7 @@ BEGIN
 END;$$
 
 -- Point b
+call getFinishedEvents('11/11/2019', '12/11/2019');$$
 CREATE PROCEDURE getFinishedEvents(IN filter_start_date VARCHAR(11), IN filter_end_date VARCHAR(11))
 BEGIN
 	DECLARE vStartDate DATE DEFAULT NULL;
@@ -38,13 +40,14 @@ BEGIN
     SET vStartDate := STR_TO_DATE(filter_start_date, '%d/%m/%Y');
     SET vEndDate := STR_TO_DATE(filter_end_date, '%d/%m/%Y');
     
-	SELECT se.event_title, se.start_date, se.end_date
+	SELECT se.event_title, DATE_FORMAT(se.start_date, "%d/%m/%Y %h:%i"), DATE_FORMAT(se.end_date, "%d/%m/%Y %h:%i")
     FROM social_event se INNER JOIN event_log el
     ON se.event_id = el.event_id
-    WHERE se.start_date <= IFNULL(vStartDate, se.start_date)
-    AND se.end_date >= IFNULL(vEndDate, se.end_date);
+    WHERE se.start_date >= IFNULL(vStartDate, se.start_date)
+    AND se.end_date <= IFNULL(vEndDate, se.end_date);
 END;$$ 
 
+call getPendingEvents(null, null);$$
 CREATE PROCEDURE getPendingEvents(IN filter_start_date VARCHAR(11), IN filter_end_date VARCHAR(11))
 BEGIN
 	DECLARE vStartDate DATE DEFAULT NULL;
@@ -57,13 +60,13 @@ BEGIN
     SET vStartDate := STR_TO_DATE(filter_start_date, '%d/%m/%Y');
     SET vEndDate := STR_TO_DATE(filter_end_date, '%d/%m/%Y');
     
-	SELECT event_title, start_date, end_date
+	SELECT event_title, DATE_FORMAT(start_date, "%d/%m/%Y %h:%i"), DATE_FORMAT(end_date, "%d/%m/%Y %h:%i")
     FROM social_event
     WHERE event_id NOT IN (
 		SELECT event_id FROM event_log
     )
-    AND start_date <= IFNULL(vStartDate, start_date)
-    AND end_date >= IFNULL(vEndDate, end_date);
+    AND start_date >= IFNULL(vStartDate, start_date)
+    AND end_date <= IFNULL(vEndDate, end_date);
 END;$$
 
 -- Point c
@@ -107,7 +110,7 @@ BEGIN
 END;$$
 
 -- Point b
-call getPublicEvents(1);$$
+call getPublicEvents(null);$$
 CREATE PROCEDURE getPublicEvents(IN p_current_user_id int)
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -154,9 +157,8 @@ BEGIN
     WHERE pes.status_type_id = 3 -- AQUI VA EL PARAMETRO
       AND pes.person_id = p_current_person_id;
 END;$$
-
+											       
 /* User Login */
--- call userLogin("tentz2210","abc123");$$
 CREATE PROCEDURE userLogin(IN p_username VARCHAR(30), IN p_userpassword VARCHAR(30))
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
