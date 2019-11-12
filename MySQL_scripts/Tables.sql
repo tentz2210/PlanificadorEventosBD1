@@ -276,6 +276,7 @@ CREATE TABLE province(
 -- Foreign keys
 ALTER TABLE province
 	ADD CONSTRAINT province_country_fk FOREIGN KEY (country_id) REFERENCES country(country_id);
+
 ################################################################################################################
 -- Country
 CREATE TABLE country(
@@ -286,6 +287,8 @@ CREATE TABLE country(
 	last_modification_date DATE DEFAULT NULL COMMENT 'Last date of row modification',
 	last_modified_by VARCHAR(30) DEFAULT NULL COMMENT 'Last user which modified the row'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Repository of countries';
+ALTER TABLE country
+	ADD CONSTRAINT country_name_uk UNIQUE (country_name);
 ################################################################################################################
 -- Parameter
 CREATE TABLE parameter(
