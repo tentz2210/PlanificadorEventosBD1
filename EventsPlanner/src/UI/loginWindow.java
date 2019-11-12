@@ -9,9 +9,6 @@ import static DBConnection.MySQLConnection.checkUserLogin;
 import Security.AES;
 import Utils.Global;
 import com.placeholder.PlaceHolder;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -104,11 +101,6 @@ public class loginWindow extends javax.swing.JFrame {
                 registerButtonMouseClicked(evt);
             }
         });
-        registerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerButtonActionPerformed(evt);
-            }
-        });
         jPanel2.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, 40));
 
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -184,10 +176,6 @@ public class loginWindow extends javax.swing.JFrame {
     private void minimizeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeLabelMouseClicked
         this.setState(loginWindow.ICONIFIED);
     }//GEN-LAST:event_minimizeLabelMouseClicked
-
-    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_registerButtonActionPerformed
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         String encryptedPassword = AES.encrypt(String.valueOf(passwordField.getPassword()));

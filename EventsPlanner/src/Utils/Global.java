@@ -5,6 +5,10 @@
  */
 package Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author lin
@@ -17,15 +21,17 @@ public class Global {
     public static int update_result = -1;
     public static int delete_result = -1;
     public static int person_id = -1;
+    public static int getInfo_result = -1;
     /*public static List<CatalogueContainer> countriesInfo = new ArrayList<>();
     public static List<CatalogueContainer> nationalitiesInfo = new ArrayList<>();
     public static List<CatalogueContainer> provincesInfo = new ArrayList<>();
     public static List<CatalogueContainer> cantonsInfo = new ArrayList<>();
     public static List<CatalogueContainer> districtsInfo = new ArrayList<>();
-    public static List<CatalogueContainer> communitiesInfo = new ArrayList<>();
+    public static List<CatalogueContainer> communitiesInfo = new ArrayList<>();*/
     public static List<CatalogueContainer> userTypesInfo = new ArrayList<>();
-    public static List<CatalogueContainer> categoriesInfo = new ArrayList<>();*/
+   // public static List<CatalogueContainer> categoriesInfo = new ArrayList<>();
     //public static JFileChooser photoChooser = new JFileChooser("C:\\Users\\mapac\\OneDrive - Estudiantes ITCR\\Documentos\\TEC\\2019 II Semestre\\Bases de Datos I\\ProyectoI\\Imágenes Usuarios");
+    public static JFileChooser photoChooser = new JFileChooser("C:\\Users\\lin\\OneDrive - Estudiantes ITCR\\TEC\\2019 - II\\BD I\\Proyectos\\P1\\Imágenes Usuarios");
     
         public static boolean isNumeric(String s) {
 
