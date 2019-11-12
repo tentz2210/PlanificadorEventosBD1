@@ -93,7 +93,7 @@ public class nameWindow extends javax.swing.JFrame {
                 cancelButtonMouseClicked(evt);
             }
         });
-        jPanel1.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 90, -1));
+        jPanel1.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 100, -1));
 
         acceptButton.setBackground(new java.awt.Color(8, 151, 157));
         acceptButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N

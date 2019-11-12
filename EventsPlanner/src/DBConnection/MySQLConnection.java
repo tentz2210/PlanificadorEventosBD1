@@ -53,6 +53,7 @@ public class MySQLConnection {
                     Global.user_id = resultSet.getInt("user_id");
                     Global.person_id = resultSet.getInt("person_id");
                     Global.user_type_id = resultSet.getInt("user_type_id");
+                    System.out.println(Global.user_id);
                     Global.login_result = 1;
                 }
                 hadResults = statement.getMoreResults();
@@ -633,6 +634,193 @@ public class MySQLConnection {
         } catch (SQLException ex) {
             Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
             return date;
+        }
+    }
+    
+    public static void updateUsername(int p_user_id, String p_username)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updateUsername(?,?)}");
+            statement.setInt(1,p_user_id);
+            statement.setString(2,p_username);
+            
+            statement.execute();
+            statement.close();
+            
+            String uName = getUsername(p_user_id);
+            if (uName.equals(p_username)) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String getUsername(int p_user_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String uName = "";
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT username FROM person_user WHERE user_id = "+Global.user_id);
+            
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getString("username"));
+                uName = resultSet.getString("username");
+            }
+            return uName;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return uName;
+        }
+    }
+    
+    public static void updatePassword(int p_user_id, String p_old_password, String p_new_password)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updatePassword(?,?,?)}");
+            statement.setInt(1,p_user_id);
+            statement.setString(2,p_old_password);
+            statement.setString(3,p_new_password);
+            
+            statement.execute();
+            statement.close();
+            
+            String pass = getPassword(p_user_id);
+            if (pass.equals(p_new_password)) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String getPassword(int p_user_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String pass = "";
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT user_password FROM person_user WHERE user_id = "+Global.user_id);
+            
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getString("user_password"));
+                pass = resultSet.getString("user_password");
+            }
+            return pass;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return pass;
+        }
+    }
+    
+    public static void updateUserType(int p_user_id, int p_new_type)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updateUserType(?,?)}");
+            statement.setInt(1,p_user_id);
+            statement.setInt(2,p_new_type);
+            
+            statement.execute();
+            statement.close();
+            
+            int type = getUserType(p_user_id);
+            if (type == p_new_type) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static int getUserType(int p_user_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        int type = 0;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT user_type_id FROM person_user WHERE user_id = "+Global.user_id);
+            
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getInt("user_type_id"));
+                type = resultSet.getInt("user_type_id");
+            }
+            return type;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return type;
         }
     }
 }

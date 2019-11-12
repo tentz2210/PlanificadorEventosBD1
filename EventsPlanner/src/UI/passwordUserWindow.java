@@ -5,6 +5,16 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.updatePassword;
+import static DBConnection.MySQLConnection.updateUsername;
+import Security.AES;
+import static Security.Password.is_Valid_Password;
+import Utils.Global;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mapac
@@ -37,13 +47,13 @@ public class passwordUserWindow extends javax.swing.JFrame {
         cNewPasswordLabel = new javax.swing.JLabel();
         usernameLabel = new javax.swing.JLabel();
         userNameField = new javax.swing.JTextField();
-        actualPasswordField = new javax.swing.JTextField();
-        newPasswordField = new javax.swing.JTextField();
-        cNewPasswordField = new javax.swing.JTextField();
         iconPassword = new javax.swing.JLabel();
         modifyUsernameButton = new javax.swing.JButton();
         modifyPasswordButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        cNewPasswordField = new javax.swing.JPasswordField();
+        actualPasswordField = new javax.swing.JPasswordField();
+        newPasswordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -73,21 +83,6 @@ public class passwordUserWindow extends javax.swing.JFrame {
         userNameField.setMinimumSize(new java.awt.Dimension(120, 21));
         userNameField.setPreferredSize(new java.awt.Dimension(120, 21));
         jPanel1.add(userNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 190, -1, -1));
-
-        actualPasswordField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        actualPasswordField.setMinimumSize(new java.awt.Dimension(120, 21));
-        actualPasswordField.setPreferredSize(new java.awt.Dimension(120, 21));
-        jPanel1.add(actualPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 18, -1, -1));
-
-        newPasswordField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        newPasswordField.setMinimumSize(new java.awt.Dimension(120, 21));
-        newPasswordField.setPreferredSize(new java.awt.Dimension(120, 21));
-        jPanel1.add(newPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 62, -1, -1));
-
-        cNewPasswordField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        cNewPasswordField.setMinimumSize(new java.awt.Dimension(120, 21));
-        cNewPasswordField.setPreferredSize(new java.awt.Dimension(120, 21));
-        jPanel1.add(cNewPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 105, -1, -1));
 
         iconPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         iconPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/password.png"))); // NOI18N
@@ -128,17 +123,52 @@ public class passwordUserWindow extends javax.swing.JFrame {
         });
         jPanel1.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, -1, -1));
 
+        cNewPasswordField.setToolTipText("");
+        cNewPasswordField.setPreferredSize(new java.awt.Dimension(120, 21));
+        jPanel1.add(cNewPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 100, -1, -1));
+
+        actualPasswordField.setToolTipText("");
+        actualPasswordField.setPreferredSize(new java.awt.Dimension(120, 21));
+        jPanel1.add(actualPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 20, -1, -1));
+
+        newPasswordField.setToolTipText("");
+        newPasswordField.setPreferredSize(new java.awt.Dimension(120, 21));
+        jPanel1.add(newPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 60, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, -2, 410, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void modifyPasswordButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyPasswordButtonMouseClicked
+        String oldPassword = String.valueOf(actualPasswordField.getPassword());
+        String newPassword = String.valueOf(newPasswordField.getPassword());
+        String newPasswordConfirmed = String.valueOf(cNewPasswordField.getPassword());
+        
+        if (!"".equals(oldPassword) && !"".equals(newPassword) && !"".equals(newPasswordConfirmed) && newPassword.equals(newPasswordConfirmed) && is_Valid_Password(newPassword))
+        {
+            String encryptedOldPass = AES.encrypt(oldPassword);
+            String encryptedPass = AES.encrypt(newPassword);
+            updatePassword(Global.user_id,encryptedOldPass,encryptedPass);
+            if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"Contraseña actualizada correctamente","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al modificar la contraseña","Error de modificación",JOptionPane.ERROR_MESSAGE);    
+        }
+        else JOptionPane.showMessageDialog(this,"Error al modificar la contraseña","Error de modificación",JOptionPane.ERROR_MESSAGE);
+        
         editP.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_modifyPasswordButtonMouseClicked
 
     private void modifyUsernameButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyUsernameButtonMouseClicked
+       String newUserName = userNameField.getText();
+       if (!Global.isNumeric(newUserName) && !"".equals(newUserName))
+       {
+           updateUsername(Global.user_id,newUserName);
+           if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"Se ha modificado el nombre de usuario","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+           else JOptionPane.showMessageDialog(this,"No se ha podido modificar el nombre de usuario","Error de modificación",JOptionPane.ERROR_MESSAGE);
+       }
+       else JOptionPane.showMessageDialog(this,"No se ha podido modificar el nombre de usuario","Error de modificación",JOptionPane.ERROR_MESSAGE);
+    
         editP.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_modifyUsernameButtonMouseClicked
@@ -148,47 +178,17 @@ public class passwordUserWindow extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_cancelButtonMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(passwordUserWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(passwordUserWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(passwordUserWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(passwordUserWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField actualPasswordField;
+    private javax.swing.JPasswordField actualPasswordField;
     private javax.swing.JLabel actualPasswordLabel;
-    private javax.swing.JTextField cNewPasswordField;
+    private javax.swing.JPasswordField cNewPasswordField;
     private javax.swing.JLabel cNewPasswordLabel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel iconPassword;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton modifyPasswordButton;
     private javax.swing.JButton modifyUsernameButton;
-    private javax.swing.JTextField newPasswordField;
+    private javax.swing.JPasswordField newPasswordField;
     private javax.swing.JLabel newPasswordLabel;
     private javax.swing.JTextField userNameField;
     private javax.swing.JLabel usernameLabel;

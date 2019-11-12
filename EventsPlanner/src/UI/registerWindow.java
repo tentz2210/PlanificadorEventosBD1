@@ -11,7 +11,6 @@ import Security.AES;
 import static Security.Password.is_Valid_Password;
 import Utils.Global;
 import com.placeholder.PlaceHolder;
-import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;

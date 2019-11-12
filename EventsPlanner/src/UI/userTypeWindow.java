@@ -5,6 +5,11 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.loadUserTypes;
+import static DBConnection.MySQLConnection.updateUserType;
+import Utils.Global;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mapac
@@ -16,10 +21,25 @@ public class userTypeWindow extends javax.swing.JFrame {
      */
     editProfile editP;
     public userTypeWindow(editProfile ew) {
+        Global.userTypesInfo.clear();
         initComponents();
         editP = ew;
+        fillUserTypeComboBox();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+    
+    private void fillUserTypeComboBox()
+    {
+        loadUserTypes();
+        if (Global.getInfo_result == 1)
+        {
+            userTypeComboBox.removeAllItems();
+            for (int uTypeNumber = 0; uTypeNumber < Global.userTypesInfo.size(); uTypeNumber++)
+            {
+                userTypeComboBox.addItem(Global.userTypesInfo.get(uTypeNumber).getName());
+            }
+        }
     }
 
     /**
@@ -34,7 +54,7 @@ public class userTypeWindow extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         userTypeTitle = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        userTypeComboBox = new javax.swing.JComboBox<>();
         cancelButton = new javax.swing.JButton();
         acceptButton = new javax.swing.JButton();
 
@@ -53,9 +73,14 @@ public class userTypeWindow extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/userType.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 80, 80));
 
-        jComboBox1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 120, -1));
+        userTypeComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        userTypeComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        userTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userTypeComboBoxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 120, -1));
 
         cancelButton.setBackground(new java.awt.Color(132, 116, 161));
         cancelButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -88,6 +113,15 @@ public class userTypeWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void acceptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptButtonMouseClicked
+        int id_userType = Global.userTypesInfo.get(userTypeComboBox.getSelectedIndex()).getId();
+        updateUserType(Global.user_id,id_userType);
+        if (Global.update_result == 1) 
+        {
+            JOptionPane.showMessageDialog(this,"Tipo de usuario modificado correctamente","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            Global.user_type_id = id_userType;
+        }
+        else JOptionPane.showMessageDialog(this,"No se ha modificado el tipo de usuario","Error de modificación",JOptionPane.ERROR_MESSAGE);
+            
         editP.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_acceptButtonMouseClicked
@@ -97,42 +131,25 @@ public class userTypeWindow extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_cancelButtonMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    private void userTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeComboBoxActionPerformed
+        if ("Administrador".equals(Global.userTypesInfo.get(userTypeComboBox.getSelectedIndex()).getName()))
+        {   
+            String code = JOptionPane.showInputDialog(this,"Digite el código para registrar administrador","Código de acceso",JOptionPane.QUESTION_MESSAGE);
+            if (code == null) userTypeComboBox.setSelectedIndex(0);
+            else if (!"151622".equals(code))
+            {
+                JOptionPane.showMessageDialog(this,"Código incorrecto.","Error",JOptionPane.INFORMATION_MESSAGE);
+                userTypeComboBox.setSelectedIndex(0);
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(userTypeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(userTypeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(userTypeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(userTypeWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
- 
-    }
+    }//GEN-LAST:event_userTypeComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptButton;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> userTypeComboBox;
     private javax.swing.JLabel userTypeTitle;
     // End of variables declaration//GEN-END:variables
 }

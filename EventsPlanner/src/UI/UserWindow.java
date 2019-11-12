@@ -6,6 +6,7 @@
 package UI;
 
 import AppPackage.AnimationClass;
+import Utils.Global;
 import javax.swing.JOptionPane;
 
 /**
@@ -124,6 +125,11 @@ public class UserWindow extends javax.swing.JFrame {
         logoutIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logout.png"))); // NOI18N
         logoutIcon.setText("Cerrar sesión");
         logoutIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logoutIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutIconMouseClicked(evt);
+            }
+        });
         jPanel1.add(logoutIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 270, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -136,6 +142,7 @@ public class UserWindow extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(this,"¿Seguro que desea salir?","Cerrar sesión",dialog);
         if (result == 0)
         {
+            Global.login_result = -1;
             this.setVisible(false);
             loginWindow login = new loginWindow();
         }
@@ -183,40 +190,16 @@ public class UserWindow extends javax.swing.JFrame {
         registerEvent event = new registerEvent(this);  
     }//GEN-LAST:event_createIconMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void logoutIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutIconMouseClicked
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(this,"¿Seguro que desea salir?","Cerrar sesión",dialog);
+        if (result == 0)
+        {
+            Global.login_result = -1;
+            this.setVisible(false);
+            loginWindow login = new loginWindow();
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UserWindow().setVisible(true);
-            }
-        });
-    }
+    }//GEN-LAST:event_logoutIconMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountSettingsIcon;
