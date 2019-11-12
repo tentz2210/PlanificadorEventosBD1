@@ -67,6 +67,7 @@ BEGIN
 END;$$
 
 -- Point c
+call getEventReviews(null);$$
 CREATE PROCEDURE getEventReviews(IN filter_event_id int)
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -87,6 +88,7 @@ END;$$
 
 /* USERS */
 -- Point a
+call getInvitations(1, null);$$
 CREATE PROCEDURE getInvitations(IN p_person_id int, IN filter_category_id int)
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -105,6 +107,7 @@ BEGIN
 END;$$
 
 -- Point b
+call getPublicEvents(1);$$
 CREATE PROCEDURE getPublicEvents(IN p_current_user_id int)
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -128,10 +131,12 @@ BEGIN
     ON dis.canton_id = can.canton_id
     INNER JOIN province pro
     ON can.province_id = pro.province_id
+    WHERE se.isPrivate = FALSE
     ORDER BY -cxp.cat_id DESC, se.category_id, se.event_title ASC;
 END;$$
 
 -- Point c
+call getAssistedEvents(1);$$
 CREATE PROCEDURE getAssistedEvents(IN p_current_person_id int)
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -144,9 +149,9 @@ BEGIN
     ON se.event_id = el.event_id
     INNER JOIN person_event_status pes
     ON se.event_id = pes.event_id
-    LEFT OUTER JOIN person_review rev
+	LEFT OUTER JOIN person_review rev
     ON se.event_id = rev.event_id
-    WHERE pes.status_type_id = 2 -- AQUI VA EL PARAMETRO
+    WHERE pes.status_type_id = 3 -- AQUI VA EL PARAMETRO
       AND pes.person_id = p_current_person_id;
 END;$$
 
@@ -168,7 +173,7 @@ BEGIN
     WHERE username = p_username
       AND user_password = p_userpassword;
 END;$$
-
+										
 -- STATISTICS MODULE --
 
 -- Point a: getEventStatisticsPerCategory
