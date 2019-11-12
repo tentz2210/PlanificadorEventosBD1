@@ -308,6 +308,6 @@ BEGIN
     END;
 	SELECT user_type_id, user_type_name
 	FROM user_type
-	ORDER BY user_type_name asc;
+	ORDER BY user_type_name desc;
 END;$$
     

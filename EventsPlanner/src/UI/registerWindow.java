@@ -5,8 +5,17 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.loadUserTypes;
+import static DBConnection.MySQLConnection.registerUser;
+import Security.AES;
+import static Security.Password.is_Valid_Password;
+import Utils.Global;
 import com.placeholder.PlaceHolder;
-import java.awt.Font;
+import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -19,6 +28,7 @@ public class registerWindow extends javax.swing.JFrame {
      */
     public registerWindow() {
         initComponents();
+        fillUserTypeComboBox();
         this.holders();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -169,6 +179,11 @@ public class registerWindow extends javax.swing.JFrame {
         jPanel1.add(userTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 400, -1, -1));
 
         userTypeComboBox.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        userTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userTypeComboBoxActionPerformed(evt);
+            }
+        });
         jPanel1.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 395, 120, -1));
 
         photoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -180,6 +195,11 @@ public class registerWindow extends javax.swing.JFrame {
         photoButton.setForeground(new java.awt.Color(255, 255, 255));
         photoButton.setText("Foto");
         photoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        photoButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                photoButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(photoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 470, 130, 30));
 
         registerButton.setBackground(new java.awt.Color(8, 151, 157));
@@ -187,6 +207,11 @@ public class registerWindow extends javax.swing.JFrame {
         registerButton.setForeground(new java.awt.Color(255, 255, 255));
         registerButton.setText("Registrarse");
         registerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 530, 130, 30));
 
         closeWindow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/closeWindow.png"))); // NOI18N
@@ -226,40 +251,73 @@ public class registerWindow extends javax.swing.JFrame {
         this.setState(registerWindow.ICONIFIED);
     }//GEN-LAST:event_minimizeMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
+        String name = nameField.getText();
+        String first_ln = fLastNameField.getText();
+        String sec_ln = sLastNameField.getText();
+        int monthNumber = monthComboBox.getSelectedIndex()+1;
+        String birth_date = dayComboBox.getSelectedItem().toString() +"/" +monthNumber+"/" + yearComboBox.getSelectedItem().toString();
+        String userName = userNameField.getText();
+        String password = String.valueOf(passwordField.getPassword());
+        String confirmedPass = String.valueOf(cPasswordField.getPassword());
+        String email = emailField.getText();
+        int id_userType = Global.userTypesInfo.get(userTypeComboBox.getSelectedIndex()).getId();
+        String photo = "";
+        if (!"Nombre".equals(name) && !Global.hasNumbers(name) && !"Primer Apellido".equals(first_ln) && !Global.hasNumbers(first_ln) && !"Segundo Apellido".equals(sec_ln) && !Global.hasNumbers(sec_ln) && !"Nombre de usuario".equals(userName) && !"Contraseña".equals(password) && password.equals(confirmedPass) && !"Correo electrónico".equals(email))
+        {
+            if (Global.isNumeric(identificationField.getText()) && Global.isNumeric(phoneField.getText()) && is_Valid_Password(password))
+            {
+                int id = Integer.valueOf(identificationField.getText());
+                int phoneNumber = Integer.valueOf(phoneField.getText());
+                if (Global.photoChooser.getSelectedFile() == null) photo = "userDefault.png";
+                else photo = Global.photoChooser.getSelectedFile().getName();
+                String encryptedPassword = AES.encrypt(password);
+                registerUser(name,first_ln,sec_ln,id,birth_date,photo,userName,encryptedPassword,id_userType,phoneNumber,email);
+                if (Global.insert_result == 1) JOptionPane.showMessageDialog(this,"Usuario registrado con éxito.","Registro exitoso",JOptionPane.INFORMATION_MESSAGE);
+                else JOptionPane.showMessageDialog(this,"El usuario no ha sido registrado. Favor intentar nuevamente.","Error al registrar.",JOptionPane.ERROR_MESSAGE);
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(registerWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(registerWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(registerWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(registerWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            else JOptionPane.showMessageDialog(this,"El usuario no ha sido registrado. Favor intentar nuevamente.","Error al registrar.",JOptionPane.ERROR_MESSAGE);
         }
-        //</editor-fold>
+        else JOptionPane.showMessageDialog(this,"El usuario no ha sido registrado. Favor intentar nuevamente.","Error al registrar.",JOptionPane.ERROR_MESSAGE);
+        nameField.setText("");
+        fLastNameField.setText("");
+        sLastNameField.setText("");
+        dayComboBox.setSelectedIndex(0);
+        monthComboBox.setSelectedIndex(0);
+        yearComboBox.setSelectedIndex(0);
+        userNameField.setText("");
+        passwordField.setText("");
+        cPasswordField.setText("");
+        emailField.setText("");
+        userTypeComboBox.setSelectedIndex(0);
+        identificationField.setText("");
+        phoneField.setText("");
+        photoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/camera.png")));
+        this.holders();
+        
+    }//GEN-LAST:event_registerButtonMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new registerWindow().setVisible(true);
+    private void userTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeComboBoxActionPerformed
+        if ("Administrador".equals(Global.userTypesInfo.get(userTypeComboBox.getSelectedIndex()).getName()))
+        {   
+            String code = JOptionPane.showInputDialog(this,"Digite el código para registrar administrador","Código de acceso",JOptionPane.QUESTION_MESSAGE);
+            if (code == null) userTypeComboBox.setSelectedIndex(0);
+            else if (!"151622".equals(code))
+            {
+                JOptionPane.showMessageDialog(this,"Código incorrecto.","Error",JOptionPane.INFORMATION_MESSAGE);
+                userTypeComboBox.setSelectedIndex(0);
             }
-        });
-    }
+        }
+    }//GEN-LAST:event_userTypeComboBoxActionPerformed
+
+    private void photoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_photoButtonMouseClicked
+        Global.photoChooser.setDialogTitle("Seleccionar foto de perfil");
+        Global.photoChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png"));
+        if (Global.photoChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+        {
+            photoLabel.setIcon(new ImageIcon(Global.photoChooser.getSelectedFile().toString())); 
+        }
+    }//GEN-LAST:event_photoButtonMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Day;
@@ -294,4 +352,18 @@ public class registerWindow extends javax.swing.JFrame {
     private javax.swing.JLabel userTypeLabel;
     private javax.swing.JComboBox<String> yearComboBox;
     // End of variables declaration//GEN-END:variables
+
+    private void fillUserTypeComboBox()
+    {
+        loadUserTypes();
+        if (Global.getInfo_result == 1)
+        {
+            userTypeComboBox.removeAllItems();
+            for (int uTypeNumber = 0; uTypeNumber < Global.userTypesInfo.size(); uTypeNumber++)
+            {
+                userTypeComboBox.addItem(Global.userTypesInfo.get(uTypeNumber).getName());
+            }
+        }
+    }
+
 }
