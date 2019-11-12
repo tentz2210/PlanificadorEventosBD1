@@ -248,7 +248,7 @@ public class registerEvent extends javax.swing.JFrame {
         photoButton.setForeground(new java.awt.Color(255, 255, 255));
         photoButton.setText("Seleccionar");
         photoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(photoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 140, -1, -1));
+        jPanel1.add(photoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(657, 140, -1, -1));
 
         acceptButton.setBackground(new java.awt.Color(8, 151, 157));
         acceptButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N

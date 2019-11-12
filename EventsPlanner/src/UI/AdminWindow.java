@@ -86,6 +86,11 @@ public class AdminWindow extends javax.swing.JFrame {
         cataloguesIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/catalogues.png"))); // NOI18N
         cataloguesIcon.setText("Catálogos");
         cataloguesIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cataloguesIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cataloguesIconMouseClicked(evt);
+            }
+        });
         jPanel1.add(cataloguesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-185, 102, -1, -1));
 
         queriesIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -159,6 +164,11 @@ public class AdminWindow extends javax.swing.JFrame {
         this.setVisible(false);
         editProfile edit = new editProfile();
     }//GEN-LAST:event_accountSettingsIconMouseClicked
+
+    private void cataloguesIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cataloguesIconMouseClicked
+        this.setVisible(false);
+        cataloguesWindow edit = new cataloguesWindow();
+    }//GEN-LAST:event_cataloguesIconMouseClicked
 
     /**
      * @param args the command line arguments
