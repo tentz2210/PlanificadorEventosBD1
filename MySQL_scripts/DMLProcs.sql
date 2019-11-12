@@ -30,6 +30,7 @@ BEGIN
     SET phone_number = p_new_phonenumber
     WHERE (phone_number, person_id) = (p_old_phonenumber, p_person_id);
     COMMIT;
+
 END;$$
 
 -- DELETE
@@ -618,6 +619,91 @@ BEGIN
 END;$$
 
 -- UPDATE
+CREATE PROCEDURE updatePersonBirthDate(IN p_person_id int, IN p_new_date VARCHAR(10))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error updating date of birth';
+	END;
+    
+    UPDATE person
+    SET date_of_birth = IFNULL(STR_TO_DATE(p_new_date, '%d/%m/%Y'),date_of_birth)
+    WHERE person_id = p_person_id;
+    COMMIT;
+END;$$
+
+CREATE PROCEDURE updatePersonPhoto(IN p_person_id int, IN p_new_photo VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error updating photo';
+	END;
+    
+    UPDATE person
+    SET photo = IFNULL(p_new_photo,photo)
+    WHERE person_id = p_person_id;
+    COMMIT;
+END;$$
+
+CREATE PROCEDURE updatePersonIdPass(IN p_person_id int, IN p_new_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error updating id/passport number';
+	END;
+    
+    UPDATE person
+    SET id = IFNULL(p_new_id,id)
+    WHERE person_id = p_person_id;
+    COMMIT;
+END;$$
+
+CREATE PROCEDURE updatePersonLastName(IN p_person_id int, IN p_last_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error updating last name';
+	END;
+    
+    UPDATE person
+    SET last_name = IFNULL(p_last_name,last_name)
+    WHERE person_id = p_person_id;
+    COMMIT;
+END;$$
+
+CREATE PROCEDURE updatePersonMiddleName(IN p_person_id int, IN p_middle_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error updating middle name';
+	END;
+    
+    UPDATE person
+    SET middle_name = IFNULL(p_middle_name,middle_name)
+    WHERE person_id = p_person_id;
+    COMMIT;
+END;$$
+
+CREATE PROCEDURE updatePersonName(IN p_person_id int, IN p_first_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error updating name';
+	END;
+    
+    UPDATE person
+    SET first_name = IFNULL(p_first_name,first_name)
+    WHERE person_id = p_person_id;
+    COMMIT;
+END;$$
+    
+
 CREATE PROCEDURE updatePerson(IN p_person_id int, IN p_first_name VARCHAR(30), IN p_middle_name VARCHAR(30), IN p_last_name VARCHAR(30), 
 							  IN p_id int, IN p_date_of_birth VARCHAR(10), IN p_photo VARCHAR(30))
 BEGIN
