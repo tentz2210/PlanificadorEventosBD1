@@ -5,6 +5,15 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.updatePersonLastName;
+import static DBConnection.MySQLConnection.updatePersonMiddleName;
+import static DBConnection.MySQLConnection.updatePersonName;
+import Utils.Global;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mapac
@@ -116,16 +125,25 @@ public class nameWindow extends javax.swing.JFrame {
         String name = nameField.getText();
         String firstLName = fLastNameField.getText();
         String secLName = sLastNameField.getText();
-     /*  if(!"".equals(name) && !Global.hasNumbers(name))
-       {
-           updatePerson(Global.person_id,name,firstLName,secLName,0,"","");
+        if(!"".equals(name) && !Global.hasNumbers(name))
+        {
+           updatePersonName(Global.person_id,name);
            if (Global.update_result==1) JOptionPane.showMessageDialog(this, "El nombre ha sido actualizado","Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
            else JOptionPane.showMessageDialog(this, "No es posible modificar el nombre","Error de cambio", JOptionPane.ERROR_MESSAGE);
-       }
-       else JOptionPane.showMessageDialog(this, "No es posible modificar el nombre","Error de cambio", JOptionPane.ERROR_MESSAGE);
-       nameField.setText("");
-       fLastNameField.setText("");
-       sLastNameField.setText("");*/
+        }
+        else JOptionPane.showMessageDialog(this, "No es posible modificar el nombre","Error de cambio", JOptionPane.ERROR_MESSAGE);
+        if (!"".equals(firstLName) && !Global.hasNumbers(firstLName)){
+           updatePersonMiddleName(Global.person_id,firstLName);
+           if (Global.update_result==1) JOptionPane.showMessageDialog(this, "El primer apellido ha sido actualizado","Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
+           else JOptionPane.showMessageDialog(this, "No es posible modificar el primer apellido","Error de cambio", JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this, "No es posible modificar el primer apellido","Error de cambio", JOptionPane.ERROR_MESSAGE);
+        if (!"".equals(secLName) && !Global.hasNumbers(secLName)){
+           updatePersonLastName(Global.person_id,secLName);
+           if (Global.update_result==1) JOptionPane.showMessageDialog(this, "El segundo apellido ha sido actualizado","Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
+           else JOptionPane.showMessageDialog(this, "No es posible modificar el segundo apellido","Error de cambio", JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this, "No es posible modificar el segundo apellido","Error de cambio", JOptionPane.ERROR_MESSAGE);
        editP.setVisible(true);
        this.setVisible(false);
     }//GEN-LAST:event_acceptButtonMouseClicked

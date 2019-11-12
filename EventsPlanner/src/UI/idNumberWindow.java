@@ -5,6 +5,13 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.updatePersonId;
+import Utils.Global;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mapac
@@ -34,13 +41,12 @@ public class idNumberWindow extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         idNUmberLabel = new javax.swing.JLabel();
         iconIdNumber = new javax.swing.JLabel();
-        idNumberField1 = new javax.swing.JTextField();
+        idNumberField = new javax.swing.JTextField();
         acceptButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(370, 140));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -55,8 +61,8 @@ public class idNumberWindow extends javax.swing.JFrame {
         iconIdNumber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/idNumber.png"))); // NOI18N
         jPanel1.add(iconIdNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 80, 70));
 
-        idNumberField1.setPreferredSize(new java.awt.Dimension(160, 23));
-        jPanel1.add(idNumberField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
+        idNumberField.setPreferredSize(new java.awt.Dimension(160, 23));
+        jPanel1.add(idNumberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
 
         acceptButton.setBackground(new java.awt.Color(8, 151, 157));
         acceptButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -95,6 +101,14 @@ public class idNumberWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonMouseClicked
 
     private void acceptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptButtonMouseClicked
+        if(Global.isNumeric(idNumberField.getText()) && !"".equals(idNumberField.getText())){
+            int new_id = Integer.valueOf(idNumberField.getText());
+            updatePersonId(Global.person_id,new_id);
+            if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"Cédula o pasaporte modificado con éxito","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"No es posible modificar la cédula o pasaporte.","Error de modificación.",JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this,"No es posible modificar la cédula o pasaporte.","Error de modificación.",JOptionPane.ERROR_MESSAGE);
+        
         editP.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_acceptButtonMouseClicked
@@ -105,7 +119,7 @@ public class idNumberWindow extends javax.swing.JFrame {
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel iconIdNumber;
     private javax.swing.JLabel idNUmberLabel;
-    private javax.swing.JTextField idNumberField1;
+    private javax.swing.JTextField idNumberField;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

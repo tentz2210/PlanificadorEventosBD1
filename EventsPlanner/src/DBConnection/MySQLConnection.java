@@ -262,4 +262,252 @@ public class MySQLConnection {
             return phone;
         }
     }
+    
+    public static void updatePersonName(int p_person_id, String p_new_name)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updatePersonName(?,?)}");
+            statement.setInt(1,p_person_id);
+            statement.setString(2,p_new_name);
+            
+            statement.execute();
+            statement.close();
+            
+            String name = getName(p_person_id);
+            if (name.equals(p_new_name)) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String getName(int p_person_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String name = "";
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT first_name FROM person WHERE person_id = "+Global.person_id);
+            
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getString("first_name"));
+                name = resultSet.getString("first_name");
+            }
+            return name;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return name;
+        }
+    }
+    
+    public static void updatePersonMiddleName(int p_person_id, String p_middle_name)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updatePersonMiddleName(?,?)}");
+            statement.setInt(1,p_person_id);
+            statement.setString(2,p_middle_name);
+            
+            statement.execute();
+            statement.close();
+            
+            String middleName = getMiddleName(p_person_id);
+            if (middleName.equals(p_middle_name)) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String getMiddleName(int p_person_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String middleName = "";
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT middle_name FROM person WHERE person_id = "+Global.person_id);
+            
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getString("middle_name"));
+                middleName = resultSet.getString("middle_name");
+            }
+            return middleName;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return middleName;
+        }
+    }
+    
+    public static void updatePersonLastName(int p_person_id, String p_last_name)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updatePersonLastName(?,?)}");
+            statement.setInt(1,p_person_id);
+            statement.setString(2,p_last_name);
+            
+            statement.execute();
+            statement.close();
+            
+            String last_name = getLastName(p_person_id);
+            if (last_name.equals(p_last_name)) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String getLastName(int p_person_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String last_name = "";
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT last_name FROM person WHERE person_id = "+Global.person_id);
+            
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getString("last_name"));
+                last_name = resultSet.getString("last_name");
+            }
+            return last_name;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return last_name;
+        }
+    }
+    
+    public static void updatePersonId(int p_person_id, int p_new_id)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updatePersonIdPass(?,?)}");
+            statement.setInt(1,p_person_id);
+            statement.setInt(2,p_new_id);
+            
+            statement.execute();
+            statement.close();
+            
+            int id = getIdPass(p_person_id);
+            if (id == p_new_id) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static int getIdPass(int p_person_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        int id = 0;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT id FROM person WHERE person_id = "+Global.person_id);
+            
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getInt("id"));
+                id = resultSet.getInt("id");
+            }
+            return id;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return id;
+        }
+    }
 }
