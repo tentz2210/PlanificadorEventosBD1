@@ -179,44 +179,32 @@ END;$$
 -- Point a: getEventStatisticsPerCategory
 CREATE PROCEDURE getEventStatisticsPerCategory() 
 BEGIN
-	DECLARE vnTotalEvents int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error executing query';
     END;
-    
-    SELECT count (1)
-    INTO vnTotalEvents
-    FROM social_event;
-        
-	SELECT c.category_name AS "Category", count(1) AS "Number of events", count(1)/vnTotalEvents *100 AS "Percentage"
-	FROM social_event s INNER JOIN category c
-	ON s.category_id = c.category_id
-	GROUP BY category_name;
+	  SELECT c.category_name AS "Category" , count(1) AS "Number of events" , count(1)/(SELECT COUNT(1) FROM social_event) *100 AS "Percentage"
+	  FROM social_event s INNER JOIN category c
+	  ON s.category_id = c.category_id
+	 GROUP BY category_name;
 END;$$
 
+-- call getPeopleStatisticsPerCategory();
 -- Point b: getPeopleStatisticsPerCategory
 CREATE PROCEDURE getPeopleStatisticsPerCategory()
 BEGIN
-	DECLARE vnTotalPersons int;
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
         SELECT 'Error executing query';
     END;
-    
-    SELECT count (1)
-    INTO vnTotalPersons
-    FROM person_event_status
-    WHERE status_type_id = 1; -- 1 se refiere al id de asistiré
-    
-	SELECT c.category_name AS "Category", count(1) AS "Total Persons", count(1)/vnTotalPersons*100 AS "Percentage"
+	SELECT c.category_name AS "Category", count(1) AS "Total Persons" , count(1)/(SELECT COUNT(1) FROM person_event_status WHERE status_type_id = 3)*100 AS "Percentage" 
     FROM category c
 	INNER JOIN(SELECT se.category_id cat_id
 			   FROM (SELECT event_id id
 					 FROM person_event_status
-					 WHERE status_type_id = 1 -- 1 se refiere al id de asistiré
+					 WHERE status_type_id = 3 -- 3 se refiere al id de asistiré
 					) t_events
 			   INNER JOIN social_event se
 			   ON t_events.id = se.event_id) t_cats
