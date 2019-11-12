@@ -5,21 +5,24 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.updateEmail;
+import Utils.Global;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author mapac
+ * @author lin
  */
 public class emailWindow extends javax.swing.JFrame {
-
+    editProfile ew;
     /**
      * Creates new form emailWindow
      */
-    editProfile editP;
-    public emailWindow(editProfile ew) {
+    public emailWindow(editProfile ep) {
         initComponents();
-        editP = ew;
-        this.setLocationRelativeTo(null);
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
+        ew = ep;
     }
 
     /**
@@ -35,14 +38,16 @@ public class emailWindow extends javax.swing.JFrame {
         modifyTitle = new javax.swing.JLabel();
         oldEmailLabel = new javax.swing.JLabel();
         actualEmailLabel = new javax.swing.JLabel();
-        newEmailField = new javax.swing.JTextField();
         oldEmailField = new javax.swing.JTextField();
-        iconEmail = new javax.swing.JLabel();
-        cancelButton = new javax.swing.JButton();
+        actualEmailField = new javax.swing.JTextField();
+        iconPhone = new javax.swing.JLabel();
         modifyButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(460, 210));
+        setSize(new java.awt.Dimension(460, 210));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -57,18 +62,32 @@ public class emailWindow extends javax.swing.JFrame {
         jPanel1.add(oldEmailLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, -1));
 
         actualEmailLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        actualEmailLabel.setText("Correo electrónico actual");
+        actualEmailLabel.setText("Número de teléfono actual");
         jPanel1.add(actualEmailLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 170, -1));
 
-        newEmailField.setPreferredSize(new java.awt.Dimension(140, 21));
-        jPanel1.add(newEmailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 87, -1, -1));
-
+        oldEmailField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         oldEmailField.setPreferredSize(new java.awt.Dimension(140, 21));
-        jPanel1.add(oldEmailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 47, -1, -1));
+        jPanel1.add(oldEmailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, -1, -1));
 
-        iconEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        iconEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/email.png"))); // NOI18N
-        jPanel1.add(iconEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 90, 90));
+        actualEmailField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        actualEmailField.setPreferredSize(new java.awt.Dimension(140, 21));
+        jPanel1.add(actualEmailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, -1));
+
+        iconPhone.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconPhone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/email.png"))); // NOI18N
+        jPanel1.add(iconPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 80, 80));
+
+        modifyButton.setBackground(new java.awt.Color(8, 151, 157));
+        modifyButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        modifyButton.setForeground(new java.awt.Color(255, 255, 255));
+        modifyButton.setText("Modificar");
+        modifyButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        modifyButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                modifyButtonMouseClicked(evt);
+            }
+        });
+        jPanel1.add(modifyButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, -1, -1));
 
         cancelButton.setBackground(new java.awt.Color(132, 116, 161));
         cancelButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -82,72 +101,38 @@ public class emailWindow extends javax.swing.JFrame {
         });
         jPanel1.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, -1));
 
-        modifyButton.setBackground(new java.awt.Color(8, 151, 157));
-        modifyButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        modifyButton.setForeground(new java.awt.Color(255, 255, 255));
-        modifyButton.setText("Modificar");
-        modifyButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        modifyButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                modifyButtonMouseClicked(evt);
-            }
-        });
-        jPanel1.add(modifyButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, -1));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 210));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
-        editP.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_cancelButtonMouseClicked
-
     private void modifyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyButtonMouseClicked
-        editP.setVisible(true);
+        String newMail = actualEmailField.getText();
+        String oldMail = oldEmailField.getText();
+        if (!newMail.equals(oldMail) && !"".equals(newMail) && !"".equals(oldMail))
+        {
+            updateEmail(oldMail,newMail,Global.person_id);
+            if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"Email modificado correctamente","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"No se ha podido modificar el email","Error en modificación",JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this,"No se ha podido modificar el email","Error en modificación",JOptionPane.ERROR_MESSAGE);
+        ew.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_modifyButtonMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(emailWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(emailWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(emailWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(emailWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        
-    }
+    private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
+        ew.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_cancelButtonMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField actualEmailField;
     private javax.swing.JLabel actualEmailLabel;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JLabel iconEmail;
+    private javax.swing.JLabel iconPhone;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton modifyButton;
     private javax.swing.JLabel modifyTitle;
-    private javax.swing.JTextField newEmailField;
     private javax.swing.JTextField oldEmailField;
     private javax.swing.JLabel oldEmailLabel;
     // End of variables declaration//GEN-END:variables

@@ -100,11 +100,6 @@ public class nameWindow extends javax.swing.JFrame {
                 acceptButtonMouseClicked(evt);
             }
         });
-        acceptButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                acceptButtonActionPerformed(evt);
-            }
-        });
         jPanel1.add(acceptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(313, 140, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 180));
@@ -117,13 +112,22 @@ public class nameWindow extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_cancelButtonMouseClicked
 
-    private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_acceptButtonActionPerformed
-
     private void acceptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptButtonMouseClicked
-        editP.setVisible(true);
-        this.setVisible(false);
+        String name = nameField.getText();
+        String firstLName = fLastNameField.getText();
+        String secLName = sLastNameField.getText();
+     /*  if(!"".equals(name) && !Global.hasNumbers(name))
+       {
+           updatePerson(Global.person_id,name,firstLName,secLName,0,"","");
+           if (Global.update_result==1) JOptionPane.showMessageDialog(this, "El nombre ha sido actualizado","Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
+           else JOptionPane.showMessageDialog(this, "No es posible modificar el nombre","Error de cambio", JOptionPane.ERROR_MESSAGE);
+       }
+       else JOptionPane.showMessageDialog(this, "No es posible modificar el nombre","Error de cambio", JOptionPane.ERROR_MESSAGE);
+       nameField.setText("");
+       fLastNameField.setText("");
+       sLastNameField.setText("");*/
+       editP.setVisible(true);
+       this.setVisible(false);
     }//GEN-LAST:event_acceptButtonMouseClicked
 
     

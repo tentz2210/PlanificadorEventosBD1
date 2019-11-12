@@ -5,6 +5,8 @@
  */
 package UI;
 
+import Utils.Global;
+
 /**
  *
  * @author mapac
@@ -212,7 +214,15 @@ public class editProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeWindowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowMouseClicked
-        // TODO add your handling code here:
+        this.setVisible(false);
+        if (Global.user_type_id == 1) //Admin
+        {
+            AdminWindow adminW = new AdminWindow();
+        }
+        else
+        {
+            UserWindow userW = new UserWindow();
+        }
     }//GEN-LAST:event_closeWindowMouseClicked
 
     private void minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeMouseClicked
