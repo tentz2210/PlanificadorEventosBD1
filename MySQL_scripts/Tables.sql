@@ -9,7 +9,7 @@ CREATE TABLE phone (
   creation_date date NOT NULL COMMENT 'Row date of creation',
   created_by varchar(30) NOT NULL COMMENT 'User which created the row',
   last_modification_date date DEFAULT NULL COMMENT 'Last date of row modification',
-  last_modified_b varchar(30) DEFAULT NULL COMMENT 'Last user which modified the row',
+  last_modified_by varchar(30) DEFAULT NULL COMMENT 'Last user which modified the row',
   PRIMARY KEY (phone_number,person_id),
   UNIQUE KEY phone_number_UNIQUE (phone_number)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Repository of users'' phone numbers';
