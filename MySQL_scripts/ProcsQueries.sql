@@ -292,4 +292,28 @@ BEGIN
 	FROM user_type
 	ORDER BY user_type_name desc;
 END;$$
+
+CREATE PROCEDURE getCountryId(IN p_country_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+	END;
+    SELECT country_id
+    FROM country
+    WHERE country_name = p_country_name;
+END;$$
+
+CREATE PROCEDURE getCountries()
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+    END;
+	SELECT country_id, country_name
+	FROM country
+	ORDER BY country_id asc;
+END;$$
     
