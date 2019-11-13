@@ -215,7 +215,21 @@ BEGIN
 END;$$
 
 -- Point c: getEventStatiticsPerDate
--- Point d getTopEventsWithMostAssistance
+-- Point d: getTopEventsWithMostAssistance
+CREATE PROCEDURE getTopEventsWithMostAssistance()
+BEGIN
+	SELECT event_t, assist_count, topn 
+	FROM(
+		SELECT se.event_title as event_t, 
+			count(pes.status_type_id) as assist_count, 
+			RANK() OVER(ORDER BY count(pes.status_type_id) desc) as topn
+			FROM social_event se INNER JOIN person_event_status pes
+			ON se.event_id = pes.event_id
+			WHERE pes.status_type_id = 3
+			GROUP BY se.event_title) t
+	WHERE topn < 5
+	order by topn;
+END;$$
 -- Point e: getTopEventsWithBestCalif
 -- Point f getTopEventsWithWorstCalif
 
