@@ -1034,6 +1034,7 @@ public class MySQLConnection {
             statement = connection.prepareCall("{call getProvincesFromCountry(?)}");
             statement.setInt(1, p_country_id);
             boolean hadResults = statement.execute();
+            Global.provincesInfo.clear();
             while (hadResults)
             {
                 resultSet = statement.getResultSet();
@@ -1519,6 +1520,7 @@ public class MySQLConnection {
             statement = connection.prepareCall("{call getCantonsFromProvince(?)}");
             statement.setInt(1,province_id);
             boolean hadResults = statement.execute();
+            Global.cantonsInfo.clear();
             while (hadResults)
             {
                 resultSet = statement.getResultSet();
@@ -1714,6 +1716,7 @@ public class MySQLConnection {
             statement = connection.prepareCall("{call getDistrictsFromCanton(?)}");
             statement.setInt(1,canton_id);
             boolean hadResults = statement.execute();
+            Global.districtsInfo.clear();
             while (hadResults)
             {
                 resultSet = statement.getResultSet();
@@ -1794,4 +1797,40 @@ public class MySQLConnection {
         }
     }
     
+    
+    public static void createSocialEvent(int person_id,int id_category,String eventName,
+                                        String descripcionEvento,String start_date,String end_date,
+                                        int isPrivate,String photo,String direccion,int district_id)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call createSocialEvent(?,?,?,?,?,?,?,?,?,?)}");
+                statement.setInt(1,person_id);
+                statement.setInt(2,id_category);
+                statement.setString(3,eventName);
+                statement.setString(4,descripcionEvento);
+                statement.setString(5,start_date);
+                statement.setString(6,end_date);
+                statement.setInt(7,isPrivate);
+                statement.setString(8,photo);
+                statement.setString(9,direccion);
+                statement.setInt(10,district_id);
+            
+                statement.execute();
+                Global.insert_result = 1;
+                statement.close();
+        } catch (SQLException ex) {
+            Global.insert_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

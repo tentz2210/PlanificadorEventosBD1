@@ -82,8 +82,14 @@ public class UserWindow extends javax.swing.JFrame {
 
         myEventsIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         myEventsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/eventIcon.png"))); // NOI18N
-        myEventsIcon.setText("Mis eventos");
+        myEventsIcon.setText("Reseñas");
+        myEventsIcon.setToolTipText("");
         myEventsIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        myEventsIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                myEventsIconMouseClicked(evt);
+            }
+        });
         jPanel1.add(myEventsIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 60, -1, -1));
 
         createIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -225,6 +231,11 @@ public class UserWindow extends javax.swing.JFrame {
         this.setVisible(false);
         favoritesWindow favorites = new favoritesWindow();
     }//GEN-LAST:event_favoritesIconMouseClicked
+
+    private void myEventsIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myEventsIconMouseClicked
+        this.setVisible(false);
+        reviewWindow reviewW = new reviewWindow();
+    }//GEN-LAST:event_myEventsIconMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountSettingsIcon;

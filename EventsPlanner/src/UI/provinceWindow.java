@@ -269,23 +269,37 @@ public class provinceWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonMouseClicked
 
     private void eliminateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminateButtonMouseClicked
+        int province_id = -1;
+        String province_name ="";
         int id_country = Global.countriesInfo.get(chooseCComboBox2.getSelectedIndex()).getId();
-        String province_name = Global.provincesInfo.get(eliminateProvinceComboBox2.getSelectedIndex()).getName();
-        int province_id = Global.provincesInfo.get(eliminateProvinceComboBox2.getSelectedIndex()).getId();
-        deleteProvince(id_country,province_name,province_id);
-        if (Global.delete_result == 1) JOptionPane.showMessageDialog(this,"La provincia ha sido eliminada","Borrado exitoso",JOptionPane.INFORMATION_MESSAGE);
+        if (eliminateProvinceComboBox2.getSelectedIndex()!=1)
+        {
+            province_name = Global.provincesInfo.get(eliminateProvinceComboBox2.getSelectedIndex()).getName();
+            province_id = Global.provincesInfo.get(eliminateProvinceComboBox2.getSelectedIndex()).getId();
+        }
+        if (province_id!=-1 && !"".equals(province_name))
+        {
+            deleteProvince(id_country,province_name,province_id);
+            if (Global.delete_result == 1) JOptionPane.showMessageDialog(this,"La provincia ha sido eliminada","Borrado exitoso",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al eliminar la provincia","Error de borrado",JOptionPane.ERROR_MESSAGE);
+        }
         else JOptionPane.showMessageDialog(this,"Error al eliminar la provincia","Error de borrado",JOptionPane.ERROR_MESSAGE);
-        
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_eliminateButtonMouseClicked
 
     private void modifyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyButtonMouseClicked
+        int province_id = -1;
+        String old_name_province="";
         int id_country = Global.countriesInfo.get(chooseCComboBox3.getSelectedIndex()).getId();
-        String old_name_province = Global.provincesInfo.get(modifyProvinceComboBox.getSelectedIndex()).getName();
-        int province_id = Global.provincesInfo.get(modifyProvinceComboBox.getSelectedIndex()).getId();
+        if (modifyProvinceComboBox.getSelectedIndex()!=-1)
+        {
+            province_id = Global.provincesInfo.get(modifyProvinceComboBox.getSelectedIndex()).getId();
+            old_name_province = Global.provincesInfo.get(modifyProvinceComboBox.getSelectedIndex()).getName();
+        }
+        
         String newProvinceName = newNameField.getText();
-        if (!"".equals(newProvinceName) && !Global.isNumeric(newProvinceName) && !Global.hasNumbers(newProvinceName))
+        if (!"".equals(old_name_province) && !"".equals(newProvinceName) && !Global.isNumeric(newProvinceName) && !Global.hasNumbers(newProvinceName) && province_id!=-1)
         {
             updateProvince(id_country,old_name_province,province_id,newProvinceName);
             if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"El nombre de la provincia ha sido modificado","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
@@ -302,42 +316,16 @@ public class provinceWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonMouseClicked
 
     private void chooseCComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCComboBox2ActionPerformed
+        eliminateProvinceComboBox2.removeAllItems();
+        if (chooseCComboBox2.getSelectedItem() != null)
         fillProvincesComboBox1(Global.countriesInfo.get(chooseCComboBox2.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCComboBox2ActionPerformed
 
     private void chooseCComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCComboBox3ActionPerformed
+        modifyProvinceComboBox.removeAllItems();
+        if (chooseCComboBox3.getSelectedItem() != null)
         fillProvincesComboBox2(Global.countriesInfo.get(chooseCComboBox3.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCComboBox3ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(provinceWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(provinceWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(provinceWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(provinceWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

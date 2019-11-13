@@ -5,6 +5,18 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.createSocialEvent;
+import static DBConnection.MySQLConnection.loadCantons;
+import static DBConnection.MySQLConnection.loadCategories;
+import static DBConnection.MySQLConnection.loadCountries;
+import static DBConnection.MySQLConnection.loadDistricts;
+import static DBConnection.MySQLConnection.loadProvinces;
+import Utils.Global;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author mapac
@@ -14,12 +26,67 @@ public class registerEvent extends javax.swing.JFrame {
     /**
      * Creates new form registerEvent
      */
+    int isPrivate = 0;
     UserWindow userW;
     public registerEvent(UserWindow uW) {
+        Global.categoriesInfo.clear();
+        Global.countriesInfo.clear();
         initComponents();
+        fillCountriesComboBox();
+        fillCategoriesComboBox();
         userW = uW;
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+    
+     private void fillCountriesComboBox()
+    {
+        loadCountries();
+        if (Global.getInfo_result == 1)
+        {
+            countryComboBox.removeAllItems();
+            for (int countryNumber = 0; countryNumber < Global.countriesInfo.size(); countryNumber++)
+            {
+                countryComboBox.addItem(Global.countriesInfo.get(countryNumber).getName());
+            }
+        }
+    }
+     
+     private void fillProvincesComboBox(int country_id)
+    {
+        loadProvinces(country_id);
+        if (Global.getInfo_result == 1)
+        {
+            provinceComboBox.removeAllItems();
+            for (int provinceNumber = 0; provinceNumber < Global.provincesInfo.size(); provinceNumber++)
+            {
+                provinceComboBox.addItem(Global.provincesInfo.get(provinceNumber).getName());
+            }
+        }
+    }
+     
+     private void fillCantonsComboBox(int id_province) {
+        loadCantons(id_province);
+        if (Global.getInfo_result == 1)
+        {
+            cantonComboBox.removeAllItems();
+            for (int cantonNumber = 0; cantonNumber < Global.cantonsInfo.size(); cantonNumber++)
+            {
+                cantonComboBox.addItem(Global.cantonsInfo.get(cantonNumber).getName());
+            }
+        }
+    }
+     
+     private void fillDistrictsComboBox(int id_canton) {
+        loadDistricts(id_canton);
+        if (Global.getInfo_result == 1)
+        {
+            districtComboBox.removeAllItems();
+            for (int districtNumber = 0; districtNumber < Global.districtsInfo.size(); districtNumber++)
+            {
+                districtComboBox.addItem(Global.districtsInfo.get(districtNumber).getName());
+            }
+        }
     }
 
     /**
@@ -139,6 +206,11 @@ public class registerEvent extends javax.swing.JFrame {
         privateRadioButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         privateRadioButton.setText("Privado");
         privateRadioButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        privateRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                privateRadioButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(privateRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 217, -1, -1));
 
         startDateLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -150,7 +222,7 @@ public class registerEvent extends javax.swing.JFrame {
         jPanel1.add(dayFLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 353, -1, -1));
 
         dayFComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        dayFComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        dayFComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
         dayFComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(dayFComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, -1, -1));
 
@@ -199,7 +271,7 @@ public class registerEvent extends javax.swing.JFrame {
         jPanel1.add(daySLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 273, -1, -1));
 
         daySComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        daySComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        daySComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
         daySComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(daySComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, -1, -1));
 
@@ -248,6 +320,11 @@ public class registerEvent extends javax.swing.JFrame {
         photoButton.setForeground(new java.awt.Color(255, 255, 255));
         photoButton.setText("Seleccionar");
         photoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        photoButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                photoButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(photoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(657, 140, -1, -1));
 
         acceptButton.setBackground(new java.awt.Color(8, 151, 157));
@@ -283,6 +360,11 @@ public class registerEvent extends javax.swing.JFrame {
 
         countryComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         countryComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        countryComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                countryComboBoxActionPerformed(evt);
+            }
+        });
         jPanel1.add(countryComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, 105, -1));
 
         provinceLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -291,6 +373,11 @@ public class registerEvent extends javax.swing.JFrame {
 
         provinceComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         provinceComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        provinceComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                provinceComboBoxActionPerformed(evt);
+            }
+        });
         jPanel1.add(provinceComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 430, 105, -1));
 
         cantonLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -299,6 +386,11 @@ public class registerEvent extends javax.swing.JFrame {
 
         cantonComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         cantonComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cantonComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cantonComboBoxActionPerformed(evt);
+            }
+        });
         jPanel1.add(cantonComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, 105, -1));
 
         districtLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -322,49 +414,89 @@ public class registerEvent extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void publicRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicRadioButtonActionPerformed
-        // TODO add your handling code here:
+        System.out.println("Público");
+        isPrivate = 0;
     }//GEN-LAST:event_publicRadioButtonActionPerformed
 
     private void acceptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptButtonMouseClicked
+        int district_id;
+        String photo = "";
+        String eventName = nameField.getText();
+        String descripcionEvento = descriptionField.getText();
+        String direccion = directionTextField.getText();
+        int id_category = Global.categoriesInfo.get(categoryComboBox.getSelectedIndex()).getId();
+        int monthSNumber = monthSComboBox1.getSelectedIndex()+1;
+        String start_date = daySComboBox.getSelectedItem().toString() +"/" +monthSNumber+"/" + yearSComboBox.getSelectedItem().toString() + " " + hourSComboBox.getSelectedItem().toString()+":"+minutesSComboBox.getSelectedItem().toString();
+        int monthFNumber = monthFComboBox.getSelectedIndex()+1;
+        String end_date = dayFComboBox.getSelectedItem().toString() +"/" +monthFNumber+"/" + yearFComboBox.getSelectedItem().toString() + " " + hourFComboBox.getSelectedItem().toString()+":"+minutesFComboBox.getSelectedItem().toString();
+        if (Global.districtsInfo.get(districtComboBox.getSelectedIndex())!=null)
+            district_id = Global.districtsInfo.get(districtComboBox.getSelectedIndex()).getId();
+        else district_id = -1;
+        if (Global.photoChooser.getSelectedFile() == null) photo = "userDefault.png";
+                else photo = Global.photoChooser.getSelectedFile().getName();
+        
+        if (!"".equals(eventName) && !Global.isNumeric(eventName) && !"".equals(descripcionEvento) && !Global.isNumeric(descripcionEvento) && 
+            !"".equals(direccion) && !Global.isNumeric(direccion) && district_id!=-1)
+        {
+            createSocialEvent(Global.person_id,id_category,eventName,descripcionEvento,start_date,end_date,isPrivate,photo,direccion,district_id);
+            if (Global.insert_result == 1) JOptionPane.showMessageDialog(this,"Evento registrado con éxito.","Registro exitoso",JOptionPane.INFORMATION_MESSAGE);
+                else JOptionPane.showMessageDialog(this,"El evento no ha sido registrado. Favor intentar nuevamente.","Error al registrar.",JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this,"El evento no ha sido registrado. Favor intentar nuevamente.","Error al registrar.",JOptionPane.ERROR_MESSAGE);
         userW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_acceptButtonMouseClicked
-
+    
+    private void fillCategoriesComboBox()
+    {
+        loadCategories();
+        if (Global.getInfo_result == 1)
+        {
+            categoryComboBox.removeAllItems();
+            for (int categoryNumber = 0; categoryNumber < Global.categoriesInfo.size(); categoryNumber++)
+            {
+                categoryComboBox.addItem(Global.categoriesInfo.get(categoryNumber).getName());
+            }
+        }
+    }
+    
     private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
         userW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_cancelButtonMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(registerEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(registerEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(registerEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(registerEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void privateRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_privateRadioButtonActionPerformed
+        System.out.println("Privado");
+        isPrivate = 1;
+    }//GEN-LAST:event_privateRadioButtonActionPerformed
 
-        /* Create and display the form */
-        
-    }
+    private void countryComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countryComboBoxActionPerformed
+        //System.out.println(Global.countriesInfo.get(countryComboBox.getSelectedIndex()).getId());
+        //Global.provincesInfo.clear();
+        if (countryComboBox.getSelectedItem() != null)
+        fillProvincesComboBox(Global.countriesInfo.get(countryComboBox.getSelectedIndex()).getId());
+    }//GEN-LAST:event_countryComboBoxActionPerformed
+
+    private void provinceComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provinceComboBoxActionPerformed
+        //Global.cantonsInfo.clear();
+        if (provinceComboBox.getSelectedItem() != null)
+            fillCantonsComboBox(Global.provincesInfo.get(provinceComboBox.getSelectedIndex()).getId());
+    }//GEN-LAST:event_provinceComboBoxActionPerformed
+
+    private void cantonComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantonComboBoxActionPerformed
+        //Global.districtsInfo.clear();
+        if (cantonComboBox.getSelectedItem() != null)
+        fillDistrictsComboBox(Global.cantonsInfo.get(cantonComboBox.getSelectedIndex()).getId());
+    }//GEN-LAST:event_cantonComboBoxActionPerformed
+
+    private void photoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_photoButtonMouseClicked
+        Global.photoChooser.setDialogTitle("Seleccionar foto de evento");
+        Global.photoChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png"));
+        if (Global.photoChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+        {
+            iconPhoto.setIcon(new ImageIcon(Global.photoChooser.getSelectedFile().toString())); 
+        }
+    }//GEN-LAST:event_photoButtonMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptButton;

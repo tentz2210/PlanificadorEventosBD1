@@ -11,7 +11,6 @@ import static DBConnection.MySQLConnection.loadCantons;
 import static DBConnection.MySQLConnection.loadCountries;
 import static DBConnection.MySQLConnection.loadDistricts;
 import static DBConnection.MySQLConnection.loadProvinces;
-import static DBConnection.MySQLConnection.updateCanton;
 import static DBConnection.MySQLConnection.updateDistrict;
 import Utils.Global;
 import javax.swing.JOptionPane;
@@ -393,9 +392,11 @@ public class districtWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
-        int id_canton = Global.cantonsInfo.get(chooseCanton1.getSelectedIndex()).getId();
+        int id_canton = -1;
+        if (chooseCanton1.getSelectedIndex()!=-1)
+            id_canton = Global.cantonsInfo.get(chooseCanton1.getSelectedIndex()).getId();
         String newDistrictName = newDistrict.getText();
-        if (!"".equals(newDistrictName) && !Global.isNumeric(newDistrictName) && !Global.hasNumbers(newDistrictName))
+        if (id_canton!=-1 && !"".equals(newDistrictName) && !Global.isNumeric(newDistrictName) && !Global.hasNumbers(newDistrictName))
         {
             insertNewDistrict(id_canton,newDistrictName);
             if (Global.insert_result == 1) JOptionPane.showMessageDialog(this,"Nuevo distrito ha sido agregado al catálogo","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
@@ -408,22 +409,39 @@ public class districtWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonMouseClicked
 
     private void eliminateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminateButtonMouseClicked
-        int id_canton = Global.cantonsInfo.get(chooseCanton1.getSelectedIndex()).getId();
-        int district_id = Global.districtsInfo.get(modifyDistrict.getSelectedIndex()).getId();
-        String district_name = Global.districtsInfo.get(modifyDistrict.getSelectedIndex()).getName();
-        deleteDistrict(id_canton,district_name,district_id);
-        if (Global.delete_result == 1) JOptionPane.showMessageDialog(this,"El distrito ha sido eliminado","Borrado exitoso",JOptionPane.INFORMATION_MESSAGE);
+        int id_canton = -1;
+        if (chooseCanton2.getSelectedIndex()!=-1)
+            id_canton = Global.cantonsInfo.get(chooseCanton2.getSelectedIndex()).getId();
+        int district_id = -1;
+        String district_name = "";
+        if (modifyDistrict.getSelectedIndex()!=-1){
+            Global.districtsInfo.get(modifyDistrict.getSelectedIndex()).getName();
+            Global.districtsInfo.get(modifyDistrict.getSelectedIndex()).getId();
+        }
+        if (id_canton!=-1 && district_id != -1 && ""!=district_name)
+        {
+            deleteDistrict(id_canton,district_name,district_id);
+            if (Global.delete_result == 1) JOptionPane.showMessageDialog(this,"El distrito ha sido eliminado","Borrado exitoso",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al eliminar el distrito","Error de borrado",JOptionPane.ERROR_MESSAGE);
+        }
         else JOptionPane.showMessageDialog(this,"Error al eliminar el distrito","Error de borrado",JOptionPane.ERROR_MESSAGE);
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_eliminateButtonMouseClicked
 
     private void modifyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyButtonMouseClicked
-        int id_canton = Global.cantonsInfo.get(chooseCanton3.getSelectedIndex()).getId();
-        String district_name = Global.districtsInfo.get(modifyDistrict1.getSelectedIndex()).getName();
-        int district_id = Global.districtsInfo.get(modifyDistrict1.getSelectedIndex()).getId();
+        int id_canton = -1;
+        if (chooseCanton3.getSelectedIndex()!=-1)
+            id_canton = Global.cantonsInfo.get(chooseCanton3.getSelectedIndex()).getId();
+        String district_name = "";
+        int district_id = -1;
+        if (modifyDistrict1.getSelectedIndex()!= -1)
+        {
+            Global.districtsInfo.get(modifyDistrict1.getSelectedIndex()).getName();
+            Global.districtsInfo.get(modifyDistrict1.getSelectedIndex()).getId();
+        }
         String newDistrictName = newNameField.getText();
-        if (!"".equals(newDistrictName) && !Global.isNumeric(newDistrictName) && !Global.hasNumbers(newDistrictName))
+        if (id_canton!=-1 && !"".equals(district_name) && district_id !=-1 && !"".equals(newDistrictName) && !Global.isNumeric(newDistrictName) && !Global.hasNumbers(newDistrictName))
         {
             updateDistrict(id_canton,district_name,district_id,newDistrictName);
             if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"El nombre del distrito ha sido modificado","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
@@ -441,34 +459,42 @@ public class districtWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonMouseClicked
 
     private void chooseCountry1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCountry1ActionPerformed
+        if (chooseCountry1.getSelectedItem() != null)
         fillProvincesComboBox1(Global.countriesInfo.get(chooseCountry1.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCountry1ActionPerformed
 
     private void chooseCountry2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCountry2ActionPerformed
+        if (chooseCountry2.getSelectedItem() != null)
         fillProvincesComboBox2(Global.countriesInfo.get(chooseCountry2.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCountry2ActionPerformed
 
     private void chooseCountry3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCountry3ActionPerformed
+        if (chooseCountry3.getSelectedItem() != null)
         fillProvincesComboBox3(Global.countriesInfo.get(chooseCountry3.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCountry3ActionPerformed
 
     private void chooseProvince1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseProvince1ActionPerformed
+        if (chooseProvince1.getSelectedItem() != null)
         fillCantonsComboBox1(Global.provincesInfo.get(chooseProvince1.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseProvince1ActionPerformed
 
     private void chooseProvince2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseProvince2ActionPerformed
+        if (chooseProvince2.getSelectedItem() != null)
         fillCantonsComboBox2(Global.provincesInfo.get(chooseProvince2.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseProvince2ActionPerformed
 
     private void chooseProvince3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseProvince3ActionPerformed
+        if (chooseProvince3.getSelectedItem() != null)
         fillCantonsComboBox3(Global.provincesInfo.get(chooseProvince3.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseProvince3ActionPerformed
 
     private void chooseCanton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCanton2ActionPerformed
+        if (chooseCanton2.getSelectedItem() != null)
         fillDistrictsComboBox1(Global.cantonsInfo.get(chooseCanton2.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCanton2ActionPerformed
 
     private void chooseCanton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCanton3ActionPerformed
+        if (chooseCanton3.getSelectedItem() != null)
         fillDistrictsComboBox2(Global.cantonsInfo.get(chooseCanton3.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCanton3ActionPerformed
 

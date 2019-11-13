@@ -309,9 +309,11 @@ public class cantonWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
-        int id_province = Global.provincesInfo.get(chooseProvince1.getSelectedIndex()).getId();
+        int id_province= -1;
+        if (chooseProvince1.getSelectedIndex()!=-1)
+            id_province = Global.provincesInfo.get(chooseProvince1.getSelectedIndex()).getId();
         String newCantonName = newCantonField.getText();
-        if (!"".equals(newCantonName) && !Global.isNumeric(newCantonName) && !Global.hasNumbers(newCantonName))
+        if (id_province!=-1 && !"".equals(newCantonName) && !Global.isNumeric(newCantonName) && !Global.hasNumbers(newCantonName))
         {
             insertNewCanton(id_province,newCantonName);
             if (Global.insert_result == 1) JOptionPane.showMessageDialog(this,"Nuevo cantón ha sido agregado al catálogo","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
@@ -323,11 +325,22 @@ public class cantonWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonMouseClicked
 
     private void eliminateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminateButtonMouseClicked
-        int id_province = Global.provincesInfo.get(chooseProvince2.getSelectedIndex()).getId();
-        String canton_name = Global.cantonsInfo.get(eliminateCantonComboBox.getSelectedIndex()).getName();
-        int canton_id = Global.cantonsInfo.get(eliminateCantonComboBox.getSelectedIndex()).getId();
-        deleteCanton(id_province,canton_name,canton_id);
-        if (Global.delete_result == 1) JOptionPane.showMessageDialog(this,"El cantón ha sido eliminado","Borrado exitoso",JOptionPane.INFORMATION_MESSAGE);
+        int id_province = -1;
+        if (chooseProvince2.getSelectedIndex()!=-1)
+            Global.provincesInfo.get(chooseProvince2.getSelectedIndex()).getId();
+        String canton_name = "";
+        int canton_id = -1;
+        if (eliminateCantonComboBox.getSelectedIndex()!=-1)
+        {
+            canton_name = Global.cantonsInfo.get(eliminateCantonComboBox.getSelectedIndex()).getName();
+            canton_id = Global.cantonsInfo.get(eliminateCantonComboBox.getSelectedIndex()).getId();
+        }
+        if (id_province!=-1 && canton_id != -1 && canton_name!="")
+        {
+            deleteCanton(id_province,canton_name,canton_id);
+            if (Global.delete_result == 1) JOptionPane.showMessageDialog(this,"El cantón ha sido eliminado","Borrado exitoso",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al eliminar el cantón","Error de borrado",JOptionPane.ERROR_MESSAGE);
+        }
         else JOptionPane.showMessageDialog(this,"Error al eliminar el cantón","Error de borrado",JOptionPane.ERROR_MESSAGE);
         
         cataW.setVisible(true);
@@ -335,11 +348,18 @@ public class cantonWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminateButtonMouseClicked
 
     private void modifyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyButtonMouseClicked
-        int id_province = Global.provincesInfo.get(chooseProvince3.getSelectedIndex()).getId();
-        String canton_name = Global.cantonsInfo.get(modifyCantonComboBox1.getSelectedIndex()).getName();
-        int canton_id = Global.cantonsInfo.get(modifyCantonComboBox1.getSelectedIndex()).getId();
+        int id_province = -1;
+        if (chooseProvince3.getSelectedIndex()!=-1)
+            id_province = Global.provincesInfo.get(chooseProvince3.getSelectedIndex()).getId();
+        String canton_name = "";
+        int canton_id = -1;
+        if (modifyCantonComboBox1.getSelectedIndex()!=-1)
+        {
+            canton_name = Global.cantonsInfo.get(modifyCantonComboBox1.getSelectedIndex()).getName();
+            canton_id = Global.cantonsInfo.get(modifyCantonComboBox1.getSelectedIndex()).getId();
+        }
         String newCantonName = newNameField.getText();
-        if (!"".equals(newCantonName) && !Global.isNumeric(newCantonName) && !Global.hasNumbers(newCantonName))
+        if (id_province!=-1 && canton_id!=-1 && !"".equals(canton_name) &&!"".equals(newCantonName) && !Global.isNumeric(newCantonName) && !Global.hasNumbers(newCantonName))
         {
             updateCanton(id_province,canton_name,canton_id,newCantonName);
             if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"El nombre del cantón ha sido modificado","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
@@ -357,22 +377,27 @@ public class cantonWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonMouseClicked
 
     private void chooseCountry1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCountry1ActionPerformed
+        if (chooseCountry1.getSelectedItem() != null)
         fillProvincesComboBox1(Global.countriesInfo.get(chooseCountry1.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCountry1ActionPerformed
 
     private void chooseCountry2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCountry2ActionPerformed
+        if (chooseCountry2.getSelectedItem() != null)
         fillProvincesComboBox2(Global.countriesInfo.get(chooseCountry2.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCountry2ActionPerformed
 
     private void chooseCountry3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCountry3ActionPerformed
+        if (chooseCountry3.getSelectedItem() != null)
         fillProvincesComboBox3(Global.countriesInfo.get(chooseCountry3.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCountry3ActionPerformed
 
     private void chooseProvince2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseProvince2ActionPerformed
+        if (chooseProvince2.getSelectedItem() != null)
         fillCantonsComboBox(Global.provincesInfo.get(chooseProvince2.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseProvince2ActionPerformed
 
     private void chooseProvince3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseProvince3ActionPerformed
+        if (chooseProvince3.getSelectedItem() != null)
         fillCantonsComboBox1(Global.provincesInfo.get(chooseProvince3.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseProvince3ActionPerformed
 
