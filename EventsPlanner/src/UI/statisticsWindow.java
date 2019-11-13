@@ -133,6 +133,11 @@ public class statisticsWindow extends javax.swing.JFrame {
         mostAssEventsButton.setForeground(new java.awt.Color(255, 255, 255));
         mostAssEventsButton.setText("Eventos con mayor asistencia");
         mostAssEventsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mostAssEventsButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mostAssEventsButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(mostAssEventsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 230, 40));
 
         closeWindow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/closeWindow.png"))); // NOI18N
@@ -184,6 +189,11 @@ public class statisticsWindow extends javax.swing.JFrame {
         this.setVisible(false);
         ReviewPerCategoryStatisticWindow review = new ReviewPerCategoryStatisticWindow(this);
     }//GEN-LAST:event_catReviewsButtonMouseClicked
+
+    private void mostAssEventsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mostAssEventsButtonMouseClicked
+        this.setVisible(false);
+        MostAssistedEventsWindow mostA = new MostAssistedEventsWindow(this);
+    }//GEN-LAST:event_mostAssEventsButtonMouseClicked
 
     /**
      * @param args the command line arguments

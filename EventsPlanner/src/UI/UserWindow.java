@@ -43,6 +43,7 @@ public class UserWindow extends javax.swing.JFrame {
         queriesIcon = new javax.swing.JLabel();
         accountSettingsIcon = new javax.swing.JLabel();
         logoutIcon = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -101,6 +102,11 @@ public class UserWindow extends javax.swing.JFrame {
         favoritesIcon.setText("Favoritos");
         favoritesIcon.setToolTipText("");
         favoritesIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        favoritesIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                favoritesIconMouseClicked(evt);
+            }
+        });
         jPanel1.add(favoritesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 144, -1, -1));
 
         queriesIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -136,6 +142,10 @@ public class UserWindow extends javax.swing.JFrame {
             }
         });
         jPanel1.add(logoutIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 270, -1, -1));
+
+        logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
+        jPanel1.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, 840, 630));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -211,12 +221,18 @@ public class UserWindow extends javax.swing.JFrame {
         queriesWindow queries = new queriesWindow();
     }//GEN-LAST:event_queriesIconMouseClicked
 
+    private void favoritesIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_favoritesIconMouseClicked
+        this.setVisible(false);
+        favoritesWindow favorites = new favoritesWindow();
+    }//GEN-LAST:event_favoritesIconMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountSettingsIcon;
     private javax.swing.JLabel closeWindIcon;
     private javax.swing.JLabel createIcon;
     private javax.swing.JLabel favoritesIcon;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel logo;
     private javax.swing.JLabel logoutIcon;
     private javax.swing.JLabel menuIcon;
     private javax.swing.JLabel minimizeWindIcon;

@@ -42,6 +42,7 @@ public class AdminWindow extends javax.swing.JFrame {
         queriesIcon = new javax.swing.JLabel();
         accountSettingsIcon = new javax.swing.JLabel();
         logoutIcon = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -127,6 +128,10 @@ public class AdminWindow extends javax.swing.JFrame {
         });
         jPanel1.add(logoutIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-185, 228, -1, -1));
 
+        logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
+        jPanel1.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 840, 630));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 730));
 
         pack();
@@ -203,6 +208,7 @@ public class AdminWindow extends javax.swing.JFrame {
     private javax.swing.JLabel cataloguesIcon;
     private javax.swing.JLabel closeWindIcon;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel logo;
     private javax.swing.JLabel logoutIcon;
     private javax.swing.JLabel menuIcon;
     private javax.swing.JLabel minimizeWindIcon;
