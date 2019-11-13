@@ -177,6 +177,8 @@ CREATE TABLE category(
 	last_modified_by varchar(30) DEFAULT NULL COMMENT 'Last user which modified the row'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Repository of available categories for social events';
 ###################################################################################################################
+ALTER TABLE category
+	ADD CONSTRAINT category_name_uk UNIQUE (category_name);
 -- Category_X_Person
 CREATE TABLE category_x_person(
 	person_id int NOT NULL COMMENT 'Reference of the person linked to the category',
