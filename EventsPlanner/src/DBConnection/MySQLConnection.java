@@ -1071,7 +1071,7 @@ public class MySQLConnection {
                 System.out.println("no existe");
                 statement = connection.prepareCall("{call createProvince(?,?)}");
                 statement.setString(1,p_province_name);
-                statement.setInt(3,p_country_id);
+                statement.setInt(2,p_country_id);
             
                 statement.execute();
                 Global.insert_result = 1;
@@ -1117,4 +1117,98 @@ public class MySQLConnection {
         }
     }
     
+    public static void deleteProvince(int p_country_id, String p_province_name, int province_id)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call deleteProvince(?)}");
+            statement.setInt(1,province_id);
+            statement.execute();
+            statement.close();
+               
+            if (!provinceExists(p_country_id, p_province_name)) 
+            {
+                Global.delete_result = 1;
+            }
+            else 
+            {
+                System.out.println("Sí existe");
+                Global.delete_result = 0;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error");
+            Global.delete_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void updateProvince(int id_country,String old_name_province,int province_id,String newProvinceName)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updateProvince(?,?)}");
+            statement.setInt(1,province_id);
+            statement.setString(2,newProvinceName);
+            
+            statement.execute();
+            statement.close();
+            
+            String name = getProvinceName(province_id);
+            if (name.equals(newProvinceName)) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String getProvinceName(int p_province_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String name = "";
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT province_name FROM province WHERE province_id = "+p_province_id);
+            
+            while(resultSet.next())
+            {
+                name = resultSet.getString("province_name");
+            }
+            return name;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return name;
+        }
+    }
 }

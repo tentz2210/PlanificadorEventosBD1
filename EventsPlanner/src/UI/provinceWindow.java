@@ -5,9 +5,14 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.deleteProvince;
+import static DBConnection.MySQLConnection.insertNewProvince;
 import static DBConnection.MySQLConnection.loadCountries;
 import static DBConnection.MySQLConnection.loadProvinces;
+import static DBConnection.MySQLConnection.updateCountry;
+import static DBConnection.MySQLConnection.updateProvince;
 import Utils.Global;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -255,18 +260,39 @@ public class provinceWindow extends javax.swing.JFrame {
         String newProvinceName = newProvinceField.getText();
         if (!"".equals(newProvinceName) && !Global.isNumeric(newProvinceName) && !Global.hasNumbers(newProvinceName))
         {
-            
+            insertNewProvince(id_country,newProvinceName);
+            if (Global.insert_result == 1) JOptionPane.showMessageDialog(this,"Nueva provincia ha sido agregada al catálogo","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al insertar la provincia","Error de inserción",JOptionPane.ERROR_MESSAGE);
         }
+        else JOptionPane.showMessageDialog(this,"Error al insertar la provincia","Error de inserción",JOptionPane.ERROR_MESSAGE);
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_addButtonMouseClicked
 
     private void eliminateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminateButtonMouseClicked
+        int id_country = Global.countriesInfo.get(chooseCComboBox2.getSelectedIndex()).getId();
+        String province_name = Global.provincesInfo.get(eliminateProvinceComboBox2.getSelectedIndex()).getName();
+        int province_id = Global.provincesInfo.get(eliminateProvinceComboBox2.getSelectedIndex()).getId();
+        deleteProvince(id_country,province_name,province_id);
+        if (Global.delete_result == 1) JOptionPane.showMessageDialog(this,"La provincia ha sido eliminada","Borrado exitoso",JOptionPane.INFORMATION_MESSAGE);
+        else JOptionPane.showMessageDialog(this,"Error al eliminar la provincia","Error de borrado",JOptionPane.ERROR_MESSAGE);
+        
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_eliminateButtonMouseClicked
 
     private void modifyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyButtonMouseClicked
+        int id_country = Global.countriesInfo.get(chooseCComboBox3.getSelectedIndex()).getId();
+        String old_name_province = Global.provincesInfo.get(modifyProvinceComboBox.getSelectedIndex()).getName();
+        int province_id = Global.provincesInfo.get(modifyProvinceComboBox.getSelectedIndex()).getId();
+        String newProvinceName = newNameField.getText();
+        if (!"".equals(newProvinceName) && !Global.isNumeric(newProvinceName) && !Global.hasNumbers(newProvinceName))
+        {
+            updateProvince(id_country,old_name_province,province_id,newProvinceName);
+            if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"El nombre del país ha sido modificado","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al modificar el país","Error de modificación",JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this,"Error al modificar la provincia","Error de modificación",JOptionPane.ERROR_MESSAGE);
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_modifyButtonMouseClicked
