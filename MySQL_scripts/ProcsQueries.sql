@@ -359,6 +359,19 @@ BEGIN
     AND canton_name = p_canton_name;
 END;$$
 
+CREATE PROCEDURE getDistrictId(IN p_district_name VARCHAR(30), IN p_canton_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+	END;
+    SELECT district_id
+    FROM district
+    WHERE canton_id = p_canton_id
+    AND district_name = p_district_name;
+END;$$
+
 CREATE PROCEDURE getCountries()
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
