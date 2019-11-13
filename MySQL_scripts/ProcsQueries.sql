@@ -215,6 +215,7 @@ BEGIN
 END;$$
 
 -- Point c: getEventStatiticsPerDate
+
 -- Point d: getTopEventsWithMostAssistance
 CREATE PROCEDURE getTopEventsWithMostAssistance()
 BEGIN
@@ -230,6 +231,7 @@ BEGIN
 	WHERE topn < 5
 	order by topn;
 END;$$
+
 -- Point e: getTopEventsWithBestCalif
 -- Point f getTopEventsWithWorstCalif
 
@@ -319,6 +321,19 @@ BEGIN
     WHERE country_name = p_country_name;
 END;$$
 
+CREATE PROCEDURE getProvinceId(IN p_province_name VARCHAR(30), IN p_country_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+	END;
+    SELECT province_id
+    FROM province
+    WHERE country_id = p_country_id
+    AND province_name = p_province_name;
+END;$$
+
 CREATE PROCEDURE getCountries()
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -329,5 +344,44 @@ BEGIN
 	SELECT country_id, country_name
 	FROM country
 	ORDER BY country_id asc;
+END;$$
+
+CREATE PROCEDURE getProvincesFromCountry(IN p_country_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+	END;
+    SELECT province_id, province_name
+    FROM province
+    WHERE country_id = p_country_id
+    ORDER BY province_id asc;
+END;$$
+
+CREATE PROCEDURE getCantonsFromProvince(IN p_province_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+	END;
+    SELECT canton_id, canton_name
+    FROM canton
+    WHERE province_id = p_province_id
+    ORDER BY canton_id asc;
+END;$$
+
+CREATE PROCEDURE getDistrictsFromCanton(IN p_canton_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+	END;
+    SELECT district_id, district_name
+    FROM district
+    WHERE canton_id = p_canton_id
+    ORDER BY district_id asc;
 END;$$
     
