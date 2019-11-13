@@ -9,7 +9,6 @@ import static DBConnection.MySQLConnection.deleteProvince;
 import static DBConnection.MySQLConnection.insertNewProvince;
 import static DBConnection.MySQLConnection.loadCountries;
 import static DBConnection.MySQLConnection.loadProvinces;
-import static DBConnection.MySQLConnection.updateCountry;
 import static DBConnection.MySQLConnection.updateProvince;
 import Utils.Global;
 import javax.swing.JOptionPane;

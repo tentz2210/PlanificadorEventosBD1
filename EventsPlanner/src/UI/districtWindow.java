@@ -5,6 +5,10 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.loadCountries;
+import static DBConnection.MySQLConnection.loadProvinces;
+import Utils.Global;
+
 /**
  *
  * @author mapac
@@ -16,12 +20,72 @@ public class districtWindow extends javax.swing.JFrame {
      */
     cataloguesWindow cataW;
     public districtWindow(cataloguesWindow cW) {
+        Global.countriesInfo.clear();
         initComponents();
+        fillCountriesComboBox();
         cataW = cW;
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-
+    
+    private void fillCountriesComboBox()
+    {
+        loadCountries();
+        if (Global.getInfo_result == 1)
+        {
+            chooseCountry1.removeAllItems();
+            chooseCountry2.removeAllItems();
+            chooseCountry3.removeAllItems();
+            for (int countryNumber = 0; countryNumber < Global.countriesInfo.size(); countryNumber++)
+            {
+                chooseCountry1.addItem(Global.countriesInfo.get(countryNumber).getName());
+                chooseCountry2.addItem(Global.countriesInfo.get(countryNumber).getName());
+                chooseCountry3.addItem(Global.countriesInfo.get(countryNumber).getName());
+            }
+        }
+    }
+    
+    private void fillProvincesComboBox1(int country_id)
+    {
+        Global.provincesInfo.clear();
+        loadProvinces(country_id);
+        if (Global.getInfo_result == 1)
+        {
+            chooseProvince1.removeAllItems();
+            for (int provinceNumber = 0; provinceNumber < Global.provincesInfo.size(); provinceNumber++)
+            {
+                chooseProvince1.addItem(Global.provincesInfo.get(provinceNumber).getName());
+            }
+        }
+    }
+    
+    private void fillProvincesComboBox2(int country_id)
+    {
+        Global.provincesInfo.clear();
+        loadProvinces(country_id);
+        if (Global.getInfo_result == 1)
+        {
+            chooseProvince2.removeAllItems();
+            for (int provinceNumber = 0; provinceNumber < Global.provincesInfo.size(); provinceNumber++)
+            {
+                chooseProvince2.addItem(Global.provincesInfo.get(provinceNumber).getName());
+            }
+        }
+    }
+    
+    private void fillProvincesComboBox3(int country_id)
+    {
+        Global.provincesInfo.clear();
+        loadProvinces(country_id);
+        if (Global.getInfo_result == 1)
+        {
+            chooseProvince3.removeAllItems();
+            for (int provinceNumber = 0; provinceNumber < Global.provincesInfo.size(); provinceNumber++)
+            {
+                chooseProvince3.addItem(Global.provincesInfo.get(provinceNumber).getName());
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +128,6 @@ public class districtWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(778, 587));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(780, 587));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -171,6 +234,11 @@ public class districtWindow extends javax.swing.JFrame {
         chooseCountry3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         chooseCountry3.setMinimumSize(new java.awt.Dimension(130, 21));
         chooseCountry3.setPreferredSize(new java.awt.Dimension(130, 21));
+        chooseCountry3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseCountry3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(chooseCountry3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, -1, -1));
 
         chooseCanton3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -183,6 +251,11 @@ public class districtWindow extends javax.swing.JFrame {
         chooseCountry1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         chooseCountry1.setMinimumSize(new java.awt.Dimension(130, 21));
         chooseCountry1.setPreferredSize(new java.awt.Dimension(130, 21));
+        chooseCountry1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseCountry1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(chooseCountry1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, 20));
 
         chooseProvince1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -201,6 +274,11 @@ public class districtWindow extends javax.swing.JFrame {
         chooseCountry2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         chooseCountry2.setMinimumSize(new java.awt.Dimension(130, 21));
         chooseCountry2.setPreferredSize(new java.awt.Dimension(130, 21));
+        chooseCountry2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseCountry2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(chooseCountry2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, -1, -1));
 
         chooseProvince2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -263,35 +341,17 @@ public class districtWindow extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_cancelButtonMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(districtWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(districtWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(districtWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(districtWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void chooseCountry1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCountry1ActionPerformed
+        fillProvincesComboBox1(Global.countriesInfo.get(chooseCountry1.getSelectedIndex()).getId());
+    }//GEN-LAST:event_chooseCountry1ActionPerformed
 
-        
-    }
+    private void chooseCountry2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCountry2ActionPerformed
+        fillProvincesComboBox2(Global.countriesInfo.get(chooseCountry2.getSelectedIndex()).getId());
+    }//GEN-LAST:event_chooseCountry2ActionPerformed
+
+    private void chooseCountry3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCountry3ActionPerformed
+        fillProvincesComboBox3(Global.countriesInfo.get(chooseCountry3.getSelectedIndex()).getId());
+    }//GEN-LAST:event_chooseCountry3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
