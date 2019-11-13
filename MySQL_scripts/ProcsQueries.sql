@@ -346,6 +346,19 @@ BEGIN
     AND province_name = p_province_name;
 END;$$
 
+CREATE PROCEDURE getCantonId(IN p_canton_name VARCHAR(30), IN p_province_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+	END;
+    SELECT canton_id
+    FROM canton
+    WHERE province_id = p_province_id
+    AND canton_name = p_canton_name;
+END;$$
+
 CREATE PROCEDURE getCountries()
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
