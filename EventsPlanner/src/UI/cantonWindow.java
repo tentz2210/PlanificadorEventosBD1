@@ -6,14 +6,11 @@
 package UI;
 
 import static DBConnection.MySQLConnection.deleteCanton;
-import static DBConnection.MySQLConnection.deleteProvince;
 import static DBConnection.MySQLConnection.insertNewCanton;
-import static DBConnection.MySQLConnection.insertNewProvince;
 import static DBConnection.MySQLConnection.loadCantons;
 import static DBConnection.MySQLConnection.loadCountries;
 import static DBConnection.MySQLConnection.loadProvinces;
 import static DBConnection.MySQLConnection.updateCanton;
-import static DBConnection.MySQLConnection.updateProvince;
 import Utils.Global;
 import javax.swing.JOptionPane;
 

@@ -5,9 +5,16 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.deleteDistrict;
+import static DBConnection.MySQLConnection.insertNewDistrict;
+import static DBConnection.MySQLConnection.loadCantons;
 import static DBConnection.MySQLConnection.loadCountries;
+import static DBConnection.MySQLConnection.loadDistricts;
 import static DBConnection.MySQLConnection.loadProvinces;
+import static DBConnection.MySQLConnection.updateCanton;
+import static DBConnection.MySQLConnection.updateDistrict;
 import Utils.Global;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -86,6 +93,46 @@ public class districtWindow extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void fillCantonsComboBox1(int id_province) {
+        Global.cantonsInfo.clear();
+        loadCantons(id_province);
+        if (Global.getInfo_result == 1)
+        {
+            chooseCanton1.removeAllItems();
+            for (int cantonNumber = 0; cantonNumber < Global.cantonsInfo.size(); cantonNumber++)
+            {
+                chooseCanton1.addItem(Global.cantonsInfo.get(cantonNumber).getName());
+            }
+        }
+    }
+    
+    private void fillCantonsComboBox2(int id_province) {
+        Global.cantonsInfo.clear();
+        loadCantons(id_province);
+        if (Global.getInfo_result == 1)
+        {
+            chooseCanton2.removeAllItems();
+            for (int cantonNumber = 0; cantonNumber < Global.cantonsInfo.size(); cantonNumber++)
+            {
+                chooseCanton2.addItem(Global.cantonsInfo.get(cantonNumber).getName());
+            }
+        }
+    }
+    
+    private void fillCantonsComboBox3(int id_province) {
+        Global.cantonsInfo.clear();
+        loadCantons(id_province);
+        if (Global.getInfo_result == 1)
+        {
+            chooseCanton3.removeAllItems();
+            for (int cantonNumber = 0; cantonNumber < Global.cantonsInfo.size(); cantonNumber++)
+            {
+                chooseCanton3.addItem(Global.cantonsInfo.get(cantonNumber).getName());
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,9 +168,9 @@ public class districtWindow extends javax.swing.JFrame {
         chooseProvince3 = new javax.swing.JComboBox<>();
         newNameField = new javax.swing.JTextField();
         newDistrict = new javax.swing.JTextField();
-        eliminateDistrictField = new javax.swing.JTextField();
         modifyDistrict = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        modifyDistrict1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(778, 587));
@@ -228,6 +275,11 @@ public class districtWindow extends javax.swing.JFrame {
         chooseCanton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         chooseCanton2.setMinimumSize(new java.awt.Dimension(130, 21));
         chooseCanton2.setPreferredSize(new java.awt.Dimension(130, 21));
+        chooseCanton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseCanton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(chooseCanton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 200, -1, -1));
 
         chooseCountry3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -245,6 +297,11 @@ public class districtWindow extends javax.swing.JFrame {
         chooseCanton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         chooseCanton3.setMinimumSize(new java.awt.Dimension(130, 21));
         chooseCanton3.setPreferredSize(new java.awt.Dimension(130, 21));
+        chooseCanton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseCanton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(chooseCanton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 380, -1, -1));
 
         chooseCountry1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -262,6 +319,11 @@ public class districtWindow extends javax.swing.JFrame {
         chooseProvince1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         chooseProvince1.setMinimumSize(new java.awt.Dimension(130, 21));
         chooseProvince1.setPreferredSize(new java.awt.Dimension(130, 21));
+        chooseProvince1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseProvince1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(chooseProvince1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, -1, -1));
 
         chooseCanton1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -285,12 +347,22 @@ public class districtWindow extends javax.swing.JFrame {
         chooseProvince2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         chooseProvince2.setMinimumSize(new java.awt.Dimension(130, 21));
         chooseProvince2.setPreferredSize(new java.awt.Dimension(130, 21));
+        chooseProvince2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseProvince2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(chooseProvince2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, -1, -1));
 
         chooseProvince3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         chooseProvince3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         chooseProvince3.setMinimumSize(new java.awt.Dimension(130, 21));
         chooseProvince3.setPreferredSize(new java.awt.Dimension(130, 21));
+        chooseProvince3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseProvince3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(chooseProvince3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, -1, -1));
 
         newNameField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -303,18 +375,17 @@ public class districtWindow extends javax.swing.JFrame {
         newDistrict.setPreferredSize(new java.awt.Dimension(130, 21));
         jPanel1.add(newDistrict, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, -1, -1));
 
-        eliminateDistrictField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        eliminateDistrictField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        eliminateDistrictField.setPreferredSize(new java.awt.Dimension(130, 21));
-        jPanel1.add(eliminateDistrictField, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
-
         modifyDistrict.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         modifyDistrict.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(modifyDistrict, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 130, -1));
+        jPanel1.add(modifyDistrict, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 130, -1));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/district.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 10, 110, 90));
+
+        modifyDistrict1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        modifyDistrict1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(modifyDistrict1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 130, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, -1));
 
@@ -322,16 +393,44 @@ public class districtWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        int id_canton = Global.cantonsInfo.get(chooseCanton1.getSelectedIndex()).getId();
+        String newDistrictName = newDistrict.getText();
+        if (!"".equals(newDistrictName) && !Global.isNumeric(newDistrictName) && !Global.hasNumbers(newDistrictName))
+        {
+            insertNewDistrict(id_canton,newDistrictName);
+            if (Global.insert_result == 1) JOptionPane.showMessageDialog(this,"Nuevo distrito ha sido agregado al catálogo","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al insertar el distrito","Error de inserción",JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this,"Error al insertar el distrito","Error de inserción",JOptionPane.ERROR_MESSAGE);
+        
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_addButtonMouseClicked
 
     private void eliminateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminateButtonMouseClicked
+        int id_canton = Global.cantonsInfo.get(chooseCanton1.getSelectedIndex()).getId();
+        int district_id = Global.districtsInfo.get(modifyDistrict.getSelectedIndex()).getId();
+        String district_name = Global.districtsInfo.get(modifyDistrict.getSelectedIndex()).getName();
+        deleteDistrict(id_canton,district_name,district_id);
+        if (Global.delete_result == 1) JOptionPane.showMessageDialog(this,"El distrito ha sido eliminado","Borrado exitoso",JOptionPane.INFORMATION_MESSAGE);
+        else JOptionPane.showMessageDialog(this,"Error al eliminar el distrito","Error de borrado",JOptionPane.ERROR_MESSAGE);
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_eliminateButtonMouseClicked
 
     private void modifyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyButtonMouseClicked
+        int id_canton = Global.cantonsInfo.get(chooseCanton3.getSelectedIndex()).getId();
+        String district_name = Global.districtsInfo.get(modifyDistrict1.getSelectedIndex()).getName();
+        int district_id = Global.districtsInfo.get(modifyDistrict1.getSelectedIndex()).getId();
+        String newDistrictName = newNameField.getText();
+        if (!"".equals(newDistrictName) && !Global.isNumeric(newDistrictName) && !Global.hasNumbers(newDistrictName))
+        {
+            updateDistrict(id_canton,district_name,district_id,newDistrictName);
+            if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"El nombre del distrito ha sido modificado","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al modificar el distrito","Error de modificación",JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this,"Error al modificar el distrito","Error de modificación",JOptionPane.ERROR_MESSAGE);
+        
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_modifyButtonMouseClicked
@@ -353,6 +452,26 @@ public class districtWindow extends javax.swing.JFrame {
         fillProvincesComboBox3(Global.countriesInfo.get(chooseCountry3.getSelectedIndex()).getId());
     }//GEN-LAST:event_chooseCountry3ActionPerformed
 
+    private void chooseProvince1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseProvince1ActionPerformed
+        fillCantonsComboBox1(Global.provincesInfo.get(chooseProvince1.getSelectedIndex()).getId());
+    }//GEN-LAST:event_chooseProvince1ActionPerformed
+
+    private void chooseProvince2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseProvince2ActionPerformed
+        fillCantonsComboBox2(Global.provincesInfo.get(chooseProvince2.getSelectedIndex()).getId());
+    }//GEN-LAST:event_chooseProvince2ActionPerformed
+
+    private void chooseProvince3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseProvince3ActionPerformed
+        fillCantonsComboBox3(Global.provincesInfo.get(chooseProvince3.getSelectedIndex()).getId());
+    }//GEN-LAST:event_chooseProvince3ActionPerformed
+
+    private void chooseCanton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCanton2ActionPerformed
+        fillDistrictsComboBox1(Global.cantonsInfo.get(chooseCanton2.getSelectedIndex()).getId());
+    }//GEN-LAST:event_chooseCanton2ActionPerformed
+
+    private void chooseCanton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCanton3ActionPerformed
+        fillDistrictsComboBox2(Global.cantonsInfo.get(chooseCanton3.getSelectedIndex()).getId());
+    }//GEN-LAST:event_chooseCanton3ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JLabel addTitle;
@@ -371,12 +490,12 @@ public class districtWindow extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> chooseProvince3;
     private javax.swing.JButton eliminateButton;
     private javax.swing.JLabel eliminateDistrict;
-    private javax.swing.JTextField eliminateDistrictField;
     private javax.swing.JLabel eliminateTitle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton modifyButton;
     private javax.swing.JComboBox<String> modifyDistrict;
+    private javax.swing.JComboBox<String> modifyDistrict1;
     private javax.swing.JLabel modifyDistrictLabel;
     private javax.swing.JLabel modifyTitle;
     private javax.swing.JLabel newDistrcit;
@@ -384,4 +503,30 @@ public class districtWindow extends javax.swing.JFrame {
     private javax.swing.JTextField newNameField;
     private javax.swing.JLabel newNameLabel;
     // End of variables declaration//GEN-END:variables
+
+    private void fillDistrictsComboBox1(int id_canton) {
+        Global.districtsInfo.clear();
+        loadDistricts(id_canton);
+        if (Global.getInfo_result == 1)
+        {
+            modifyDistrict.removeAllItems();
+            for (int districtNumber = 0; districtNumber < Global.districtsInfo.size(); districtNumber++)
+            {
+                modifyDistrict.addItem(Global.districtsInfo.get(districtNumber).getName());
+            }
+        }
+    }
+    
+    private void fillDistrictsComboBox2(int id_canton) {
+        Global.districtsInfo.clear();
+        loadDistricts(id_canton);
+        if (Global.getInfo_result == 1)
+        {
+            modifyDistrict1.removeAllItems();
+            for (int districtNumber = 0; districtNumber < Global.districtsInfo.size(); districtNumber++)
+            {
+                modifyDistrict1.addItem(Global.districtsInfo.get(districtNumber).getName());
+            }
+        }
+    }
 }

@@ -1598,4 +1598,200 @@ public class MySQLConnection {
             return name;
         }
     }
+    
+    public static void insertNewDistrict(int id_canton,String newDistrictName)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            if (!districtExists(id_canton,newDistrictName))
+            {
+                System.out.println("no existe");
+                statement = connection.prepareCall("{call createDistrict(?,?)}");
+                statement.setString(1,newDistrictName);
+                statement.setInt(2,id_canton);
+            
+                statement.execute();
+                Global.insert_result = 1;
+                statement.close();
+            }
+            else
+            {
+                Global.insert_result = 0;
+            }
+        } catch (SQLException ex) {
+            Global.insert_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static boolean districtExists(int canton_id, String p_district_name)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        ResultSet resultSet = null;
+        boolean hadResults = false;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call getDistrictId(?,?)}");
+            statement.setString(1,p_district_name);
+            statement.setInt(2, canton_id);
+            statement.execute();
+            resultSet = statement.getResultSet();
+            hadResults = resultSet.next();
+            statement.close();
+            return hadResults;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public static void deleteDistrict(int p_canton_id, String p_district_name, int district_id)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call deleteDistrict(?)}");
+            statement.setInt(1,district_id);
+            statement.execute();
+            statement.close();
+               
+            if (!districtExists(p_canton_id, p_district_name)) 
+            {
+                Global.delete_result = 1;
+            }
+            else 
+            {
+                System.out.println("Sí existe");
+                Global.delete_result = 0;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error");
+            Global.delete_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void loadDistricts(int canton_id)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        ResultSet resultSet = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call getDistrictsFromCanton(?)}");
+            statement.setInt(1,canton_id);
+            boolean hadResults = statement.execute();
+            while (hadResults)
+            {
+                resultSet = statement.getResultSet();
+                while (resultSet.next())
+                {
+                    CatalogueContainer cc = new CatalogueContainer(resultSet.getInt("district_id"),resultSet.getString("district_name"));
+                    Global.districtsInfo.add(cc);
+                    Global.getInfo_result = 1;
+                }
+                hadResults = statement.getMoreResults();
+            }
+            statement.close();
+            
+        } catch (SQLException ex) {
+            Global.getInfo_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void updateDistrict(int id_canton,String district_name,int district_id,String newDistrictName)
+    {
+        Connection connection = null;
+        CallableStatement statement = null;
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.prepareCall("{call updateDistrict(?,?)}");
+            statement.setInt(1,district_id);
+            statement.setString(2,newDistrictName);
+            
+            statement.execute();
+            statement.close();
+            
+            String name = getDistrictName(district_id);
+            if (name.equals(newDistrictName)) Global.update_result = 1;
+            else Global.update_result = 0;
+            System.out.println(Global.update_result);
+            
+        } catch (SQLException ex) {
+            Global.update_result = 0;
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String getDistrictName(int p_district_id)
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String name = "";
+        
+        try {
+            Class.forName(DB_DRV);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT district_name FROM district WHERE district_id = "+p_district_id);
+            
+            while(resultSet.next())
+            {
+                name = resultSet.getString("district_name");
+            }
+            return name;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return name;
+        }
+    }
+    
 }

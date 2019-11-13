@@ -39,7 +39,6 @@ public class AdminWindow extends javax.swing.JFrame {
         menuIcon = new javax.swing.JLabel();
         statisticsIcon = new javax.swing.JLabel();
         cataloguesIcon = new javax.swing.JLabel();
-        queriesIcon = new javax.swing.JLabel();
         accountSettingsIcon = new javax.swing.JLabel();
         logoutIcon = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
@@ -100,12 +99,6 @@ public class AdminWindow extends javax.swing.JFrame {
         });
         jPanel1.add(cataloguesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-185, 102, -1, -1));
 
-        queriesIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        queriesIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/query.png"))); // NOI18N
-        queriesIcon.setText("Consultas");
-        queriesIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(queriesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-185, 144, -1, -1));
-
         accountSettingsIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         accountSettingsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/userSettings.png"))); // NOI18N
         accountSettingsIcon.setText("Configuración");
@@ -115,7 +108,7 @@ public class AdminWindow extends javax.swing.JFrame {
                 accountSettingsIconMouseClicked(evt);
             }
         });
-        jPanel1.add(accountSettingsIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-185, 186, -1, -1));
+        jPanel1.add(accountSettingsIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-185, 144, -1, -1));
 
         logoutIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         logoutIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logout.png"))); // NOI18N
@@ -126,7 +119,7 @@ public class AdminWindow extends javax.swing.JFrame {
                 logoutIconMouseClicked(evt);
             }
         });
-        jPanel1.add(logoutIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-185, 228, -1, -1));
+        jPanel1.add(logoutIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-185, 186, -1, -1));
 
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
@@ -159,8 +152,6 @@ public class AdminWindow extends javax.swing.JFrame {
         accSettingsR.jLabelXRight(-185, 10, 10, 5, accountSettingsIcon);
         AnimationClass cataloguesR = new AnimationClass();
         cataloguesR.jLabelXRight(-185, 10, 10, 5, cataloguesIcon);
-        AnimationClass queriesR = new AnimationClass();
-        queriesR.jLabelXRight(-185, 10, 10, 5, queriesIcon);
         AnimationClass logoutR = new AnimationClass();
         logoutR.jLabelXRight(-185, 10, 10, 5, logoutIcon);
         
@@ -171,8 +162,6 @@ public class AdminWindow extends javax.swing.JFrame {
         accSettingsL.jLabelXLeft(10, -185, 10, 5, accountSettingsIcon);
         AnimationClass cataloguesL = new AnimationClass();
         cataloguesL.jLabelXLeft(10,-185,10,5,cataloguesIcon);
-        AnimationClass queriesL = new AnimationClass();
-        queriesL.jLabelXLeft(10,-185,10,5,queriesIcon);
         AnimationClass logoutL = new AnimationClass();
         logoutL.jLabelXLeft(10,-185,10,5,logoutIcon);
     }//GEN-LAST:event_menuIconMouseClicked
@@ -212,7 +201,6 @@ public class AdminWindow extends javax.swing.JFrame {
     private javax.swing.JLabel logoutIcon;
     private javax.swing.JLabel menuIcon;
     private javax.swing.JLabel minimizeWindIcon;
-    private javax.swing.JLabel queriesIcon;
     private javax.swing.JLabel statisticsIcon;
     // End of variables declaration//GEN-END:variables
 }
