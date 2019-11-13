@@ -321,6 +321,18 @@ BEGIN
     WHERE country_name = p_country_name;
 END;$$
 
+CREATE PROCEDURE getCategoryId(IN p_category_name VARCHAR(30))
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+	END;
+    SELECT category_id
+    FROM category
+    WHERE category_name = p_category_name;
+END;$$
+
 CREATE PROCEDURE getProvinceId(IN p_province_name VARCHAR(30), IN p_country_id int)
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -344,6 +356,18 @@ BEGIN
 	SELECT country_id, country_name
 	FROM country
 	ORDER BY country_id asc;
+END;$$
+
+CREATE PROCEDURE getCategories()
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+    END;
+	SELECT category_id, category_name
+	FROM category
+	ORDER BY category_id asc;
 END;$$
 
 CREATE PROCEDURE getProvincesFromCountry(IN p_country_id int)
