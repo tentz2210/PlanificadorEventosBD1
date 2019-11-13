@@ -5,6 +5,17 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.deleteCategory;
+import static DBConnection.MySQLConnection.deleteCountry;
+import static DBConnection.MySQLConnection.insertNewCategory;
+import static DBConnection.MySQLConnection.insertNewCountry;
+import static DBConnection.MySQLConnection.loadCategories;
+import static DBConnection.MySQLConnection.loadCountries;
+import static DBConnection.MySQLConnection.updateCategory;
+import static DBConnection.MySQLConnection.updateCountry;
+import Utils.Global;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mapac
@@ -16,12 +27,28 @@ public class categoriesWindow extends javax.swing.JFrame {
      */
     cataloguesWindow cataW;
     public categoriesWindow(cataloguesWindow cW) {
+        Global.categoriesInfo.clear();
         initComponents();
+        fillCategoriesComboBox();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         cataW = cW;
     }
-
+    
+    private void fillCategoriesComboBox()
+    {
+        loadCategories();
+        if (Global.getInfo_result == 1)
+        {
+            eliminateCategory.removeAllItems();
+            modifyCategory.removeAllItems();
+            for (int categoryNumber = 0; categoryNumber < Global.categoriesInfo.size(); categoryNumber++)
+            {
+                eliminateCategory.addItem(Global.categoriesInfo.get(categoryNumber).getName());
+                modifyCategory.addItem(Global.categoriesInfo.get(categoryNumber).getName());
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -169,16 +196,41 @@ public class categoriesWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_modifyButtonActionPerformed
 
     private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        String newCategoryName = addCategoryField1.getText();
+        if (!"".equals(newCategoryName) && !Global.isNumeric(newCategoryName) && !Global.hasNumbers(newCategoryName))
+        {
+            insertNewCategory(newCategoryName);
+            if (Global.insert_result == 1) JOptionPane.showMessageDialog(this,"Nueva categoría ha sido agregada al catálogo","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al insertar la categoría","Error de inserción",JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this,"Error al insertar la categoría","Error de inserción",JOptionPane.ERROR_MESSAGE);
+        
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_addButtonMouseClicked
 
     private void eliminateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminateButtonMouseClicked
+        int id_category = Global.categoriesInfo.get(eliminateCategory.getSelectedIndex()).getId();
+        String name_category = Global.categoriesInfo.get(eliminateCategory.getSelectedIndex()).getName();
+        deleteCategory(id_category,name_category);
+        if (Global.delete_result == 1) JOptionPane.showMessageDialog(this,"La categoría ha sido eliminada","Borrado exitoso",JOptionPane.INFORMATION_MESSAGE);
+        else JOptionPane.showMessageDialog(this,"Error al eliminar la categoría","Error de borrado",JOptionPane.ERROR_MESSAGE);
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_eliminateButtonMouseClicked
 
     private void modifyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifyButtonMouseClicked
+        int id_category = Global.categoriesInfo.get(modifyCategory.getSelectedIndex()).getId();
+        String old_name_category = Global.categoriesInfo.get(modifyCategory.getSelectedIndex()).getName();
+        String newCategoryName = newNameField.getText();
+        if (!"".equals(newCategoryName) && !Global.isNumeric(newCategoryName) && !Global.hasNumbers(newCategoryName))
+        {
+            updateCategory(id_category,old_name_category,newCategoryName);
+            if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"El nombre de la categoría ha sido modificada","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al modificar la categoría","Error de modificación",JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(this,"Error al modificar la categoría","Error de modificación",JOptionPane.ERROR_MESSAGE);
+        
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_modifyButtonMouseClicked

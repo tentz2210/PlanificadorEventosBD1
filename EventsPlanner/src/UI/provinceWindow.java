@@ -289,8 +289,8 @@ public class provinceWindow extends javax.swing.JFrame {
         if (!"".equals(newProvinceName) && !Global.isNumeric(newProvinceName) && !Global.hasNumbers(newProvinceName))
         {
             updateProvince(id_country,old_name_province,province_id,newProvinceName);
-            if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"El nombre del país ha sido modificado","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
-            else JOptionPane.showMessageDialog(this,"Error al modificar el país","Error de modificación",JOptionPane.ERROR_MESSAGE);
+            if (Global.update_result == 1) JOptionPane.showMessageDialog(this,"El nombre de la provincia ha sido modificado","Modificación exitosa",JOptionPane.INFORMATION_MESSAGE);
+            else JOptionPane.showMessageDialog(this,"Error al modificar la provincia","Error de modificación",JOptionPane.ERROR_MESSAGE);
         }
         else JOptionPane.showMessageDialog(this,"Error al modificar la provincia","Error de modificación",JOptionPane.ERROR_MESSAGE);
         cataW.setVisible(true);
