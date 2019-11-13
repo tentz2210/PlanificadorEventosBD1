@@ -372,6 +372,19 @@ BEGIN
     AND district_name = p_district_name;
 END;$$
 
+CREATE PROCEDURE getEventId(IN p_event_name VARCHAR(50), IN p_address_id int)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+        SELECT 'Error executing query';
+	END;
+    SELECT event_id
+    FROM social_event
+    WHERE address_id = p_address_id
+    AND event_title = p_event_name;
+END;$$
+
 CREATE PROCEDURE getCountries()
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
