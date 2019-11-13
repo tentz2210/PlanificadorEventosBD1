@@ -248,6 +248,8 @@ CREATE TABLE district(
 -- Foreign keys
 ALTER TABLE district
 	ADD CONSTRAINT district_canton_fk FOREIGN KEY (canton_id) REFERENCES canton(canton_id);
+ALTER TABLE district
+	ADD CONSTRAINT district_canton_uk UNIQUE (canton_id,district_name);
 ################################################################################################################
 -- Canton
 CREATE TABLE canton(
@@ -263,6 +265,8 @@ CREATE TABLE canton(
 -- Foreign keys
 ALTER TABLE canton
 	ADD CONSTRAINT canton_province_fk FOREIGN KEY (province_id) REFERENCES province(province_id);
+ALTER TABLE canton
+	ADD CONSTRAINT canton_province_uk UNIQUE (province_id,canton_name);
 ################################################################################################################
 -- Province
 CREATE TABLE province(
