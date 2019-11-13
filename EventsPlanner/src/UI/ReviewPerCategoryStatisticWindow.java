@@ -36,8 +36,10 @@ public class ReviewPerCategoryStatisticWindow extends javax.swing.JFrame {
     /**
      * Creates new form citizenWindow
      */
-    public ReviewPerCategoryStatisticWindow() {
+    statisticsWindow staW;
+    public ReviewPerCategoryStatisticWindow(statisticsWindow sW) {
         initComponents();
+        staW = sW;
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         final JFXPanel panel = new JFXPanel();
@@ -63,11 +65,12 @@ public class ReviewPerCategoryStatisticWindow extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(579, 658));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(579, 654));
         setSize(new java.awt.Dimension(1366, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1366, 710));
+        jPanel1.setPreferredSize(new java.awt.Dimension(579, 654));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/minimize.png"))); // NOI18N
@@ -88,23 +91,27 @@ public class ReviewPerCategoryStatisticWindow extends javax.swing.JFrame {
         });
         jPanel1.add(closeWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, -1, -1));
 
+        chartPanel.setBackground(new java.awt.Color(255, 255, 255));
         chartPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         chartPanel.setLayout(new java.awt.BorderLayout());
         jPanel1.add(chartPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 510, 480));
 
+        queryButton.setBackground(new java.awt.Color(8, 151, 157));
+        queryButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        queryButton.setForeground(new java.awt.Color(255, 255, 255));
         queryButton.setText("Consultar");
         queryButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 queryButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(queryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, -1, -1));
+        jPanel1.add(queryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Estadísticas de Reseña por Categoría");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, -1, -1));
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel2.setText("Estadísticas de reseña por categoría");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 730));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -114,6 +121,7 @@ public class ReviewPerCategoryStatisticWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeMouseClicked
 
     private void closeWindowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowMouseClicked
+        staW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_closeWindowMouseClicked
 
@@ -275,12 +283,7 @@ public class ReviewPerCategoryStatisticWindow extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ReviewPerCategoryStatisticWindow().setVisible(true);
-            }
-        });
+        
     }
 
     
@@ -325,7 +328,7 @@ public class ReviewPerCategoryStatisticWindow extends javax.swing.JFrame {
         final String DB_URL =
             "jdbc:mysql://localhost:3306/eventsproject";
         final String DB_USER = "root";
-        final String DB_PASSWD = "Lfmb1500";
+        final String DB_PASSWD = "Mpca1606";
         try {
             ResultSet r = null;
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);

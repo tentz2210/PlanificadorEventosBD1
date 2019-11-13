@@ -5,6 +5,10 @@
  */
 package UI;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author mapac
@@ -166,7 +170,11 @@ public class cataloguesWindow extends javax.swing.JFrame {
 
     private void countryButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_countryButtonMouseClicked
         this.setVisible(false);
-        countryWindow country = new countryWindow(this); 
+        try { 
+            countryWindow country = new countryWindow(this);
+        } catch (SQLException ex) {
+            Logger.getLogger(cataloguesWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_countryButtonMouseClicked
 
     private void provinceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_provinceButtonMouseClicked

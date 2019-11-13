@@ -81,6 +81,11 @@ public class AdminWindow extends javax.swing.JFrame {
         statisticsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/statistics.png"))); // NOI18N
         statisticsIcon.setText("Módulo de Estadísticas");
         statisticsIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        statisticsIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                statisticsIconMouseClicked(evt);
+            }
+        });
         jPanel1.add(statisticsIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-185, 60, -1, -1));
 
         cataloguesIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -187,6 +192,11 @@ public class AdminWindow extends javax.swing.JFrame {
             loginWindow login = new loginWindow();
         }
     }//GEN-LAST:event_logoutIconMouseClicked
+
+    private void statisticsIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statisticsIconMouseClicked
+        this.setVisible(false);
+        statisticsWindow statistic = new statisticsWindow();
+    }//GEN-LAST:event_statisticsIconMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountSettingsIcon;
