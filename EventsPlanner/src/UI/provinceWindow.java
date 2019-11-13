@@ -5,6 +5,10 @@
  */
 package UI;
 
+import static DBConnection.MySQLConnection.loadCountries;
+import static DBConnection.MySQLConnection.loadProvinces;
+import Utils.Global;
+
 /**
  *
  * @author mapac
@@ -16,12 +20,58 @@ public class provinceWindow extends javax.swing.JFrame {
      */
     cataloguesWindow cataW;
     public provinceWindow(cataloguesWindow cW) {
+        Global.countriesInfo.clear();
         initComponents();
+        fillCountriesComboBox();
         cataW = cW;
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-
+    
+    private void fillCountriesComboBox()
+    {
+        loadCountries();
+        if (Global.getInfo_result == 1)
+        {
+            chooseCComboBox1.removeAllItems();
+            chooseCComboBox2.removeAllItems();
+            chooseCComboBox3.removeAllItems();
+            for (int countryNumber = 0; countryNumber < Global.countriesInfo.size(); countryNumber++)
+            {
+                chooseCComboBox1.addItem(Global.countriesInfo.get(countryNumber).getName());
+                chooseCComboBox2.addItem(Global.countriesInfo.get(countryNumber).getName());
+                chooseCComboBox3.addItem(Global.countriesInfo.get(countryNumber).getName());
+            }
+        }
+    }
+    
+    private void fillProvincesComboBox1(int country_id)
+    {
+        Global.provincesInfo.clear();
+        loadProvinces(country_id);
+        if (Global.getInfo_result == 1)
+        {
+            eliminateProvinceComboBox2.removeAllItems();
+            for (int provinceNumber = 0; provinceNumber < Global.provincesInfo.size(); provinceNumber++)
+            {
+                eliminateProvinceComboBox2.addItem(Global.provincesInfo.get(provinceNumber).getName());
+            }
+        }
+    }
+    
+    private void fillProvincesComboBox2(int country_id)
+    {
+        Global.provincesInfo.clear();
+        loadProvinces(country_id);
+        if (Global.getInfo_result == 1)
+        {
+            modifyProvinceComboBox.removeAllItems();
+            for (int provinceNumber = 0; provinceNumber < Global.provincesInfo.size(); provinceNumber++)
+            {
+                modifyProvinceComboBox.addItem(Global.provincesInfo.get(provinceNumber).getName());
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,6 +202,11 @@ public class provinceWindow extends javax.swing.JFrame {
 
         chooseCComboBox3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         chooseCComboBox3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        chooseCComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseCComboBox3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(chooseCComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 130, -1));
 
         newProvinceField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -163,6 +218,11 @@ public class provinceWindow extends javax.swing.JFrame {
 
         chooseCComboBox2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         chooseCComboBox2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        chooseCComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseCComboBox2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(chooseCComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 130, -1));
 
         eliminateProvinceComboBox2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -191,6 +251,12 @@ public class provinceWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        int id_country = Global.countriesInfo.get(chooseCComboBox1.getSelectedIndex()).getId();
+        String newProvinceName = newProvinceField.getText();
+        if (!"".equals(newProvinceName) && !Global.isNumeric(newProvinceName) && !Global.hasNumbers(newProvinceName))
+        {
+            
+        }
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_addButtonMouseClicked
@@ -209,6 +275,14 @@ public class provinceWindow extends javax.swing.JFrame {
         cataW.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_cancelButtonMouseClicked
+
+    private void chooseCComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCComboBox2ActionPerformed
+        fillProvincesComboBox1(Global.countriesInfo.get(chooseCComboBox2.getSelectedIndex()).getId());
+    }//GEN-LAST:event_chooseCComboBox2ActionPerformed
+
+    private void chooseCComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseCComboBox3ActionPerformed
+        fillProvincesComboBox2(Global.countriesInfo.get(chooseCComboBox3.getSelectedIndex()).getId());
+    }//GEN-LAST:event_chooseCComboBox3ActionPerformed
 
     /**
      * @param args the command line arguments
