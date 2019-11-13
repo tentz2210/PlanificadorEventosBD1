@@ -276,7 +276,8 @@ CREATE TABLE province(
 -- Foreign keys
 ALTER TABLE province
 	ADD CONSTRAINT province_country_fk FOREIGN KEY (country_id) REFERENCES country(country_id);
-
+ALTER TABLE province
+	ADD CONSTRAINT province_country_uk UNIQUE (country_id,province_name);
 ################################################################################################################
 -- Country
 CREATE TABLE country(
