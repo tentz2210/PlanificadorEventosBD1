@@ -27,8 +27,10 @@ public class UserInvitationsWindow extends javax.swing.JFrame {
     /**
      * Creates new form citizenWindow
      */
-    public UserInvitationsWindow() {
+    queriesWindow quW;
+    public UserInvitationsWindow(queriesWindow qW) {
         initComponents();
+        quW = qW;
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.generateUserInvitationsTable();
@@ -108,8 +110,8 @@ public class UserInvitationsWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeMouseClicked
 
     private void closeWindowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowMouseClicked
+        quW.setVisible(true);
         this.setVisible(false);
-        //citizenWindow mainWindow = new citizenWindow();
     }//GEN-LAST:event_closeWindowMouseClicked
 
     /**
@@ -202,12 +204,6 @@ public class UserInvitationsWindow extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UserInvitationsWindow().setVisible(true);
-            }
-        });
     }
 
     
@@ -240,7 +236,7 @@ public class UserInvitationsWindow extends javax.swing.JFrame {
         final String DB_URL =
             "jdbc:mysql://localhost:3306/eventsproject";
         final String DB_USER = "root";
-        final String DB_PASSWD = "Lfmb1500";
+        final String DB_PASSWD = "Mpca1606";
         try {
             ResultSet r = null;
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);

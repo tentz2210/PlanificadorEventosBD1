@@ -24,8 +24,10 @@ public class FinishedEventsWindow extends javax.swing.JFrame {
     /**
      * Creates new form citizenWindow
      */
-    public FinishedEventsWindow() {
+    queriesWindow quW;
+    public FinishedEventsWindow(queriesWindow qW) {
         initComponents();
+        quW = qW;
         this.fillDateComboBox();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -88,7 +90,7 @@ public class FinishedEventsWindow extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setText("Eventos finalizados");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
 
         communitiesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -103,7 +105,7 @@ public class FinishedEventsWindow extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(communitiesTable);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, 200));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, -1, 200));
 
         startYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         startYearComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -113,19 +115,24 @@ public class FinishedEventsWindow extends javax.swing.JFrame {
         });
         jPanel1.add(startYearComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 70, -1));
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel1.setText("Filtro fecha fin:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, 20));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 50, -1, 20));
 
+        jButton1.setBackground(new java.awt.Color(8, 151, 157));
+        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Consultar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel3.setText("Filtro fecha inicio:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, 20));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, 20));
 
         startDayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         startDayComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -177,8 +184,8 @@ public class FinishedEventsWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeMouseClicked
 
     private void closeWindowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowMouseClicked
+        quW.setVisible(true);
         this.setVisible(false);
-        //citizenWindow mainWindow = new citizenWindow();
     }//GEN-LAST:event_closeWindowMouseClicked
 
     private void startYearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startYearComboBoxActionPerformed
@@ -267,12 +274,7 @@ public class FinishedEventsWindow extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FinishedEventsWindow().setVisible(true);
-            }
-        });
+       
     }
 
     private void fillDateComboBox()
@@ -333,7 +335,7 @@ public class FinishedEventsWindow extends javax.swing.JFrame {
         final String DB_URL =
             "jdbc:mysql://localhost:3306/eventsproject";
         final String DB_USER = "root";
-        final String DB_PASSWD = "Lfmb1500";
+        final String DB_PASSWD = "Mpca1606";
         try {
             ResultSet r = null;
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);

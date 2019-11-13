@@ -157,7 +157,7 @@ public class statisticsWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeMouseClicked
-        this.setState(editProfile.ICONIFIED);
+        this.setState(statisticsWindow.ICONIFIED);
     }//GEN-LAST:event_minimizeMouseClicked
 
     private void closeWindowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowMouseClicked

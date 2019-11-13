@@ -25,8 +25,10 @@ public class InvitedUsersWindow extends javax.swing.JFrame {
     /**
      * Creates new form citizenWindow
      */
-    public InvitedUsersWindow() {
+    queriesWindow quW;
+    public InvitedUsersWindow(queriesWindow qW) {
         initComponents();
+        quW = qW;
         this.fillOptionComboBox();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -82,9 +84,9 @@ public class InvitedUsersWindow extends javax.swing.JFrame {
         });
         jPanel1.add(closeWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Usuarios invitados a mis eventos");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, -1, -1));
 
         communitiesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -99,26 +101,31 @@ public class InvitedUsersWindow extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(communitiesTable);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, 200));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, -1, 200));
 
+        optionComboBox.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         optionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         optionComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 optionComboBoxActionPerformed(evt);
             }
         });
-        jPanel1.add(optionComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 80, -1));
+        jPanel1.add(optionComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 120, -1));
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Filtro:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, 20));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, 20));
 
+        jButton1.setBackground(new java.awt.Color(8, 151, 157));
+        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Consultar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 730));
 
@@ -130,8 +137,8 @@ public class InvitedUsersWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeMouseClicked
 
     private void closeWindowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowMouseClicked
+        quW.setVisible(true);
         this.setVisible(false);
-        //citizenWindow mainWindow = new citizenWindow();
     }//GEN-LAST:event_closeWindowMouseClicked
 
     private void optionComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionComboBoxActionPerformed
@@ -184,12 +191,7 @@ public class InvitedUsersWindow extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InvitedUsersWindow().setVisible(true);
-            }
-        });
+        
     }
 
     private void fillOptionComboBox()
@@ -225,7 +227,7 @@ public class InvitedUsersWindow extends javax.swing.JFrame {
         final String DB_URL =
             "jdbc:mysql://localhost:3306/eventsproject";
         final String DB_USER = "root";
-        final String DB_PASSWD = "Lfmb1500";
+        final String DB_PASSWD = "Mpca1606";
         try {
             ResultSet r = null;
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);

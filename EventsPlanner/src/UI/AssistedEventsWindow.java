@@ -27,8 +27,10 @@ public class AssistedEventsWindow extends javax.swing.JFrame {
     /**
      * Creates new form citizenWindow
      */
-    public AssistedEventsWindow() {
+    queriesWindow quW;
+    public AssistedEventsWindow(queriesWindow qW) {
         initComponents();
+        quW = qW;
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.generateAssistedEventsTable();
@@ -80,7 +82,7 @@ public class AssistedEventsWindow extends javax.swing.JFrame {
         jPanel1.add(closeWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Eventos a los que Asistí");
+        jLabel2.setText("Eventos a los que asistí");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
 
         communitiesTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -108,8 +110,8 @@ public class AssistedEventsWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeMouseClicked
 
     private void closeWindowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowMouseClicked
+        quW.setVisible(true);
         this.setVisible(false);
-        //citizenWindow mainWindow = new citizenWindow();
     }//GEN-LAST:event_closeWindowMouseClicked
 
     /**
@@ -394,12 +396,7 @@ public class AssistedEventsWindow extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AssistedEventsWindow().setVisible(true);
-            }
-        });
+       
     }
 
     
@@ -426,7 +423,7 @@ public class AssistedEventsWindow extends javax.swing.JFrame {
         final String DB_URL =
             "jdbc:mysql://localhost:3306/eventsproject";
         final String DB_USER = "root";
-        final String DB_PASSWD = "Lfmb1500";
+        final String DB_PASSWD = "Mpca1606";
         try {
             ResultSet r = null;
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);

@@ -108,6 +108,11 @@ public class UserWindow extends javax.swing.JFrame {
         queriesIcon.setText("Consultas");
         queriesIcon.setToolTipText("");
         queriesIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        queriesIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                queriesIconMouseClicked(evt);
+            }
+        });
         jPanel1.add(queriesIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(-125, 186, -1, -1));
 
         accountSettingsIcon.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -200,6 +205,11 @@ public class UserWindow extends javax.swing.JFrame {
             loginWindow login = new loginWindow();
         }
     }//GEN-LAST:event_logoutIconMouseClicked
+
+    private void queriesIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_queriesIconMouseClicked
+        this.setVisible(false);
+        queriesWindow queries = new queriesWindow();
+    }//GEN-LAST:event_queriesIconMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountSettingsIcon;
